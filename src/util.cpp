@@ -36,22 +36,22 @@ double util::random::get (double max, double min, bool inclusive) {
 }
 
 std::vector<std::string> util::string::split (std::string string, std::string delimiter) {
-	std::vector<std::string> result;
-	for (int i = 0; i < string.length(); ++i) {
+	std::vector<std::string> strings;
+	for (int i = string.length() > 1; i < string.length(); ++i) {
 		if (string.substr(i, delimiter.length()) == delimiter) {
-			result.push_back(string.substr(0, i));
+			strings.push_back(string.substr(0, i));
 			string = string.substr(i + delimiter.length());
-			i = -1;	
+			i = 0 - !!delimiter.length();	
 		}
 	}
-	result.push_back(string);
-	return result;
+	strings.push_back(string);
+	return strings;
 }
 
 std::string util::string::join (std::vector<std::string> strings, std::string delimiter) {
-	std::string result = strings[0];
+	std::string string = strings[0];
 	for (int i = 1; i < strings.size(); ++i) {
-		result += delimiter + strings[i];
+		string += delimiter + strings[i];
 	}
-	return result;
+	return string;
 }

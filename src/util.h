@@ -43,32 +43,47 @@ namespace util {
 	}
 
 	namespace string {
-		std::vector<std::string> split (std::string string, std::string delimiter);
+		std::vector<std::string> split (std::string string, std::string delimiter = "");
 
 		std::string join (std::vector<std::string> array, std::string delimiter = ", ");
 	}
 
 	namespace vector {
 		template <typename T>
-		std::vector<T> erase (std::vector<T> vector, int startIndex, int eraseCount = 1) {
-			for (int i = 0; i < eraseCount; ++i) {
-				vector.erase(vector.begin() + startIndex);
+		std::vector<T> erase (std::vector<T> vector, int start, int erase = 1) {
+			for (int i = 0; i < erase; ++i) {
+				vector.erase(vector.begin() + start);
 			}
 			return vector;
 		}
 
 		template <typename T>
-		std::vector<T> splice (std::vector<T> vector, int startIndex, int eraseCount, T insert) {
-			vector = util::vector::erase<T>(vector, startIndex, eraseCount);
-			vector.insert(vector.begin() + startIndex, insert);
+		std::vector<T> splice (std::vector<T> vector, int start, int erase, T insert) {
+			vector = util::vector::erase(vector, start, erase);
+			vector.insert(vector.begin() + start, insert);
 			return vector;
 		}
 
 		template <typename T>
-		std::vector<T> splice (std::vector<T> vector, int startIndex, int eraseCount, std::vector<T> insertVector) {
-			vector = util::vector::erase<T>(vector, startIndex, eraseCount);
-			vector.insert(vector.begin() + startIndex, insertVector.begin(), insertVector.end());
+		std::vector<T> splice (std::vector<T> vector, int start, int erase, std::vector<T> insert) {
+			vector = util::vector::erase(vector, start, erase);
+			vector.insert(vector.begin() + start, insert.begin(), insert.end());
 			return vector;
+		}
+
+		template <typename T>
+		std::vector<T> slice (std::vector<T> vector, int start, int end = -1) {
+			if (start < 0) {
+				start += vector.size();
+			}
+			if (end < 0) {
+				end += vector.size();
+			}
+			std::vector<T> slice;
+			for (int i = start; i < end; ++i) {
+				slice.push_back(vector[i]);
+			}
+			return slice;
 		}
 	}
 }
