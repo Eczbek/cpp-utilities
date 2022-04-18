@@ -37,11 +37,27 @@ double util::random::get (double max, double min, bool inclusive) {
 
 std::vector<std::string> util::string::split (std::string string, std::string delimiter) {
 	std::vector<std::string> strings;
-	for (int i = string.length() > 1; i < string.length(); ++i) {
-		if (string.substr(i, delimiter.length()) == delimiter) {
+	int stringLength = string.length();
+	int delimiterLength = delimiter.length();
+	for (int i = stringLength > 1; i < stringLength; ++i) {
+		if (string.substr(i, delimiterLength) == delimiter) {
 			strings.push_back(string.substr(0, i));
-			string = string.substr(i + delimiter.length());
-			i = 0 - !!delimiter.length();	
+			string = string.substr(i + delimiterLength);
+			i = 0 - !!delimiterLength;	
+		}
+	}
+	strings.push_back(string);
+	return strings;
+}
+
+std::vector<std::string> util::string::split (std::string string, char delimiter) {
+	std::vector<std::string> strings;
+	int stringLength = string.length();
+	for (int i = stringLength > 1; i < stringLength; ++i) {
+		if (string[i] == delimiter) {
+			strings.push_back(string.substr(0, i));
+			string = string.substr(i + 1);
+			i = -1;
 		}
 	}
 	strings.push_back(string);

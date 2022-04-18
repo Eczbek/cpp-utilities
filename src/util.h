@@ -45,6 +45,8 @@ namespace util {
 	namespace string {
 		std::vector<std::string> split (std::string string, std::string delimiter = "");
 
+		std::vector<std::string> split (std::string string, char delimiter);
+
 		std::string join (std::vector<std::string> array, std::string delimiter = ", ");
 	}
 
