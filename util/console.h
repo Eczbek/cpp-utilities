@@ -18,6 +18,7 @@ namespace util {
 				if (!std::cin.fail()) {
 					return result;
 				}
+				std::cout.clear();
 				util::console::ignoreLine();
 			} while (repeatIfFail);
 			return defaultValue;
