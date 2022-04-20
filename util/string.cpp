@@ -18,6 +18,9 @@ std::vector<std::string> util::string::split (std::string string, std::string de
 }
 
 std::string util::string::join (std::vector<std::string> strings, std::string delimiter) {
+	if (!strings.size()) {
+		return "";
+	}
 	std::string string = strings[0];
 	for (int i = 1; i < strings.size(); ++i) {
 		string += delimiter + strings[i];
