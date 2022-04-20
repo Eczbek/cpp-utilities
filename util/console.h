@@ -10,9 +10,8 @@ namespace util {
 		void ignoreLine (char until = '\n');
 
 		template <typename T>
-		T prompt (std::string message = "", bool repeatIfFail = false, T defaultValue = T()) {
-			T result;
-			do {
+		T prompt (std::string message = "", bool attempts = 1, T defaultValue = T()) {
+			for (T result, int i = 0; i < attempts; ++i) {
 				std::cout << message;
 				std::cin >> result;
 				if (!std::cin.fail()) {
@@ -20,7 +19,7 @@ namespace util {
 				}
 				std::cout.clear();
 				util::console::ignoreLine();
-			} while (repeatIfFail);
+			}
 			return defaultValue;
 		}
 	}
