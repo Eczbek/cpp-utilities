@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-
 namespace util {
 	namespace string {
 		std::vector<std::string> split (std::string string, std::string delimiter = "");

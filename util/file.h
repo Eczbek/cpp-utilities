@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 namespace util {
 	namespace file {
 		std::string read (std::string path);

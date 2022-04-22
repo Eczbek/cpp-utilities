@@ -3,7 +3,6 @@
 
 #include <chrono>
 
-
 namespace util {
 	namespace time {
 		template <typename T = std::chrono::milliseconds>

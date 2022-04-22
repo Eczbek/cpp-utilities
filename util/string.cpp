@@ -1,7 +1,6 @@
 
 #include "./string.h"
 
-
 std::vector<std::string> util::string::split (std::string string, std::string delimiter) {
 	std::vector<std::string> strings;
 	int stringLength = string.length();

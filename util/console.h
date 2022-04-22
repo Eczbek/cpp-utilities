@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-
 namespace util {
 	namespace console {
 		void ignoreLine (char until = '\n');
