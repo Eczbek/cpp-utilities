@@ -8,38 +8,50 @@
 namespace util {
 	namespace vector {
 		template <typename T>
-		std::vector<T> erase (std::vector<T> vector, int start, int erase = 1) {
+		std::vector<T> erase (std::vector<T> vector, int index, int erase = 1) {
 			int size = vector.size();
 			if (start < 0) {
 				start += size + 1;
 			}
-			assert(start >= 0 && start < size && start + erase >= 0 && start + erase < size);
-			vector.erase(vector.begin() + start, vector.begin() + start + erase);
+			assert(index >= 0 && index < size && erase >= 0 && index + erase < size);
+			vector.erase(vector.begin() + index, vector.begin() + index + erase);
 			return vector;
 		}
 
 		template <typename T>
-		std::vector<T> splice (std::vector<T> vector, int start, int erase, T insert) {
-			if (start < 0) {
-				start += vector.size() + 1;
+		std::vector<T> insert (std::vector<T> vector, int index, const T& value) {
+			int size = vector.size();
+			if (index < 0) {
+				index += size + 1;
 			}
-			vector = util::vector::erase(vector, start, erase);
-			vector.insert(vector.begin() + start, insert);
+			assert(index >= 0 && index <= size);
+			vector.insert(vector.begin() + index, value);
 			return vector;
 		}
 
 		template <typename T>
-		std::vector<T> splice (std::vector<T> vector, int start, int erase, std::vector<T> insert) {
-			if (start < 0) {
-				start += vector.size() + 1;
+		std::vector<T> insert (std::vector<T> vector, int index, const std::vector<T>& values) {
+			int size = vector.size();
+			if (index < 0) {
+				index += size + 1;
 			}
-			vector = util::vector::erase(vector, start, erase);
-			vector.insert(vector.begin() + start, insert.begin(), insert.end());
+			assert(index >= 0 && index <= size);
+			vector.insert(vector.begin() + index, values.begin(), values.end());
 			return vector;
 		}
 
 		template <typename T>
-		std::vector<T> slice (std::vector<T> vector, int start, int end = -1) {
+		std::vector<T> slice (std::vector<T> vector, int start) {
+			int size = vector.size();
+			if (start < 0) {
+				start += size + 1;
+			}
+			assert(start >= 0 && start < size);
+			return std::vector<T>(vector.begin() + start, vector.end());
+		}
+
+		template <typename T>
+		std::vector<T> slice (std::vector<T> vector, int start, int end) {
 			int size = vector.size();
 			if (start < 0) {
 				start += size + 1;
@@ -48,9 +60,7 @@ namespace util {
 				end += size + 1;
 			}
 			assert(start >= 0 && start < size && end >= start && end < size);
-			std::vector<T> result;
-			result.insert(result.begin(), vector.begin() + start, vector.begin() + end);
-			return result;
+			return std::vector<T>(vector.begin() + start, vector.begin() + end);
 		}
 	}
 }
