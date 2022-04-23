@@ -8,10 +8,11 @@ namespace util {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
-		template <typename T>
-		T prompt (std::string message = "", bool attempts = 1, T defaultValue = T()) {
-			for (T result, int i = 0; i < attempts; ++i) {
+		template <typename T = std::string>
+		T prompt (const std::string& message = "", const T& defaultValue = T(), int attempts = 1) {
+			for (int i = 0; i < attempts; ++i) {
 				std::cout << message;
+				T result;
 				std::cin >> result;
 				if (!std::cin.fail()) {
 					return result;

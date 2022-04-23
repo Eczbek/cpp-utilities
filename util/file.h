@@ -5,9 +5,9 @@
 
 namespace util {
 	namespace file {
-		std::string read (std::string path);
+		std::string read (const std::string& path);
 
-		void write (std::string path, std::string data);
+		void write (const std::string& path, const std::string& data);
 	}
 }
 

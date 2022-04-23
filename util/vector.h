@@ -8,7 +8,7 @@
 namespace util {
 	namespace vector {
 		template <typename T>
-		std::vector<T> erase (std::vector<T> vector, int index, int erase = 1) {
+		const std::vector<T>& erase (std::vector<T>& vector, int index, int erase = 1) {
 			int size = vector.size();
 			if (index < 0) {
 				index += size + 1;
@@ -19,7 +19,7 @@ namespace util {
 		}
 
 		template <typename T>
-		std::vector<T> insert (std::vector<T> vector, int index, const T& value) {
+		const std::vector<T>& insert (std::vector<T>& vector, int index, const T& value) {
 			int size = vector.size();
 			if (index < 0) {
 				index += size + 1;
@@ -30,7 +30,7 @@ namespace util {
 		}
 
 		template <typename T>
-		std::vector<T> insert (std::vector<T> vector, int index, const std::vector<T>& values) {
+		const std::vector<T>& insert (std::vector<T>& vector, int index, const std::vector<T>& values) {
 			int size = vector.size();
 			if (index < 0) {
 				index += size + 1;
@@ -41,7 +41,7 @@ namespace util {
 		}
 
 		template <typename T>
-		std::vector<T> slice (std::vector<T> vector, int start) {
+		std::vector<T> slice (const std::vector<T>& vector, int start) {
 			int size = vector.size();
 			if (start < 0) {
 				start += size + 1;
@@ -51,7 +51,7 @@ namespace util {
 		}
 
 		template <typename T>
-		std::vector<T> slice (std::vector<T> vector, int start, int end) {
+		std::vector<T> slice (const std::vector<T>& vector, int start, int end) {
 			int size = vector.size();
 			if (start < 0) {
 				start += size + 1;
@@ -64,7 +64,7 @@ namespace util {
 		}
 
 		template <typename T>
-		bool includes (std::vector<T> vector, const T& value) {
+		bool includes (const std::vector<T>& vector, const T& value) {
 			return std::find(vector.begin(), vector.end(), value) != vector.end();
 		}
 	}

@@ -1,7 +1,7 @@
 
 #include "./string.h"
 
-std::vector<std::string> util::string::split (std::string string, std::string delimiter) {
+std::vector<std::string> util::string::split (std::string string, const std::string& delimiter) {
 	std::vector<std::string> strings;
 	int stringLength = string.length();
 	int delimiterLength = delimiter.length();
@@ -16,7 +16,7 @@ std::vector<std::string> util::string::split (std::string string, std::string de
 	return strings;
 }
 
-std::string util::string::join (std::vector<std::string> strings, std::string delimiter) {
+std::string util::string::join (const std::vector<std::string>& strings, const std::string& delimiter) {
 	if (!strings.size()) {
 		return "";
 	}
