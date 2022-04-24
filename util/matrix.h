@@ -5,11 +5,9 @@
 
 template <typename T>
 class Matrix {
-	private:
-		std::vector<T> values;
-
 	public:
 		std::vector<int> dimensions;
+		std::vector<T> values;
 
 		Matrix (const std::vector<int>& dimensions)
 			: dimensions(dimensions)
@@ -17,6 +15,14 @@ class Matrix {
 			int size = 1;
 			for (int dimension : dimensions) size *= dimension;
 			values = std::vector<T>(size);
+		}
+
+		Matrix (const std::vector<int>& dimensions, const std::vector<T>& values)
+			: dimensions(dimensions), values(values)
+		{
+			int size = 1;
+			for (int dimension : dimensions) size *= dimension;
+			assert(values.size() == size);
 		}
 
 		T& operator() (const std::vector<int>& indices) {
