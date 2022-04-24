@@ -15,9 +15,7 @@ class Matrix {
 			: dimensions(dimensions)
 		{
 			int size = 1;
-			for (int dimension : dimensions) {
-				size *= dimension;
-			}
+			for (int dimension : dimensions) size *= dimension;
 			values = std::vector<T>(size);
 		}
 
