@@ -3,21 +3,20 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 namespace util {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
 		template <typename T = std::string>
-		T prompt (const std::string& message = "", const T& defaultValue = T(), int attempts = 1) {
-			for (int i = 0; i < attempts; ++i) {
+		T prompt (const std::vector<std::string>& messages, T defaultValue = T()) {
+			T result;
+			for (const std::string& message : messages) {
 				std::cout << message;
-				T result;
 				std::cin >> result;
-				if (!std::cin.fail()) {
-					return result;
-				}
-				std::cout.clear();
+				if (!std::cin.fail()) return result;
+				std::cin.clear();
 				util::console::ignoreLine();
 			}
 			return defaultValue;
