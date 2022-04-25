@@ -6,9 +6,9 @@
 
 namespace util {
 	namespace string {
-		std::vector<std::string> split (std::string string, std::string delimiter = "");
+		std::vector<std::string> split (std::string string, const std::string& delimiter = "");
 
-		std::string join (std::vector<std::string> strings, std::string delimiter = ", ");
+		std::string join (const std::vector<std::string>& strings, const std::string& delimiter = ", ");
 	}
 }
 
