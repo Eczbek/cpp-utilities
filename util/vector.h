@@ -55,6 +55,20 @@ namespace util {
 		bool includes (const std::vector<T>& vector, const T& value) {
 			return std::find(vector.begin(), vector.end(), value) != vector.end();
 		}
+
+		template <typename T, class C>
+		std::vector<T> map (const std::vector<T>& vector, const C& mapCallback) {
+			std::vector<T> result;
+			for (int i = 0; i < vector.size(); ++i) result.push_back(mapCallback(vector[i], i));
+			return result;
+		}
+
+		template <typename T, class C>
+		std::vector<T> filter (const std::vector<T>& vector, const C& filterCallback) {
+			std::vector<T> result;
+			for (int i = 0; i < vector.size(); ++i) if (filterCallback(vector[i], i)) result.push_back(vector[i]);
+			return result;
+		}
 	}
 }
 
