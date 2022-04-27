@@ -9,6 +9,8 @@ namespace util {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
+		void clearScreen ();
+
 		template <typename T = std::string>
 		T prompt (const std::vector<std::string>& messages, T defaultValue = T()) {
 			T result;
