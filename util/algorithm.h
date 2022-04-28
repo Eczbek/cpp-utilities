@@ -1,7 +1,7 @@
 #ifndef UTIL_ALGORITHM_H
 #define UTIL_ALGORITHM_H
 
-#include "./vector.h"
+#include <vector>
 
 namespace util {
 	namespace algorithm {
