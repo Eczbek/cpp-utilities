@@ -7,7 +7,7 @@
 namespace util {
 	namespace misc {
 		template <typename T>
-		std::string getType (T value) {
+		std::string getType (const T& value) {
 			return std::string(typeid(value).name()).substr(1);
 		}
 	}
