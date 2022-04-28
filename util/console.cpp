@@ -9,3 +9,10 @@ void util::console::ignoreLine (char until) {
 void util::console::clearScreen () {
 	std::cout << "\033[2J\033[1;1H";
 }
+
+char util::console::getCharUnix () {
+	system("stty raw");
+	char result = getchar();
+	system("stty cooked");
+	return result;
+}
