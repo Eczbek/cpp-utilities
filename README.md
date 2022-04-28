@@ -1,2 +1,2 @@
 # cpp-utils
-generic c++ utilities?
+may contain terrible code
