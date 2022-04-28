@@ -12,10 +12,14 @@ namespace util {
 			while (true) {
 				int middle = (right - left) / 2 + left;
 				int check = searchCallback(sortedVector[middle]);
-				if (!check) return middle;
-				if (right - left < 2) return -1;
-				if (check < 0) left = middle + 1;
-				else right = middle;
+				if (!check)
+					return middle;
+				if (right - left < 2)
+					return -1;
+				if (check < 0)
+					left = middle + 1;
+				else
+					right = middle;
 			}
 		}
 	}

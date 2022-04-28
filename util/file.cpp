@@ -9,5 +9,6 @@ std::string util::file::read (const std::string& path) {
 
 void util::file::write (const std::string& path, const std::string& data) {
 	std::ofstream writer(path);
-	if (writer) writer << data;
+	if (writer)
+		writer << data;
 }

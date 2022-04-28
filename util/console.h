@@ -19,7 +19,8 @@ namespace util {
 			for (const std::string& message : messages) {
 				std::cout << message;
 				std::cin >> result;
-				if (!std::cin.fail()) return result;
+				if (!std::cin.fail())
+					return result;
 				std::cin.clear();
 				util::console::ignoreLine();
 			}
