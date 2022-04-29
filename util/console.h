@@ -5,11 +5,11 @@
 #include <string>
 #include <vector>
 
+#define CLR_SCRN "\033[2J\033[1;1H"
+
 namespace util {
 	namespace console {
 		void ignoreLine (char until = '\n');
-
-		void clearScreen ();
 
 		char getCharUnix (bool echo = true);
 
