@@ -1,5 +1,6 @@
 
 #include "./math.h"
+#include <cmath>
 
 double util::math::clamp (double value, double max, double min) {
 	return std::fmin(std::fmax(value, min), max);

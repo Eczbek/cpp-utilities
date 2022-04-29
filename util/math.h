@@ -1,8 +1,6 @@
 #ifndef UTIL_MATH_H
 #define UTIL_MATH_H
 
-#include <cmath>
-
 namespace util {
 	namespace math {
 		double clamp (double value, double max, double min = 0);

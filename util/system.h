@@ -1,5 +1,5 @@
-#ifndef UTIL_OS_H
-#define UTIL_OS_H
+#ifndef UTIL_SYSTEM_H
+#define UTIL_SYSTEM_H
 
 #include <string>
 
