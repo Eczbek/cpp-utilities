@@ -4,8 +4,6 @@
 #include <termios.h>
 #include <unistd.h>
 
-#define CLR_SCRN "\033[2J\033[1;1H"
-
 void util::console::ignoreLine (char until) {
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), until);
 }
