@@ -27,29 +27,3 @@ std::vector<std::string> util::string::split (std::string string, char delimiter
 	strings.push_back(string);
 	return strings;
 }
-
-std::string util::string::join (const std::vector<std::string>& strings, const std::string& delimiter) {
-	if (!strings.size())
-		return "";
-	std::string string = strings[0];
-	for (int i = 1; i < strings.size(); ++i)
-		string += delimiter + strings[i];
-	return string;
-}
-
-std::string util::string::join (const std::vector<std::string>& strings, char delimiter) {
-	return util::string::join(strings, std::string(1, delimiter));
-}
-
-std::string util::string::join (const std::vector<char>& characters, const std::string& delimiter) {
-	if (!characters.size())
-		return "";
-	std::string string = std::string(1, characters[0]);
-	for (int i = 1; i < characters.size(); ++i)
-		string += delimiter + characters[i];
-	return string;
-}
-
-std::string util::string::join (const std::vector<char>& characters, char delimiter) {
-	return util::string::join(characters, std::string(1, delimiter));
-}
