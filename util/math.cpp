@@ -1,5 +1,5 @@
 
-#include "./math.h"
+#include "./math.hpp"
 #include <cmath>
 
 double util::math::clamp (double value, double max, double min) {

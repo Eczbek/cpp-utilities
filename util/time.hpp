@@ -2,6 +2,7 @@
 #define UTIL_TIME_H
 
 #include <chrono>
+#include <string>
 
 #define HOURS_BEFORE_EPOCH 17268648
 

@@ -1,5 +1,5 @@
 
-#include "./random.h"
+#include "./random.hpp"
 #include <random>
 
 double util::random::mt32 (double max, double min, bool inclusive) {

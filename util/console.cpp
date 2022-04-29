@@ -1,5 +1,5 @@
 
-#include "./console.h"
+#include "./console.hpp"
 #include <limits>
 #include <termios.h>
 #include <unistd.h>

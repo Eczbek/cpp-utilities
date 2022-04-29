@@ -1,5 +1,5 @@
 
-#include "./system.h"
+#include "./system.hpp"
 
 std::string util::system::name () {
 #ifdef _WIN32

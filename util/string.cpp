@@ -1,5 +1,5 @@
 
-#include "./string.h"
+#include "./string.hpp"
 
 std::vector<std::string> util::string::split (std::string string, const std::string& delimiter) {
 	std::vector<std::string> strings;
