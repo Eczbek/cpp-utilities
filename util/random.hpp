@@ -1,5 +1,5 @@
-#ifndef UTIL_RANDOM_H
-#define UTIL_RANDOM_H
+#ifndef UTIL_RANDOM_HPP
+#define UTIL_RANDOM_HPP
 
 namespace util {
 	namespace random {

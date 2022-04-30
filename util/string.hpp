@@ -1,5 +1,5 @@
-#ifndef UTIL_STRING_H
-#define UTIL_STRING_H
+#ifndef UTIL_STRING_HPP
+#define UTIL_STRING_HPP
 
 #include <vector>
 #include <string>

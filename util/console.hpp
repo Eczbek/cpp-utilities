@@ -1,5 +1,5 @@
-#ifndef UTIL_CONSOLE_H
-#define UTIL_CONSOLE_H
+#ifndef UTIL_CONSOLE_HPP
+#define UTIL_CONSOLE_HPP
 
 #include <iostream>
 #include <string>

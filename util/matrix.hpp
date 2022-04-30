@@ -1,3 +1,5 @@
+#ifndef UTIL_MATRIX_HPP
+#define UTIL_MATRIX_HPP
 
 #include <vector>
 #include <cassert>
@@ -36,3 +38,5 @@ class Matrix {
 			return values[index];
 		}
 };
+
+#endif

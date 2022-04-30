@@ -1,5 +1,5 @@
-#ifndef UITL_TIME_H
-#define UTIL_TIME_H
+#ifndef UITL_TIME_HPP
+#define UTIL_TIME_HPP
 
 #include <chrono>
 #include <string>

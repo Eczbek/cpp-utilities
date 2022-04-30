@@ -1,5 +1,5 @@
-#ifndef UTIL_ALGORITHM_H
-#define UTIL_ALGORITHM_H
+#ifndef UTIL_ALGORITHM_HPP
+#define UTIL_ALGORITHM_HPP
 
 #include <vector>
 

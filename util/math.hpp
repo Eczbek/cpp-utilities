@@ -1,5 +1,5 @@
-#ifndef UTIL_MATH_H
-#define UTIL_MATH_H
+#ifndef UTIL_MATH_HPP
+#define UTIL_MATH_HPP
 
 namespace util {
 	namespace math {
