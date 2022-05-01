@@ -1,9 +1,9 @@
-#ifndef UTIL_ALGORITHM_HPP
-#define UTIL_ALGORITHM_HPP
+#ifndef UTILITY_ALGORITHM_HPP
+#define UTILITY_ALGORITHM_HPP
 
 #include <vector>
 
-namespace util {
+namespace utility {
 	namespace algorithm {
 		template <typename T, class C>
 		int binarySearch (const std::vector<T>& sortedVector, const C& searchCallback) {

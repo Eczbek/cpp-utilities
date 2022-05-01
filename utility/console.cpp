@@ -4,11 +4,11 @@
 #include <termios.h>
 #include <unistd.h>
 
-void util::console::ignoreLine (char until) {
+void utility::console::ignoreLine (char until) {
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), until);
 }
 
-char util::console::getCharUnix (bool echo) {
+char utility::console::getCharUnix (bool echo) {
 	static struct termios cooked, raw;
 	tcgetattr(STDIN_FILENO, &cooked);
 	raw = cooked;

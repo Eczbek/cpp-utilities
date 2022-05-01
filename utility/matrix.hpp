@@ -1,5 +1,5 @@
-#ifndef UTIL_MATRIX_HPP
-#define UTIL_MATRIX_HPP
+#ifndef UTILITY_MATRIX_HPP
+#define UTILITY_MATRIX_HPP
 
 #include <vector>
 #include <cassert>

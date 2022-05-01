@@ -1,9 +1,9 @@
-#ifndef UTIL_FILE_HPP
-#define UTIL_FILE_HPP
+#ifndef UTILITY_FILE_HPP
+#define UTILITY_FILE_HPP
 
 #include <string>
 
-namespace util {
+namespace utility {
 	namespace file {
 		std::string read (const std::string& path);
 

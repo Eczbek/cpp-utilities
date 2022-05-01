@@ -1,7 +1,7 @@
 
 #include "./system.hpp"
 
-std::string util::system::name () {
+std::string utility::system::name () {
 #ifdef _WIN32
 	return "Windows 32-bit";
 #elif _WIN64

@@ -1,10 +1,10 @@
-#ifndef UTIL_STRING_HPP
-#define UTIL_STRING_HPP
+#ifndef UTILITY_STRING_HPP
+#define UTILITY_STRING_HPP
 
 #include <vector>
 #include <string>
 
-namespace util {
+namespace utility {
 	namespace string {
 		std::vector<std::string> split (std::string string, const std::string& delimiter);
 

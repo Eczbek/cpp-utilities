@@ -1,5 +1,5 @@
-#ifndef UTIL_CONSOLE_HPP
-#define UTIL_CONSOLE_HPP
+#ifndef UTILITY_CONSOLE_HPP
+#define UTILITY_CONSOLE_HPP
 
 #include <iostream>
 #include <string>
@@ -7,7 +7,7 @@
 
 #define CLR_SCRN "\033[2J\033[1;1H"
 
-namespace util {
+namespace utility {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
@@ -22,7 +22,7 @@ namespace util {
 				if (!std::cin.fail())
 					return result;
 				std::cin.clear();
-				util::console::ignoreLine();
+				utility::console::ignoreLine();
 			}
 			return defaultValue;
 		}

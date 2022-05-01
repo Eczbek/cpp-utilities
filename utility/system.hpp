@@ -1,9 +1,9 @@
-#ifndef UTIL_SYSTEM_HPP
-#define UTIL_SYSTEM_HPP
+#ifndef UTILITY_SYSTEM_HPP
+#define UTILITY_SYSTEM_HPP
 
 #include <string>
 
-namespace util {
+namespace utility {
 	namespace system {
 		std::string name ();
 	}
