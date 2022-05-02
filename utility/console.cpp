@@ -19,3 +19,7 @@ char utility::console::getCharUnix (bool echo) {
 	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
 	return result;
 }
+
+void utility::console::clearScreen () {
+	std::cout << "\033[2J\033[1;1H";
+}

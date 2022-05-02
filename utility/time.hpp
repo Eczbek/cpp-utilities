@@ -4,10 +4,10 @@
 #include <chrono>
 #include <string>
 
-#define HOURS_BEFORE_EPOCH 17268648
-
 namespace utility {
 	namespace time {
+		constexpr int HOURS_BEFORE_EPOCH = 17268648;
+
 		std::string MONTH_NAMES[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 		std::string WEEKDAY_NAMES[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 

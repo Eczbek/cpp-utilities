@@ -5,13 +5,13 @@
 #include <string>
 #include <vector>
 
-#define CLR_SCRN "\033[2J\033[1;1H"
-
 namespace utility {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
 		char getCharUnix (bool echo = true);
+
+		void clearScreen ();
 
 		template <typename T = std::string>
 		T prompt (const std::vector<std::string>& messages, T defaultValue = T()) {

@@ -1,7 +1,5 @@
 #ifndef UTILITY_MATH_HPP
 #define UTILITY_MATH_HPP
-
-#define M_TAU 6.28318530717958647692
 	
 namespace utility {
 	namespace math {
