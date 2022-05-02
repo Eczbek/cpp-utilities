@@ -2,14 +2,15 @@
 #define UTILITY_TIME_HPP
 
 #include <chrono>
-#include <string>
+#include <string_view>
+#include <array>
 
 namespace utility {
 	namespace time {
 		constexpr int HOURS_BEFORE_EPOCH = 17268648;
 
-		std::string MONTH_NAMES[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-		std::string WEEKDAY_NAMES[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+		constexpr std::array<std::string_view, 12> MONTH_NAMES { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+		constexpr std::array<std::string_view, 7> WEEKDAY_NAMES { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
 		template <typename T = std::chrono::milliseconds>
 		long now () {
