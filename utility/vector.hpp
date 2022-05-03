@@ -46,6 +46,37 @@ namespace utility {
 			}
 			return result;
 		}
+
+		template <typename T>
+		int indexOfSubvector (const std::vector<T>& vector, const std::vector<T>& subvector, bool wrap = false) {
+			const int vectorSize = vector.size();
+			const int subvectorSize = subvector.size();
+			for (int i = 0; i < vectorSize; ++i) {
+				int j = 0;
+				for (; j < subvectorSize; ++j)
+					if (!wrap && i + j >= vectorSize || vector[(i + j) % vectorSize] != subvector[j])
+						break;
+				if (j == subvectorSize)
+					return i;
+			}
+			return -1;
+		}
+
+		template <typename T>
+		std::vector<int> indicesOfSubvector (const std::vector<T>& vector, const std::vector<T>& subvector, bool wrap = false) {
+			std::vector<int> result;
+			const int vectorSize = vector.size();
+			const int subvectorSize = subvector.size();
+			for (int i = 0; i < vectorSize; ++i) {
+				int j = 0;
+				for (; j < subvectorSize; ++j)
+					if (!wrap && i + j >= vectorSize || vector[(i + j) % vectorSize] != subvector[j])
+						break;
+				if (j == subvectorSize)
+					result.push_back(i);
+			}
+			return result;
+		}
 	}
 }
 
