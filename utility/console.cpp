@@ -9,14 +9,14 @@ void utility::console::ignoreLine (char until) {
 }
 
 char utility::console::getCharUnix (bool echo) {
-	static struct termios cooked, raw;
-	tcgetattr(STDIN_FILENO, &cooked);
-	raw = cooked;
-	raw.c_lflag &= ~(ICANON | (echo ? 0 : ECHO));
+	static struct termios termiosCooked, termiosRaw;
+	tcgetattr(STDIN_FILENO, &termiosCooked);
+	termiosRaw = termiosCooked;
+	termiosRaw.c_lflag &= ~(ICANON | (echo ? 0 : ECHO));
 
-	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+	tcsetattr(STDIN_FILENO, TCSANOW, &termiosRaw);
 	char result = getchar();
-	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
+	tcsetattr(STDIN_FILENO, TCSANOW, &termiosCooked);
 	return result;
 }
 
