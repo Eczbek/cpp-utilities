@@ -15,7 +15,7 @@ char utility::console::getCharUnix (bool echo) {
 	termiosRaw.c_lflag &= ~(ICANON | (echo ? 0 : ECHO));
 
 	tcsetattr(STDIN_FILENO, TCSANOW, &termiosRaw);
-	char result = getchar();
+	const char result = getchar();
 	tcsetattr(STDIN_FILENO, TCSANOW, &termiosCooked);
 	return result;
 }
