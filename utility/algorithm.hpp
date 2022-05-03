@@ -1,6 +1,7 @@
 #ifndef UTILITY_ALGORITHM_HPP
 #define UTILITY_ALGORITHM_HPP
 
+#include "./random.hpp"
 #include <vector>
 
 namespace utility {
@@ -9,9 +10,11 @@ namespace utility {
 		int binarySearch (const std::vector<T>& sortedVector, const C& searchCallback) {
 			int left = 0;
 			int right = sortedVector.size();
+			int middle;
+			int check;
 			while (true) {
-				int middle = (right - left) / 2 + left;
-				int check = searchCallback(sortedVector[middle]);
+				middle = (right - left) / 2 + left;
+				check = searchCallback(sortedVector[middle]);
 				if (!check)
 					return middle;
 				if (right - left < 2)
@@ -25,7 +28,7 @@ namespace utility {
 
 		template <typename T, class C>
 		std::vector<T> mergeSort (const std::vector<T>& vector, const C& sortCallback) {
-			int middle = vector.size() / 2;
+			const int middle = vector.size() / 2;
 			if (!middle)
 				return vector;
 			std::vector<T> left = mergeSort(std::vector<T>(vector.begin(), vector.begin() + middle), sortCallback);
@@ -41,6 +44,18 @@ namespace utility {
 				}
 			result.insert(result.end(), left.begin(), left.end());
 			result.insert(result.end(), right.begin(), right.end());
+			return result;
+		}
+
+		template <typename T>
+		std::vector<T> fisherYatesShuffle (const std::vector<T>& vector) {
+			std::vector<T> result = vector;
+			for (int i = result.size() - 1; i > 0; --i) {
+				const int j = utility::random::mt32(i);
+				const T temp = result[i];
+				result[i] = result[j];
+				result[j] = temp;
+			}
 			return result;
 		}
 	}
