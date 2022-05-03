@@ -1,5 +1,5 @@
-#ifndef UTIL_THREAD_HPP
-#define UTIL_THREAD_HPP
+#ifndef UTILITY_THREAD_HPP
+#define UTILITY_THREAD_HPP
 
 #include <chrono>
 #include <thread>
