@@ -2,7 +2,7 @@
 #include "./system.hpp"
 
 // from https://sourceforge.net/p/predef/wiki/OperatingSystems/
-std::string utility::system::name () {
+std::string_view utility::system::name () {
 #ifdef _AIX || __TOS_AIX__
 	return "AIX";
 #elif __ANDROID__

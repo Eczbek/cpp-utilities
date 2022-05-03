@@ -1,11 +1,11 @@
 #ifndef UTILITY_SYSTEM_HPP
 #define UTILITY_SYSTEM_HPP
 
-#include <string>
+#include <string_view>
 
 namespace utility {
 	namespace system {
-		std::string name ();
+		std::string_view name ();
 	}
 }
 
