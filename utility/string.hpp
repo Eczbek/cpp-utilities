@@ -7,9 +7,9 @@
 
 namespace utility {
 	namespace string {
-		std::vector<std::string_view> split (std::string string, const std::string_view& delimiter);
+		std::vector<std::string_view> split (std::string_view string, const std::string_view& delimiter);
 
-		std::vector<std::string_view> split (std::string string, char delimiter);
+		std::vector<std::string_view> split (std::string_view string, char delimiter);
 	}
 }
 
