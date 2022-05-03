@@ -3,7 +3,11 @@
 #include <cmath>
 
 double utility::math::clamp (double value, double max, double min) {
-	return std::fmin(std::fmax(value, min), max);
+	return value > max
+		? max
+		: value < min
+			? min
+			: value;
 }
 
 double utility::math::lerp (double value, double max, double min) {
@@ -30,11 +34,7 @@ bool utility::math::approxEqual (double value1, double value2, double absoluteEp
 }
 
 int utility::math::sign (double value) {
-	return value > 0
-		? 1
-		: value < 0
-			? -1
-			: 0;
+	return utility::math::clamp(value, 1, -1);
 }
 
 double utility::math::radiansToDegrees (double radians) {
