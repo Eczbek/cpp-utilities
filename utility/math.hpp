@@ -11,7 +11,7 @@ namespace utility {
 
 		double wrap (double value, double max, double min = 0);
 
-		double round (double value, double interval);
+		double round (double value, double interval = 1);
 
 		bool approxEqual (double value1, double value2, double absoluteEpsilon = 1e-12, double relativeEpsilon = 1e-8);
 
