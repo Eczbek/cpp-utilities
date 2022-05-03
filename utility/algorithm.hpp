@@ -46,7 +46,7 @@ namespace utility {
 		}
 
 		template <typename T>
-		std::vector<T> fisherYatesShuffle (std::vector<T> vector) {
+		std::vector<T> shuffle (std::vector<T> vector) {
 			for (int i = vector.size() - 1; i > 0; --i) {
 				const int j = utility::random::mt32(i);
 				const T temp = vector[i];
