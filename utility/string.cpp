@@ -1,8 +1,8 @@
 
 #include "./string.hpp"
 
-std::vector<std::string> utility::string::split (std::string string, const std::string& delimiter) {
-	std::vector<std::string> strings;
+std::vector<std::string_view> utility::string::split (std::string string, const std::string_view& delimiter) {
+	std::vector<std::string_view> strings;
 	int stringLength = string.length();
 	int delimiterLength = delimiter.length();
 	for (int i = stringLength > 1; i < stringLength; ++i)
@@ -15,8 +15,8 @@ std::vector<std::string> utility::string::split (std::string string, const std::
 	return strings;
 }
 
-std::vector<std::string> utility::string::split (std::string string, char delimiter) {
-	std::vector<std::string> strings;
+std::vector<std::string_view> utility::string::split (std::string string, char delimiter) {
+	std::vector<std::string_view> strings;
 	int stringLength = string.length();
 	for (int i = stringLength > 1; i < stringLength; ++i)
 		if (string[i] == delimiter) {
