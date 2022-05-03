@@ -6,8 +6,8 @@
 
 namespace utility {
 	namespace algorithm {
-		template <typename T, class C>
-		int binarySearch (const std::vector<T>& sortedVector, const C& searchCallback) {
+		template <typename VectorType, class LambdaType>
+		int binarySearch (const std::vector<VectorType>& sortedVector, const LambdaType& searchCallback) {
 			int left = 0;
 			int right = sortedVector.size();
 			while (true) {
@@ -24,14 +24,14 @@ namespace utility {
 			}
 		}
 
-		template <typename T, class C>
-		std::vector<T> mergeSort (const std::vector<T>& vector, const C& sortCallback) {
+		template <typename VectorType, class LambdaType>
+		std::vector<VectorType> mergeSort (const std::vector<VectorType>& vector, const LambdaType& sortCallback) {
 			const int middle = vector.size() / 2;
 			if (!middle)
 				return vector;
-			std::vector<T> left = mergeSort(std::vector<T>(vector.begin(), vector.begin() + middle), sortCallback);
-			std::vector<T> right = mergeSort(std::vector<T>(vector.begin() + middle, vector.end()), sortCallback);
-			std::vector<T> result;
+			std::vector<VectorType> left = mergeSort(std::vector<VectorType>(vector.begin(), vector.begin() + middle), sortCallback);
+			std::vector<VectorType> right = mergeSort(std::vector<VectorType>(vector.begin() + middle, vector.end()), sortCallback);
+			std::vector<VectorType> result;
 			while (left.size() && right.size())
 				if (sortCallback(right[0], left[0])) {
 					result.push_back(right[0]);
@@ -45,11 +45,11 @@ namespace utility {
 			return result;
 		}
 
-		template <typename T>
-		std::vector<T> shuffle (std::vector<T> vector) {
+		template <typename VectorType>
+		std::vector<VectorType> shuffle (std::vector<VectorType> vector) {
 			for (int i = vector.size() - 1; i > 0; --i) {
 				const int j = utility::random::mt32(i);
-				const T temp = vector[i];
+				const VectorType temp = vector[i];
 				vector[i] = vector[j];
 				vector[j] = temp;
 			}

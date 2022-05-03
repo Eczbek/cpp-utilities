@@ -6,9 +6,9 @@
 
 namespace utility {
 	namespace thread {
-		template <typename T = std::chrono::milliseconds>
+		template <typename DurationType = std::chrono::milliseconds>
 		void sleep (int timeout) {
-			std::this_thread::sleep_for(T(timeout));
+			std::this_thread::sleep_for(DurationType(timeout));
 		}
 	}
 }
