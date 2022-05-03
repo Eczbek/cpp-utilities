@@ -1,5 +1,5 @@
-#ifndef UTIL_VECTOR_H
-#define UTIL_VECTOR_H
+#ifndef UTIL_VECTOR_HPP
+#define UTIL_VECTOR_HPP
 
 #include <vector>
 #include <cmath>
