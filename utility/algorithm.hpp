@@ -10,11 +10,9 @@ namespace utility {
 		int binarySearch (const std::vector<T>& sortedVector, const C& searchCallback) {
 			int left = 0;
 			int right = sortedVector.size();
-			int middle;
-			int check;
 			while (true) {
-				middle = (right - left) / 2 + left;
-				check = searchCallback(sortedVector[middle]);
+				const int middle = (right - left) / 2 + left;
+				const int check = searchCallback(sortedVector[middle]);
 				if (!check)
 					return middle;
 				if (right - left < 2)
