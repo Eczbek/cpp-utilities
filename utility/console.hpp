@@ -12,6 +12,25 @@ namespace utility {
 
 		char getCharUnix (bool echo = true);
 
+		template <typename StringType = std::string>
+		StringType getLineUnix (int characters) {
+			StringType line;
+			for (int i = 0; i < characters; ++i)
+				line += utility::console::getCharUnix(true);
+			return line;
+		}
+
+		template <typename StringType = std::string>
+		StringType getLineUnix (char until) {
+			StringType line;
+			while (true) {
+				char input = utility::console::getCharUnix(true);
+				if (input == until)
+					return line;
+				line += input;
+			}
+		}
+
 		void clearScreen ();
 
 		template <typename T = std::string>
