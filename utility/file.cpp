@@ -1,4 +1,3 @@
-
 #include "./file.hpp"
 
 std::string utility::file::read (const std::string& path) {
