@@ -1,9 +1,6 @@
 #include "./console.hpp"
 
 #include <limits>
-#include <termios.h>
-#include <unistd.h>
-#include <fcntl.h>
 
 void utility::console::ignoreLine (char until) {
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), until);
@@ -14,7 +11,7 @@ void utility::console::clearScreen () {
 }
 
 char utility::console::waitChar (bool echo) {
-	static struct termios cooked, raw;
+	struct termios cooked, raw;
 	tcgetattr(STDIN_FILENO, &cooked);
 	raw = cooked;
 	raw.c_lflag &= ~ICANON;
@@ -26,13 +23,15 @@ char utility::console::waitChar (bool echo) {
 }
 
 char utility::console::readChar (bool echo) {
-	static struct termios raw;
-	tcgetattr(STDIN_FILENO, &raw);
+	struct termios cooked, raw;
+	tcgetattr(STDIN_FILENO, &cooked);
+	raw = cooked;
 	raw.c_lflag &= ~ICANON;
 	raw.c_lflag &= echo ? ECHO : ~ECHO;
 	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 	char input = 0;
 	read(STDIN_FILENO, &input, 1);
+	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
 	return input;
 }
