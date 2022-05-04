@@ -3,40 +3,22 @@
 
 #include <iostream>
 #include <string>
-#include <string_view>
 #include <vector>
 
 namespace utility {
 	namespace console {
 		void ignoreLine (char until = '\n');
 
-		char getCharUnix (bool echo = true);
-
-		template <typename StringType = std::string>
-		StringType getLineUnix (int characters) {
-			StringType line;
-			for (int i = 0; i < characters; ++i)
-				line += utility::console::getCharUnix(true);
-			return line;
-		}
-
-		template <typename StringType = std::string>
-		StringType getLineUnix (char until) {
-			StringType line;
-			while (true) {
-				char input = utility::console::getCharUnix(true);
-				if (input == until)
-					return line;
-				line += input;
-			}
-		}
-
 		void clearScreen ();
 
-		template <typename T = std::string>
-		T prompt (const std::vector<const std::string_view&>& messages, T defaultValue = T()) {
-			T result;
-			for (const std::string_view& message : messages) {
+		char waitChar (bool echo = true);
+
+		char readChar (bool echo = true);
+
+		template <typename InputType, typename MessageType = std::string>
+		InputType prompt (const std::vector<const MessageType&>& messages, const InputType& defaultValue = InputType()) {
+			InputType result;
+			for (const MessageType& message : messages) {
 				std::cout << message;
 				std::cin >> result;
 				if (!std::cin.fail())
