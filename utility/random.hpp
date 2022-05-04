@@ -1,5 +1,4 @@
-#ifndef UTILITY_RANDOM_HPP
-#define UTILITY_RANDOM_HPP
+#pragma once
 
 namespace utility {
 	namespace random {
@@ -8,5 +7,3 @@ namespace utility {
 		double mt64 (double max, double min = 0, bool inclusive = false);
 	}
 }
-
-#endif

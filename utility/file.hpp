@@ -1,5 +1,4 @@
-#ifndef UTILITY_FILE_HPP
-#define UTILITY_FILE_HPP
+#pragma once
 
 #include <string>
 #include <string_view>
@@ -17,5 +16,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

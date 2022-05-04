@@ -1,5 +1,4 @@
-#ifndef UTILITY_VECTOR_HPP
-#define UTILITY_VECTOR_HPP
+#pragma once
 
 #include <vector>
 #include <cmath>
@@ -78,5 +77,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

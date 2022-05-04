@@ -1,5 +1,4 @@
-#ifndef UTILITY_ALGORITHM_HPP
-#define UTILITY_ALGORITHM_HPP
+#pragma once
 
 #include "./random.hpp"
 #include <vector>
@@ -57,5 +56,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

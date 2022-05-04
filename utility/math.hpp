@@ -1,5 +1,4 @@
-#ifndef UTILITY_MATH_HPP
-#define UTILITY_MATH_HPP
+#pragma once
 	
 namespace utility {
 	namespace math {
@@ -22,5 +21,3 @@ namespace utility {
 		double degreesToRadians (double degrees);
 	}
 }
-
-#endif

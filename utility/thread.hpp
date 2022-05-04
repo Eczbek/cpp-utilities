@@ -1,5 +1,4 @@
-#ifndef UTILITY_THREAD_HPP
-#define UTILITY_THREAD_HPP
+#pragma once
 
 #include <chrono>
 #include <thread>
@@ -12,5 +11,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

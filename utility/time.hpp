@@ -1,5 +1,4 @@
-#ifndef UTILITY_TIME_HPP
-#define UTILITY_TIME_HPP
+#pragma once
 
 #include <chrono>
 #include <string_view>
@@ -18,5 +17,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

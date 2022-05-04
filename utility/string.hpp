@@ -1,5 +1,4 @@
-#ifndef UTILITY_STRING_HPP
-#define UTILITY_STRING_HPP
+#pragma once
 
 #include <string_view>
 #include <vector>
@@ -34,5 +33,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif

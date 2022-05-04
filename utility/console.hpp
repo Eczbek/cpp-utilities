@@ -1,5 +1,4 @@
-#ifndef UTILITY_CONSOLE_HPP
-#define UTILITY_CONSOLE_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -30,5 +29,3 @@ namespace utility {
 		}
 	}
 }
-
-#endif
