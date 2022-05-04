@@ -19,7 +19,7 @@ namespace utility {
 
 		char readChar (bool echo = true);
 
-		template <typename DurationType = std::chrono::milliseconds>
+		template <typename DurationType>
 		char readCharTimeout (DurationType timeout, bool echo = true) {
 			struct termios cooked, raw;
 			tcgetattr(STDIN_FILENO, &cooked);
@@ -28,21 +28,11 @@ namespace utility {
 			raw.c_lflag &= echo ? ECHO : ~ECHO;
 			tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 			fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
-			bool stop = false;
-			char result;
-			std::thread inputThread([&stop, &result]() {
-				while (!stop) {
-					char input = 0;
-					read(STDIN_FILENO, &input, 1);
-					if (input)
-						result = input;
-				}
-			});
 			std::this_thread::sleep_for(timeout);
-			stop = true;
-			inputThread.join();
+			char input;
+			while (read(STDIN_FILENO, &input, 1) == 1);
 			tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
-			return result;
+			return input;
 		}
 
 		template <typename InputType, typename MessageType = std::string>
