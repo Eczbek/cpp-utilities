@@ -17,12 +17,12 @@ namespace utility {
 
 		template <typename InputType, typename MessageType = std::string>
 		InputType prompt (const std::vector<const MessageType&>& messages, const InputType& defaultValue = InputType()) {
-			InputType result;
+			InputType input;
 			for (const MessageType& message : messages) {
 				std::cout << message;
-				std::cin >> result;
+				std::cin >> input;
 				if (!std::cin.fail())
-					return result;
+					return input;
 				std::cin.clear();
 				utility::console::ignoreLine();
 			}

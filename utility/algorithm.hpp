@@ -31,17 +31,17 @@ namespace utility {
 				return vector;
 			std::vector<VectorType> left = mergeSort(std::vector<VectorType>(vector.begin(), vector.begin() + middle), sortCallback);
 			std::vector<VectorType> right = mergeSort(std::vector<VectorType>(vector.begin() + middle, vector.end()), sortCallback);
-			std::vector<VectorType> result;
+			std::vector<VectorType> sorted;
 			while (left.size() && right.size())
 				if (sortCallback(right[0], left[0])) {
-					result.push_back(right[0]);
+					sorted.push_back(right[0]);
 					right.erase(right.begin());
 				} else {
-					result.push_back(left[0]);
+					sorted.push_back(left[0]);
 					left.erase(left.begin());
 				}
-			result.insert(result.end(), left.begin(), left.end());
-			result.insert(result.end(), right.begin(), right.end());
+			sorted.insert(sorted.end(), left.begin(), left.end());
+			sorted.insert(sorted.end(), right.begin(), right.end());
 			return result;
 		}
 
