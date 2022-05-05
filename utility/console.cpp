@@ -11,7 +11,7 @@ void utility::console::clearScreen () {
 }
 
 char utility::console::waitChar (bool echo) {
-	struct termios cooked, raw;
+	termios cooked, raw;
 	tcgetattr(STDIN_FILENO, &cooked);
 	raw = cooked;
 	raw.c_lflag &= ~ICANON;
@@ -23,7 +23,7 @@ char utility::console::waitChar (bool echo) {
 }
 
 char utility::console::readChar (bool echo) {
-	struct termios cooked, raw;
+	termios cooked, raw;
 	tcgetattr(STDIN_FILENO, &cooked);
 	raw = cooked;
 	raw.c_lflag &= ~ICANON;

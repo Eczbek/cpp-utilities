@@ -21,7 +21,7 @@ namespace utility {
 
 		template <typename DurationType>
 		char readCharTimeout (const DurationType& timeout, char defaultChar = 0, bool echo = true) {
-			struct termios cooked, raw;
+			termios cooked, raw;
 			tcgetattr(STDIN_FILENO, &cooked);
 			raw = cooked;
 			raw.c_lflag &= ~ICANON;
