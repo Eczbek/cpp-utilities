@@ -1,25 +1,24 @@
 #pragma once
 
-#include "./random.hpp"
 #include <vector>
+#include <random>
 
 namespace utility {
 	namespace algorithm {
-		template <typename VectorType, class LambdaType>
-		int binarySearch (const std::vector<VectorType>& sortedVector, const LambdaType& searchCallback) {
-			int left = 0;
-			int right = sortedVector.size();
+		template <typename IteratorType, class LambdaType>
+		int binarySearch (IteratorType begin, IteratorType end, const LambdaType& searchCallback) {
+			const IteratorType start = begin;
 			while (true) {
-				const int middle = (right - left) / 2 + left;
-				const int check = searchCallback(sortedVector[middle]);
+				const IteratorType middle = begin + (end - begin) / 2;
+				const int check = searchCallback(*middle);
 				if (!check)
-					return middle;
-				if (right - left < 2)
+					return std::distance(start, middle);
+				if (end - begin < 2)
 					return -1;
 				if (check < 0)
-					left = middle + 1;
+					begin = middle + 1;
 				else
-					right = middle;
+					end = middle;
 			}
 		}
 
@@ -41,13 +40,14 @@ namespace utility {
 				}
 			sorted.insert(sorted.end(), left.begin(), left.end());
 			sorted.insert(sorted.end(), right.begin(), right.end());
-			return result;
+			return sorted;
 		}
 
 		template <typename VectorType>
 		std::vector<VectorType> shuffle (std::vector<VectorType> vector) {
+			std::mt19937 rng32 (std::random_device{}());
 			for (int i = vector.size() - 1; i > 0; --i) {
-				const int j = utility::random::mt32(i);
+				const int j = std::uniform_int_distribution<>(0, i)(rng32);
 				const VectorType temp = vector[i];
 				vector[i] = vector[j];
 				vector[j] = temp;
