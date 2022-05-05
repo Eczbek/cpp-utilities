@@ -20,7 +20,7 @@ namespace utility {
 		char readChar (bool echo = true);
 
 		template <typename DurationType>
-		char readCharTimeout (DurationType timeout, bool echo = true) {
+		char readCharTimeout (const DurationType& timeout, char defaultChar = 0, bool echo = true) {
 			struct termios cooked, raw;
 			tcgetattr(STDIN_FILENO, &cooked);
 			raw = cooked;
@@ -29,7 +29,7 @@ namespace utility {
 			tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 			fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 			std::this_thread::sleep_for(timeout);
-			char input;
+			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1);
 			tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
 			return input;
