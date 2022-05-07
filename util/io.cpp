@@ -19,22 +19,22 @@ void util::io::nonblock () {
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 }
 
-void util::io::ignr () {
+void util::io::ignore (char until) {
 	util::io::nonblock();
 	char temp;
-	while (read(STDIN_FILENO, &temp, 1) == 1);
+	while (temp != until && read(STDIN_FILENO, &temp, 1) == 1);
 }
 
 void util::io::clr_scrn () {
 	std::cout << "\033[2J\033[1;1H";
 }
 
-char util::io::char_wait (const bool echo = true) {
+char util::io::wait_char (const bool echo = true) {
 	util::io::raw lock(echo);
 	return getchar();
 }
 
-char util::io::char_read (const bool echo = true, const int defaultChar = 0) {
+char util::io::read_char (const bool echo = true, const int defaultChar = 0) {
 	util::io::raw lock(echo);
 	util::io::nonblock();
 	char input = defaultChar;

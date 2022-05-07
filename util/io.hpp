@@ -18,16 +18,16 @@ namespace util {
 
 		void nonblock ();
 
-		void ignr ();
+		void ignore (char until = 0);
 
 		void clr_scrn ();
 
-		char char_wait ();
+		char wait_char ();
 
-		char char_read ();
+		char read_char ();
 
 		template <typename DurationType>
-		char char_read_timeout (const DurationType& timeout, const bool echo = true, const char defaultChar = 0) {
+		char read_char_timeout (const DurationType timeout, const bool echo = true, const char defaultChar = 0) {
 			util::io::raw lock(echo);
 			util::io::nonblock();
 			std::this_thread::sleep_for(timeout);
