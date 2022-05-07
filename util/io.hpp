@@ -11,7 +11,7 @@ namespace util {
 				termios cooked;
 
 			public:
-				raw ();
+				raw (const bool echo = true);
 
 				~raw ();
 		};
@@ -27,8 +27,8 @@ namespace util {
 		char char_read ();
 
 		template <typename DurationType>
-		char char_read_timeout (const DurationType& timeout, const char defaultChar = 0) {
-			util::io::raw();
+		char char_read_timeout (const DurationType& timeout, const bool echo = true, const char defaultChar = 0) {
+			util::io::raw lock(echo);
 			util::io::nonblock();
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
