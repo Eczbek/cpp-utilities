@@ -1,4 +1,6 @@
 #pragma once
+
+#include <cmath>
 	
 namespace util {
 	namespace math {
