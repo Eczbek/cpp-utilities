@@ -5,17 +5,17 @@
 namespace util {
 	namespace alg {
 		template <typename IteratorType, class LambdaType>
-		int bin_srch (IteratorType begin, IteratorType end, const LambdaType& searchCallback) {
-			const IteratorType temp = begin;
+		IteratorType bin_srch (IteratorType begin, IteratorType end, const LambdaType& searchCallback) {
+			const IteratorType temp = end;
 			while (true) {
 				IteratorType middle = begin;
 				const int distance = std::distance(begin, end);
 				std::advance(middle, distance / 2);
-				const int check = searchCallback(*middle);
+				const int check = searchCallback(middle);
 				if (!check)
-					return std::distance(temp, middle);
+					return middle;
 				if (distance < 2)
-					return -1;
+					return temp;
 				if (check < 0)
 					begin = ++middle;
 				else
