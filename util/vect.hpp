@@ -19,8 +19,8 @@ namespace util {
 			}
 		}
 
-		template <typename VectorType, class LambdaType>
-		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const LambdaType& chunkCallback, bool overflow = true) {
+		template <typename VectorType, class CallbackType>
+		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const CallbackType& chunkCallback, bool overflow = true) {
 			std::vector<std::vector<VectorType>> chunked;
 			while (true) {
 				const int chunkSize = chunkCallback(chunked.size());
@@ -32,8 +32,8 @@ namespace util {
 			}
 		}
 
-		template <typename StringType = std::string, typename VectorType, class LambdaType>
-		std::unordered_map<StringType, std::vector<VectorType>> group (const std::vector<VectorType>& vector, const LambdaType& groupCallback) {
+		template <typename StringType = std::string, typename VectorType, class CallbackType>
+		std::unordered_map<StringType, std::vector<VectorType>> group (const std::vector<VectorType>& vector, const CallbackType& groupCallback) {
 			std::unordered_map<StringType, std::vector<VectorType>> grouped;
 			for (int i = 0; i < vector.size(); ++i) {
 				const StringType group = groupCallback(vector[i], i);

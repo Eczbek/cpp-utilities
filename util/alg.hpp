@@ -5,8 +5,8 @@
 
 namespace util {
 	namespace alg {
-		template <typename IteratorType, class LambdaType>
-		IteratorType bin_srch (IteratorType begin, IteratorType end, const LambdaType& searchCallback) {
+		template <typename IteratorType, class CallbackType>
+		IteratorType bin_srch (IteratorType begin, IteratorType end, const CallbackType& searchCallback) {
 			const IteratorType temp = end;
 			while (true) {
 				IteratorType middle = begin;
