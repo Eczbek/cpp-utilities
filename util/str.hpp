@@ -3,8 +3,8 @@
 #include <string_view>
 #include <vector>
 
-namespace utility {
-	namespace string {
+namespace util {
+	namespace str {
 		template <typename StringType = std::string>
 		std::vector<StringType> split (StringType string, const StringType& delimiter) {
 			std::vector<StringType> segments;

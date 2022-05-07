@@ -5,8 +5,8 @@
 #include <string_view>
 #include <unordered_map>
 
-namespace utility {
-	namespace vector {
+namespace util {
+	namespace vect {
 		template <typename VectorType>
 		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, int chunkSize, bool overflow = true) {
 			std::vector<std::vector<VectorType>> chunked;
@@ -43,37 +43,6 @@ namespace utility {
 					grouped.insert({ { group, std::vector<VectorType> { vector[i] } } });
 			}
 			return grouped;
-		}
-
-		template <typename VectorType>
-		int indexOfSubvector (const std::vector<VectorType>& vector, const std::vector<VectorType>& subvector, bool wrap = false) {
-			const int vectorSize = vector.size();
-			const int subvectorSize = subvector.size();
-			for (int i = 0; i < vectorSize; ++i) {
-				int j = 0;
-				for (; j < subvectorSize; ++j)
-					if (!wrap && i + j >= vectorSize || vector[(i + j) % vectorSize] != subvector[j])
-						break;
-				if (j == subvectorSize)
-					return i;
-			}
-			return -1;
-		}
-
-		template <typename VectorType>
-		std::vector<int> indicesOfSubvector (const std::vector<VectorType>& vector, const std::vector<VectorType>& subvector, bool wrap = false) {
-			std::vector<int> indices;
-			const int vectorSize = vector.size();
-			const int subvectorSize = subvector.size();
-			for (int i = 0; i < vectorSize; ++i) {
-				int j = 0;
-				for (; j < subvectorSize; ++j)
-					if (!wrap && i + j >= vectorSize || vector[(i + j) % vectorSize] != subvector[j])
-						break;
-				if (j == subvectorSize)
-					indices.push_back(i);
-			}
-			return indices;
 		}
 	}
 }

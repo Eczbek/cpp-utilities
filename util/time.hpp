@@ -4,7 +4,7 @@
 #include <string_view>
 #include <array>
 
-namespace utility {
+namespace util {
 	namespace time {
 		constexpr int HOURS_BEFORE_EPOCH = 17268648;
 

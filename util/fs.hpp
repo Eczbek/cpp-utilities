@@ -4,8 +4,8 @@
 #include <string_view>
 #include <fstream>
 
-namespace utility {
-	namespace file {
+namespace util {
+	namespace fs {
 		std::string read (const std::string& path);
 		
 		template <typename DataType = std::string_view>
