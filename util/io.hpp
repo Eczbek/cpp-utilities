@@ -10,8 +10,8 @@
 #include <iostream>
 
 namespace util {
-	namespace term {
-		void ign_line (char until = '\n');
+	namespace io {
+		void ignr ();
 
 		void clr_scrn ();
 
