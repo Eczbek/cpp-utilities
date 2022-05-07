@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./math.hpp"
 #include <random>
 
 namespace util {
@@ -9,12 +10,12 @@ namespace util {
 			const IteratorType temp = end;
 			while (true) {
 				IteratorType middle = begin;
-				const int distance = std::distance(begin, end);
-				std::advance(middle, distance / 2);
-				const int check = searchCallback(middle);
+				const auto size = std::distance(begin, end);
+				std::advance(middle, size / 2);
+				const int check = util::math::sign(searchCallback(*middle));
 				if (!check)
 					return middle;
-				if (distance < 2)
+				if (size < 2)
 					return temp;
 				if (check < 0)
 					begin = ++middle;
