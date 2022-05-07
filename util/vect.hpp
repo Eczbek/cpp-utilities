@@ -32,11 +32,11 @@ namespace util {
 			}
 		}
 
-		template <typename VectorType, class LambdaType>
-		std::unordered_map<std::string_view, std::vector<VectorType>> group (const std::vector<VectorType>& vector, const LambdaType& groupCallback) {
-			std::unordered_map<std::string_view, std::vector<VectorType>> grouped;
+		template <typename StringType = std::string, typename VectorType, class LambdaType>
+		std::unordered_map<StringType, std::vector<VectorType>> group (const std::vector<VectorType>& vector, const LambdaType& groupCallback) {
+			std::unordered_map<StringType, std::vector<VectorType>> grouped;
 			for (int i = 0; i < vector.size(); ++i) {
-				const std::string_view group = groupCallback(vector[i], i);
+				const StringType group = groupCallback(vector[i], i);
 				if (grouped.contains(group))
 					grouped.at(group).push_back(vector[i]);
 				else
