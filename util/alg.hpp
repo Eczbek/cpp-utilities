@@ -24,12 +24,11 @@ namespace util {
 			}
 		}
 
-		template <typename IteratorType>
-		void shuffle (IteratorType begin, const IteratorType end) {
-			std::mt19937 rng32 (std::random_device{}());
+		template <typename IteratorType, typename RandomGeneratorType>
+		void shuffle (IteratorType begin, const IteratorType end, RandomGeneratorType randomGenerator) {
 			for (auto size = std::distance(begin, end); begin != end; ++begin) {
 				IteratorType temp = begin;
-				std::advance(temp, std::uniform_int_distribution<>(0, --size)(rng32));
+				std::advance(temp, std::uniform_int_distribution<>(0, --size)(randomGenerator));
 				std::swap(*temp, *begin);
 			}
 		}
