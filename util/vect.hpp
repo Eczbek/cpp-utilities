@@ -41,5 +41,29 @@ namespace util {
 				groups[getGroup(values[i], i)].push_back(values[i]);
 			return groups;
 		}
+
+		template <typename VectorType>
+		std::vector<std::vector<VectorType>> rotate_cw (const std::vector<std::vector<VectorType>>& values) {
+			std::vector<std::vector<VectorType>> rotated;
+			for (int y = 0; y < values[0].size(); ++y) {
+				std::vector<VectorType> row;
+				for (int x = values.size() - 1; x >= 0; --x)
+					row.push_back(values[x][y]);
+				rotated.push_back(row);
+			}
+			return rotated;
+		}
+
+		template <typename VectorType>
+		std::vector<std::vector<VectorType>> rotate_ccw (const std::vector<std::vector<VectorType>>& values) {
+			std::vector<std::vector<VectorType>> rotated;
+			for (int y = values[0].size() - 1; y >= 0; --y) {
+				std::vector<VectorType> row;
+				for (int x = 0; x < values.size(); ++x)
+					row.push_back(values[x][y]);
+				rotated.push_back(row);
+			}
+			return rotated;
+		}
 	}
 }
