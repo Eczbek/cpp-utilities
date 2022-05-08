@@ -33,7 +33,7 @@ namespace util {
 		}
 
 		template <typename NumberType>
-		std::string to_base (NumberType value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		std::string to_base (const int base, NumberType value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -43,7 +43,7 @@ namespace util {
 		}
 
 		template <typename NumberType = int>
-		NumberType from_base (const std::string& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		NumberType from_base (const int base, const std::string& value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			NumberType result = 0;
 			for (int i = value.length() - 1; i >= 0; --i)
 				for (int index = 0; digits[index]; ++index)
