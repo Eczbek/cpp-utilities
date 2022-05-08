@@ -6,13 +6,13 @@
 namespace util {
 	namespace alg {
 		template <typename IteratorType, class CallbackType>
-		IteratorType bin_srch (IteratorType begin, IteratorType end, const CallbackType& searchCallback) {
+		IteratorType bin_srch (IteratorType begin, IteratorType end, const CallbackType& getSearchDirection) {
 			const IteratorType temp = end;
 			while (true) {
 				IteratorType middle = begin;
 				const auto size = std::distance(begin, end);
 				std::advance(middle, size / 2);
-				const int check = util::math::sign(searchCallback(*middle));
+				const int check = util::math::sign(getSearchDirection(*middle));
 				if (!check)
 					return middle;
 				if (size < 2)
