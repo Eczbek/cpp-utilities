@@ -22,9 +22,9 @@ namespace util {
 
 		void clr_scrn ();
 
-		char wait_char ();
+		char wait_char (const bool echo = true);
 
-		char read_char ();
+		char read_char (const bool echo = true, const char defaultChar = 0);
 
 		template <typename DurationType>
 		char read_char_timeout (const DurationType timeout, const bool echo = true, const char defaultChar = 0) {
