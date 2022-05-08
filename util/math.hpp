@@ -36,32 +36,26 @@ namespace util {
 			return degrees * M_PI / 180.0;
 		}
 
-		std::string base (std::string value, const int from, const int to, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
-			if (from == 10) {
-				std::string result;
-				int number = std::stoi(value);
-				while (number) {
-					result = digits[number % to] + result;
-					number /= to;
-				}
-				return result;
-			} else {
-				int number = 0;
-				for (int i = value.length() - 1; i >= 0; --i)
-					for (int index = 0; digits[index]; ++index)
-						if (digits[index] == value[i]) {
-							number += index * std::pow(from, value.length() - i - 1);
-							break;
-						}
-				if (to == 10)
-					return std::to_string(number);
-				std::string result;
-				while (number) {
-					result = digits[number % to] + result;
-					number /= to;
-				}
-				return result;
+		template <typename NumberType>
+		std::string to_base (NumberType value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+			std::string result;
+			while (value) {
+				result = digits[value % base] + result;
+				value /= base;
 			}
+			return result;
+		}
+
+		template <typename NumberType = int>
+		NumberType from_base (const std::string& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+			NumberType result = 0;
+			for (int i = value.length() - 1; i >= 0; --i)
+				for (int index = 0; digits[index]; ++index)
+					if (digits[index] == value[i]) {
+						result += index * std::pow(base, value.length() - i - 1);
+						break;
+					}
+			return result;
 		}
 	}
 }
