@@ -19,11 +19,7 @@ namespace util {
 
 		template <typename NumberType>
 		int sign (const NumberType value) {
-			return value > 0
-				? 1
-				: value < 0
-					? -1
-					: 0;
+			return value > 0 ? 1 : value < 0 ? -1 : 0;
 		}
 
 		template <typename NumberType>
