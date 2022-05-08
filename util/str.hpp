@@ -5,7 +5,7 @@
 
 namespace util {
 	namespace str {
-		template <typename StringType = std::string>
+		template <typename StringType = std::string_view>
 		std::vector<StringType> split (StringType string, const StringType& delimiter) {
 			std::vector<StringType> segments;
 			const int delimiterLength = delimiter.length();
@@ -19,7 +19,7 @@ namespace util {
 			return segments;
 		}
 
-		template <typename StringType = std::string>
+		template <typename StringType = std::string_view>
 		std::vector<StringType> split (StringType string, char delimiter) {
 			std::vector<StringType> segments;
 			for (int i = string.length() > 1; i < string.length(); ++i)
