@@ -20,10 +20,10 @@ namespace util {
 		}
 
 		template <typename VectorType, class CallbackType>
-		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const CallbackType& chunkCallback, bool overflow = true) {
+		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const CallbackType& getChunkSize, bool overflow = true) {
 			std::vector<std::vector<VectorType>> chunked;
 			while (true) {
-				const int chunkSize = chunkCallback(chunked.size());
+				const int chunkSize = getChunkSize(chunked.size());
 				const int vectorSize = std::fmin(vector.size(), chunkSize);
 				if (vectorSize < chunkSize && !overflow || !vectorSize)
 					return chunked;
@@ -31,18 +31,13 @@ namespace util {
 				vector = std::vector<VectorType>(vector.begin() + vectorSize, vector.end());
 			}
 		}
-
-		template <typename StringType = std::string, typename VectorType, class CallbackType>
-		std::unordered_map<StringType, std::vector<VectorType>> group (const std::vector<VectorType>& vector, const CallbackType& groupCallback) {
-			std::unordered_map<StringType, std::vector<VectorType>> grouped;
-			for (int i = 0; i < vector.size(); ++i) {
-				const StringType group = groupCallback(vector[i], i);
-				if (grouped.contains(group))
-					grouped.at(group).push_back(vector[i]);
-				else
-					grouped.insert({ { group, std::vector<VectorType> { vector[i] } } });
-			}
-			return grouped;
+		
+		template <typename KeyType = std::string_view, typename VectorType, class CallbackType>
+		std::unordered_map<KeyType, std::vector<VectorType>> group (const std::vector<VectorType>& values, const CallbackType& getGroup) {
+			std::unordered_map<KeyType, std::vector<VectorType>> groups;
+			for (int i = 0; i < values.size(); ++i)
+				groups[getGroup(values[i], i)].push_back(values[i]);
+			return groups;
 		}
 	}
 }
