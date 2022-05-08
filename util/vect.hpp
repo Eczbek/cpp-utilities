@@ -8,7 +8,7 @@
 namespace util {
 	namespace vect {
 		template <typename VectorType>
-		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, int chunkSize, bool overflow = true) {
+		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const int chunkSize, const bool overflow = true) {
 			std::vector<std::vector<VectorType>> chunked;
 			while (true) {
 				const int vectorSize = std::fmin(vector.size(), chunkSize);
@@ -20,7 +20,7 @@ namespace util {
 		}
 
 		template <typename VectorType, class CallbackType>
-		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const CallbackType& getChunkSize, bool overflow = true) {
+		std::vector<std::vector<VectorType>> chunk (std::vector<VectorType> vector, const CallbackType& getChunkSize, const bool overflow = true) {
 			std::vector<std::vector<VectorType>> chunked;
 			while (true) {
 				const int chunkSize = getChunkSize(chunked.size());

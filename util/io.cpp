@@ -19,7 +19,7 @@ void util::io::nonblock () {
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 }
 
-void util::io::ignore (char until) {
+void util::io::ignore (const char until) {
 	util::io::nonblock();
 	char temp;
 	while (temp != until && read(STDIN_FILENO, &temp, 1) == 1);

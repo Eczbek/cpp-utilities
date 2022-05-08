@@ -18,7 +18,7 @@ namespace util {
 
 		void nonblock ();
 
-		void ignore (char until = 0);
+		void ignore (const char until = 0);
 
 		void clr_scrn ();
 
