@@ -15,7 +15,7 @@ namespace util {
 				const int vectorSize = std::fmin(values.size(), chunkSize);
 				if (!vectorSize || !overflow && vectorSize < chunkSize)
 					return chunks;
-				chunks.push_bak(std::vector<VectorType>(values.begin() + i, values.begin() + i + vectorSize));
+				chunks.push_back(std::vector<VectorType>(values.begin() + i, values.begin() + i + vectorSize));
 				i += vectorSize;
 			}
 		}
@@ -34,7 +34,7 @@ namespace util {
 			}
 		}
 		
-		template <typename KeyType = std::string_view, typename VectorType, class CallbackType>
+		template <typename KeyType = std::string, typename VectorType, class CallbackType>
 		std::unordered_map<KeyType, std::vector<VectorType>> group (const std::vector<VectorType>& values, const CallbackType& getGroup) {
 			std::unordered_map<KeyType, std::vector<VectorType>> groups;
 			for (int i = 0; i < values.size(); ++i)
