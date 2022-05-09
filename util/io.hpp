@@ -26,8 +26,8 @@ namespace util {
 
 		char read_char (const bool echo = true, const char defaultChar = 0);
 
-		template <typename DurationType>
-		char read_char_timeout (const DurationType timeout, const bool echo = true, const char defaultChar = 0) {
+		template <typename Duration>
+		char read_char_timeout (const Duration timeout, const bool echo = true, const char defaultChar = 0) {
 			util::io::raw lock(echo);
 			util::io::nonblock();
 			std::this_thread::sleep_for(timeout);
