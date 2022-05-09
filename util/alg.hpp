@@ -32,5 +32,24 @@ namespace util {
 				std::swap(*temp, *begin);
 			}
 		}
+
+		template <typename IteratorType1, typename IteratorType2>
+		bool match_rotated (IteratorType1 begin1, const IteratorType1 end1, const IteratorType2 begin2, const IteratorType2 end2) {
+			const auto size = std::distance(begin1, end1);
+			if (size != std::distance(begin2, end2))
+				return false;
+			for (; begin1 != end1; ++begin1) {
+				IteratorType2 copy2 = begin2;
+				for (IteratorType1 copy1 = begin1; copy2 != end2; ++copy1, ++copy2) {
+					if (copy1 == end1)
+						std::advance(copy1, -size);
+					if (*copy1 != *copy2)
+						break;
+				}
+				if (copy2 == end2)
+					return true;
+			}
+			return false;
+		}
 	}
 }

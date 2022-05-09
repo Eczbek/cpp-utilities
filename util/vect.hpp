@@ -44,28 +44,6 @@ namespace util {
 		}
 
 		template <typename VectorType>
-		bool match_rotated (const std::vector<VectorType>& values1, const std::vector<VectorType>& values2) {
-			const int size1 = values1.size();
-			const int size2 = values2.size();
-			if (size1 != size2)
-				return false;
-			for (int i = 0; i < size1; ++i) {
-				int j = 0;
-				for (; j < size2; ++j)
-					if (values1[(i + j) % size1] != values2[j])
-						break;
-				if (j == size2)
-					return true;
-			}
-			return false;
-		}
-
-		template <typename VectorType>
-		bool match_rotated_reversed (const std::vector<VectorType>& values1, const std::vector<VectorType>& values2) {
-			return util::vect::match_rotated(values1, values2) || util::vect::match_rotated(std::vector<VectorType>(values1.rbegin(), values1.rend()), values2);
-		}
-
-		template <typename VectorType>
 		std::vector<std::vector<VectorType>> rotate_cw (const std::vector<std::vector<VectorType>>& values) {
 			std::vector<std::vector<VectorType>> rotated;
 			for (int y = 0; y < values[0].size(); ++y) {
