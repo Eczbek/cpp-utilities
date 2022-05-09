@@ -1,12 +1,11 @@
 #pragma once
-
 #include "./math.hpp"
 #include <random>
 
 namespace util {
 	namespace alg {
 		template <typename Iterator, class Callback>
-		Iterator bin_srch (Iterator begin, Iterator end, const Callback& getSearchDirection) {
+		Iterator binary_search (Iterator begin, Iterator end, const Callback& getSearchDirection) {
 			const Iterator temp = end;
 			while (true) {
 				Iterator middle = begin;

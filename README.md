@@ -2,7 +2,7 @@
 ### Examples:
 ```cpp
 std::array<int, 5> a { 0, 2, 4, 6, 8 };
-util::alg::bin_srch(a.begin(), a.end(), [](int b) { return b - 4; })
+util::alg::binary_search(a.begin(), a.end(), [](int b) { return b - 4; })
 // 2
 ```
 ```cpp

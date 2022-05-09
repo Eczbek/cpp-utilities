@@ -1,8 +1,6 @@
 #pragma once
-
 #include <cmath>
 #include <string_view>
-#include <algorithm>
 
 namespace util {
 	namespace math {

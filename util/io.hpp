@@ -1,5 +1,4 @@
 #pragma once
-
 #include <termios.h>
 #include <unistd.h>
 #include <thread>
@@ -20,14 +19,14 @@ namespace util {
 
 		void ignore (const char until = 0);
 
-		void clr_scrn ();
+		void clear_screen ();
 
-		char wait_char (const bool echo = true);
+		char char_wait (const bool echo = true);
 
-		char read_char (const bool echo = true, const char defaultChar = 0);
+		char char_read (const bool echo = true, const char defaultChar = 0);
 
 		template <typename Duration>
-		char read_char_timeout (const Duration timeout, const bool echo = true, const char defaultChar = 0) {
+		char char_timeout (const Duration timeout, const bool echo = true, const char defaultChar = 0) {
 			util::io::raw lock(echo);
 			util::io::nonblock();
 			std::this_thread::sleep_for(timeout);

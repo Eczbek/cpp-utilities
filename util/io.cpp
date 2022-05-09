@@ -1,7 +1,8 @@
 #include "./io.hpp"
-
 #include <fcntl.h>
 #include <iostream>
+
+// HERE BE DRAGONS
 
 util::io::raw::raw (const bool echo) {
 	tcgetattr(STDIN_FILENO, &cooked);
@@ -25,16 +26,16 @@ void util::io::ignore (const char until) {
 	while (temp != until && read(STDIN_FILENO, &temp, 1) == 1);
 }
 
-void util::io::clr_scrn () {
+void util::io::clear_screen () {
 	std::cout << "\033[2J\033[1;1H";
 }
 
-char util::io::wait_char (const bool echo) {
+char util::io::char_wait (const bool echo) {
 	util::io::raw lock(echo);
 	return getchar();
 }
 
-char util::io::read_char (const bool echo, const char defaultChar) {
+char util::io::char_read (const bool echo, const char defaultChar) {
 	util::io::raw lock(echo);
 	util::io::nonblock();
 	char input = defaultChar;
