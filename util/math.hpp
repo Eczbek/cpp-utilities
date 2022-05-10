@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <string>
 #include <string_view>
 
 namespace util {
@@ -41,12 +42,12 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number from_base (const int base, const std::string& value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number from_base (const int base, const std::string_view& value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			Number result = 0;
 			for (int i = value.length() - 1; i >= 0; --i)
-				for (int index = 0; digits[index]; ++index)
-					if (digits[index] == value[i]) {
-						result += index * std::pow(base, value.length() - i - 1);
+				for (int j = 0; j < digits.length(); ++j)
+					if (digits[j] == value[i]) {
+						result += j * std::pow(base, value.length() - i - 1);
 						break;
 					}
 			return result;
