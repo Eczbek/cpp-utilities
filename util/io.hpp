@@ -15,7 +15,12 @@ namespace util {
 				~raw ();
 		};
 
-		void nonblock ();
+		class nonblock {
+			public:
+				nonblock ();
+
+				~nonblock ();
+		};
 
 		void ignore (const char until = 0);
 
@@ -27,8 +32,8 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout (const Duration timeout, const bool echo = true, const char defaultChar = 0) {
-			util::io::raw lock(echo);
-			util::io::nonblock();
+			util::io::raw lock1(echo);
+			util::io::nonblock lock2();
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1);
