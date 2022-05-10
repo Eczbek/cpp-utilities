@@ -2,6 +2,8 @@
 #include <cmath>
 #include <string>
 #include <string_view>
+#include <limits>
+#include <array>
 
 namespace util {
 	namespace math {
@@ -43,13 +45,18 @@ namespace util {
 
 		template <typename Number = int>
 		Number from_base (const int base, const std::string_view& value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+			std::array<int, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> digitsMap;
+			const auto getIndex = [&](const char digit) -> int& {
+				return digitsMap[digit - std::numeric_limits<char>::min()];
+			};
+			for (int i = 0; i < digits.length(); ++i)
+				getIndex(digits[i]) = i;
 			Number result = 0;
-			for (int i = value.length() - 1; i >= 0; --i)
-				for (int j = 0; j < digits.length(); ++j)
-					if (digits[j] == value[i]) {
-						result += j * std::pow(base, value.length() - i - 1);
-						break;
-					}
+			int power = 1;
+			for (int i = value.length() - 1; i >= 0; --i) {
+				result += getIndex(value[i]) * power;
+				power *= base;
+			}
 			return result;
 		}
 	}
