@@ -5,6 +5,8 @@
 #include <limits>
 #include <array>
 
+#define M_TAU 6.283185307179586476925286766559
+
 namespace util {
 	namespace math {
 		template <typename Number>
