@@ -24,8 +24,6 @@ namespace util {
 
 		void ignore (const char until = 0);
 
-		void clear_screen ();
-
 		char char_wait (const bool echo = true);
 
 		char char_read (const bool echo = true, const char defaultChar = 0);
