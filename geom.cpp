@@ -18,7 +18,7 @@ util::geom::line::line (const util::geom::point& start, const util::geom::point&
 {}
 
 bool util::geom::line::operator== (const util::geom::line& line) const {
-	return start == line.start && end == line.end || start == line.end && end == line.start;
+	return slope() == line.slope() && contains(line.start);
 }
 
 bool util::geom::line::operator!= (const util::geom::line& line) const {
@@ -70,5 +70,25 @@ bool util::geom::ray::operator!= (const util::geom::ray& ray) const {
 }
 
 bool util::geom::ray::contains (const util::geom::point& point) const {
-	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y) && util::math::sign(start.x - end.x) == util::math::sign(start.x - point.x) && util::math::sign(start.y - end.y) == util::math::sign(start.y - point.y);
+	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y) && (start.x <= end.x ? point.x >= start.x : point.x <= start.x) && (start.y <= end.y ? point.y >= start.y : point.y <= start.y);
+}
+
+util::geom::segment::segment (const util::geom::point& start, const util::geom::point& end)
+	: util::geom::line(start, end)
+{}
+
+bool util::geom::segment::operator== (const util::geom::segment& segment) const {
+	return start == segment.start && end == segment.end || start == segment.end && end == segment.start;
+}
+
+bool util::geom::segment::operator!= (const util::geom::segment& segment) const {
+	return !(segment == *this);
+}
+
+double util::geom::segment::length () const {
+	return util::math::hypot(start.x - end.x, start.y - end.y);
+}
+
+bool util::geom::segment::contains (const util::geom::point& point) const {
+	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y) && (start.x < end.x ? point.x >= start.x && point.x <= end.x : point.x <= start.x && point.x >= end.x) && (start.y < end.y ? point.y >= start.y && point.y <= end.y : point.y <= start.y && point.y >= end.y);
 }

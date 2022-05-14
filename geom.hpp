@@ -47,5 +47,18 @@ namespace util {
 
 				bool contains (const util::geom::point& point) const;
 		};
+
+		class segment: public util::geom::line {
+			public:
+				segment (const util::geom::point& start, const util::geom::point& end);
+
+				bool operator== (const util::geom::segment& segment) const;
+
+				bool operator!= (const util::geom::segment& segment) const;
+
+				double length () const;
+
+				bool contains (const util::geom::point& point) const;
+		};
 	}
 }
