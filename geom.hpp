@@ -3,32 +3,49 @@
 
 namespace util {
 	namespace geom {
-		struct point {
-			double x;
-			double y;
+		class point {
+			public:
+				double x;
+				double y;
 
-			bool operator== (const util::geom::point& point) const;
+				point (double x, double y);
 
-			bool operator!= (const util::geom::point& point) const;
+				bool operator== (const util::geom::point& point) const;
+
+				bool operator!= (const util::geom::point& point) const;
 		};
 
-		struct line {
-			util::geom::point start;
-			util::geom::point end;
+		class line {
+			public:
+				util::geom::point start;
+				util::geom::point end;
 
-			bool operator== (const util::geom::line& line) const;
+				line (const util::geom::point& start, const util::geom::point& end);
 
-			bool operator!= (const util::geom::line& line) const;
+				bool operator== (const util::geom::line& line) const;
 
-			double get_slope () const;
+				bool operator!= (const util::geom::line& line) const;
 
-			double get_radians () const;
+				double slope () const;
 
-			double get_degrees () const;
+				double radians () const;
 
-			std::optional<util::geom::point> get_intersection (const util::geom::line& line) const;
+				double degrees () const;
 
-			bool contains_point (const util::geom::point& point) const;
+				std::optional<util::geom::point> intersection (const util::geom::line& line) const;
+
+				bool contains (const util::geom::point& point) const;
+		};
+
+		class ray: public util::geom::line {
+			public:
+				ray (const util::geom::point& start, const util::geom::point& end);
+
+				bool operator== (const util::geom::ray& ray) const;
+
+				bool operator!= (const util::geom::ray& ray) const;
+
+				bool contains (const util::geom::point& point) const;
 		};
 	}
 }
