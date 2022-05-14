@@ -76,7 +76,26 @@ namespace util {
 
 				double perimeter () const;
 
-				bool contains (const util::geom::point& point) const;
+				virtual bool contains (const util::geom::point& point) const;
+		};
+
+		class rectangle: public util::geom::polygon {
+			public:
+				rectangle (const util::geom::point& corner1, const util::geom::point& corner2);
+
+				bool operator== (const util::geom::rectangle& rectangle) const;
+
+				bool operator!= (const util::geom::rectangle& rectangle) const;
+
+				double width () const;
+
+				double height () const;
+
+				double area () const;
+
+				double perimeter () const;
+
+				virtual bool contains (const util::geom::point& point) const;
 		};
 	}
 }

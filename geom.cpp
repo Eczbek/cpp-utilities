@@ -136,3 +136,35 @@ bool util::geom::polygon::contains (const util::geom::point& point) const {
 		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
 	return intersections % 2;
 }
+
+util::geom::rectangle::rectangle (const util::geom::point& corner1, const util::geom::point& corner2)
+	: util::geom::polygon({ corner1, { corner2.x, corner1.y }, corner2, { corner1.x, corner2.y } })
+{}
+
+bool util::geom::rectangle::operator== (const util::geom::rectangle& rectangle) const {
+	return points[0] == rectangle.points[0] && points[2] == rectangle.points[2] || points[0] == rectangle.points[2] && points[2] == rectangle.points[0];
+}
+
+bool util::geom::rectangle::operator!= (const util::geom::rectangle& rectangle) const {
+	return !(rectangle == *this);
+}
+
+double util::geom::rectangle::width () const {
+	return std::abs(points[0].x - points[2].x);
+}
+
+double util::geom::rectangle::height () const {
+	return std::abs(points[0].y - points[2].y);
+}
+
+double util::geom::rectangle::area () const {
+	return width() * height();
+}
+
+double util::geom::rectangle::perimeter () const {
+	return 2 * (width() + height());
+}
+
+bool util::geom::rectangle::contains (const util::geom::point& point) const {
+	return (point.x >= points[0].x && point.x <= points[2].x || point.x <= points[0].x && point.x >= points[2].x) && (point.y >= points[0].y && point.y <= points[2].y || point.y <= points[0].y && point.y >= points[2].y);
+}
