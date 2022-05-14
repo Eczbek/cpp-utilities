@@ -1,12 +1,13 @@
 #include "./geom.hpp"
 #include "./math.hpp"
+#include "./alg.hpp"
 
 util::geom::point::point (double x, double y)
 	: x(x), y(y)
 {}
 
 bool util::geom::point::operator== (const util::geom::point& point) const {
-	return x == point.x && y == point.y;
+	return util::math::approx_eq(x, point.x) && util::math::approx_eq(y, point.y);
 }
 
 bool util::geom::point::operator!= (const util::geom::point& point) const {
@@ -54,7 +55,8 @@ std::optional<util::geom::point> util::geom::line::intersection (const util::geo
 }
 
 bool util::geom::line::contains (const util::geom::point& point) const {
-	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y);
+	const double slope = this->slope();
+	return std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y);
 }
 
 util::geom::ray::ray (const util::geom::point& start, const util::geom::point& end)
@@ -70,7 +72,8 @@ bool util::geom::ray::operator!= (const util::geom::ray& ray) const {
 }
 
 bool util::geom::ray::contains (const util::geom::point& point) const {
-	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y) && (start.x <= end.x ? point.x >= start.x : point.x <= start.x) && (start.y <= end.y ? point.y >= start.y : point.y <= start.y);
+	const double slope = this->slope();
+	return (std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y)) && (start.x <= end.x ? point.x >= start.x : point.x <= start.x) && (start.y <= end.y ? point.y >= start.y : point.y <= start.y);
 }
 
 util::geom::segment::segment (const util::geom::point& start, const util::geom::point& end)
@@ -86,9 +89,50 @@ bool util::geom::segment::operator!= (const util::geom::segment& segment) const 
 }
 
 double util::geom::segment::length () const {
-	return util::math::hypot(start.x - end.x, start.y - end.y);
+	return std::hypot(start.x - end.x, start.y - end.y);
 }
 
 bool util::geom::segment::contains (const util::geom::point& point) const {
-	return util::math::approx_eq(point.y, point.x * slope() - start.x * slope() + start.y) && (start.x < end.x ? point.x >= start.x && point.x <= end.x : point.x <= start.x && point.x >= end.x) && (start.y < end.y ? point.y >= start.y && point.y <= end.y : point.y <= start.y && point.y >= end.y);
+	const double slope = this->slope();
+	return (std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y)) && (start.x < end.x ? point.x >= start.x && point.x <= end.x : point.x <= start.x && point.x >= end.x) && (start.y < end.y ? point.y >= start.y && point.y <= end.y : point.y <= start.y && point.y >= end.y);
+}
+
+util::geom::polygon::polygon (const std::vector<util::geom::point>& points)
+	: points(points)
+{}
+
+bool util::geom::polygon::operator== (const util::geom::polygon& polygon) const {
+	return util::alg::match_rotated(points.begin(), points.end(), polygon.points.begin(), polygon.points.end()) || util::alg::match_rotated(points.rbegin(), points.rend(), polygon.points.begin(), polygon.points.end());
+}
+
+bool util::geom::polygon::operator!= (const util::geom::polygon& polygon) const {
+	return !(polygon == *this);
+}
+
+double util::geom::polygon::area () const {
+	double area = 0;
+	for (int i = 0; i < points.size(); ++i) {
+		const util::geom::point& current = points[i];
+		const util::geom::point& next = points[(i + 1) % points.size()];
+		area += current.x * next.y - next.x * current.y;
+	}
+	return area / 2;
+}
+
+double util::geom::polygon::perimeter () const {
+	double perimeter = 0;
+	for (int i = 0; i < points.size(); ++i) {
+		const util::geom::point& current = points[i];
+		const util::geom::point& next = points[(i + 1) % points.size()];
+		perimeter += std::hypot(current.x - next.x, current.y - next.y);
+	}
+	return perimeter;
+}
+
+bool util::geom::polygon::contains (const util::geom::point& point) const {
+	util::geom::ray ray(point, { point.x + 1, point.y });
+	int intersections = 0;
+	for (int i = 0; i < points.size(); ++i)
+		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
+	return intersections % 2;
 }

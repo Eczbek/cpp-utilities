@@ -1,5 +1,6 @@
 #pragma once
 #include <optional>
+#include <vector>
 
 namespace util {
 	namespace geom {
@@ -34,7 +35,7 @@ namespace util {
 
 				std::optional<util::geom::point> intersection (const util::geom::line& line) const;
 
-				bool contains (const util::geom::point& point) const;
+				virtual bool contains (const util::geom::point& point) const;
 		};
 
 		class ray: public util::geom::line {
@@ -45,7 +46,7 @@ namespace util {
 
 				bool operator!= (const util::geom::ray& ray) const;
 
-				bool contains (const util::geom::point& point) const;
+				virtual bool contains (const util::geom::point& point) const;
 		};
 
 		class segment: public util::geom::line {
@@ -57,6 +58,23 @@ namespace util {
 				bool operator!= (const util::geom::segment& segment) const;
 
 				double length () const;
+
+				virtual bool contains (const util::geom::point& point) const;
+		};
+
+		class polygon {
+			public:
+				std::vector<util::geom::point> points;
+
+				polygon (const std::vector<util::geom::point>& points);
+
+				bool operator== (const util::geom::polygon& polygon) const;
+
+				bool operator!= (const util::geom::polygon& polygon) const;
+
+				double area () const;
+
+				double perimeter () const;
 
 				bool contains (const util::geom::point& point) const;
 		};
