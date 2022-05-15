@@ -1,6 +1,6 @@
 #include "./str.hpp"
 
-std::vector<std::string> util::str::split (const std::string& string, const std::string& delimiter) {
+std::vector<std::string> util::str::split (const std::string& string, const std::string_view& delimiter) {
 	std::vector<std::string> segments;
 	int i = 0;
 	for (int j = 0; j < string.length() - i; ++j)
