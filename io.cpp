@@ -1,7 +1,7 @@
 #include "./io.hpp"
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <string>
+#include <cstring>
 
 util::io::raw_lock::raw_lock () {
 	tcgetattr(STDIN_FILENO, &cooked);
@@ -41,24 +41,29 @@ char util::io::char_read (const char defaultChar) {
 	return input;
 }
 
-int util::io::get_win_size (int &rows, int &cols) {
-	winsize ws;
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0)
-		return -1;
-	rows = ws.ws_row;
-	cols = ws.ws_col;
-	return 0;
+util::io::cursor::pos util::io::cursor::get () {
+	util::io::raw_lock rawLock;
+	write(STDOUT_FILENO, "\033[6n", 4);
+	util::io::cursor::pos position;
+	char buffer[32];
+	for (int i = 0; i < 32; ++i) {
+		read(STDIN_FILENO, &buffer[i], 1);
+		if (buffer[i] == 'R')
+			break;
+	}
+	sscanf(buffer, "\033[%d;%dR", &position.row, &position.col);
+	return position;
 }
 
-int util::io::get_cursor_pos (int &row, int &col) {
+util::io::cursor::pos util::io::cursor::get_max () {
+	winsize size;
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
+	return { size.ws_row, size.ws_col };
+}
+
+void util::io::cursor::set (const util::io::cursor::pos position) {
 	util::io::raw_lock rawLock;
-	if (write(STDOUT_FILENO, "\033[6n", 4) != 4)
-		return -1;
-	char input;
-	std::string buffer;
-	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
-		buffer += input;
-	if (sscanf(&buffer[0], "\033[%d;%dR", &row, &col) != 2)
-		return -1;
-	return 0;
+	char buffer[32];
+	sprintf(buffer, "\033[%d;%dH", position.row, position.col);
+	write(STDOUT_FILENO, buffer, strlen(buffer));
 }

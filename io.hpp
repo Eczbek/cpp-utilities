@@ -109,8 +109,17 @@ namespace util {
 			return input;
 		}
 
-		int get_win_size (int &rows, int &cols);
+		namespace cursor {
+			struct pos {
+				int row;
+				int col;
+			};
 
-		int get_cursor_pos (int &row, int &col);
+			util::io::cursor::pos get ();
+
+			util::io::cursor::pos get_max ();
+
+			void set (const util::io::cursor::pos position);
+		}
 	}
 }
