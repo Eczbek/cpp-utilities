@@ -11,7 +11,7 @@ bool util::geom::point::operator== (const util::geom::point& point) const {
 }
 
 bool util::geom::point::operator!= (const util::geom::point& point) const {
-	return !(point == *this);
+	return !operator==(point);
 }
 
 util::geom::line::line (const util::geom::point& start, const util::geom::point& end)
@@ -23,7 +23,7 @@ bool util::geom::line::operator== (const util::geom::line& line) const {
 }
 
 bool util::geom::line::operator!= (const util::geom::line& line) const {
-	return !(line == *this);
+	return !operator==(line);
 }
 
 double util::geom::line::slope () const {
@@ -68,7 +68,7 @@ bool util::geom::ray::operator== (const util::geom::ray& ray) const {
 }
 
 bool util::geom::ray::operator!= (const util::geom::ray& ray) const {
-	return !(ray == *this);
+	return !operator==(ray);
 }
 
 bool util::geom::ray::contains (const util::geom::point& point) const {
@@ -85,7 +85,7 @@ bool util::geom::segment::operator== (const util::geom::segment& segment) const 
 }
 
 bool util::geom::segment::operator!= (const util::geom::segment& segment) const {
-	return !(segment == *this);
+	return !operator==(segment);
 }
 
 double util::geom::segment::length () const {
@@ -106,7 +106,7 @@ bool util::geom::polygon::operator== (const util::geom::polygon& polygon) const 
 }
 
 bool util::geom::polygon::operator!= (const util::geom::polygon& polygon) const {
-	return !(polygon == *this);
+	return !operator==(polygon);
 }
 
 double util::geom::polygon::area () const {
@@ -146,7 +146,7 @@ bool util::geom::rectangle::operator== (const util::geom::rectangle& rectangle) 
 }
 
 bool util::geom::rectangle::operator!= (const util::geom::rectangle& rectangle) const {
-	return !(rectangle == *this);
+	return !operator==(rectangle);
 }
 
 double util::geom::rectangle::width () const {
