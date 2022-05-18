@@ -59,8 +59,6 @@
 #define AEC_RESET_EF_UNDERLINE_DOUBLE "\033[24m"
 #define AEC_ERASE_ALL "\033[2J"
 #define AEC_ERASE_LINE "\033[2K"
-#define AEC_CURSOR_SAVE "\033[s"
-#define AEC_CURSOR_RESTORE "\033[u"
 #define AEC_CURSOR_HIDE "\033[?25l"
 #define AEC_CURSOR_SHOW "\033[?25h"
 
