@@ -2,6 +2,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <thread>
+#include <string>
 
 #define AEC_EF_BOLD "\033[1m"
 #define AEC_EF_DIM "\033[2m"
@@ -108,6 +109,8 @@ namespace util {
 			while (read(STDIN_FILENO, &input, 1) == 1);
 			return input;
 		}
+
+		std::string string_read ();
 
 		namespace cursor {
 			struct pos {

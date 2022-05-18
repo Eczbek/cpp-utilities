@@ -41,6 +41,16 @@ char util::io::char_read (const char defaultChar) {
 	return input;
 }
 
+std::string util::io::string_read () {
+	util::io::raw_lock rawLock;
+	util::io::nonblock_lock nonblockLock;
+	std::string result;
+	char input;
+	while (read(STDIN_FILENO, &input, 1) == 1)
+		result += input;
+	return result;
+}
+
 util::io::cursor::pos util::io::cursor::get () {
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
