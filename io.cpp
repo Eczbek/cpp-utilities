@@ -1,7 +1,6 @@
 #include "./io.hpp"
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <cstring>
 
 util::io::raw_lock::raw_lock () {
 	tcgetattr(STDIN_FILENO, &cooked);
@@ -23,9 +22,9 @@ util::io::nonblock_lock::~nonblock_lock () {
 }
 
 void util::io::ignore (const char until) {
+	char input;
 	util::io::nonblock_lock nonblockLock;
-	char temp;
-	while (temp != until && read(STDIN_FILENO, &temp, 1) == 1);
+	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
 char util::io::char_wait () {
@@ -34,18 +33,18 @@ char util::io::char_wait () {
 }
 
 char util::io::char_read (const char defaultChar) {
+	char input = defaultChar;
 	util::io::raw_lock rawLock;
 	util::io::nonblock_lock nonblockLock;
-	char input = defaultChar;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
 std::string util::io::string_read () {
-	util::io::raw_lock rawLock;
-	util::io::nonblock_lock nonblockLock;
 	std::string result;
 	char input;
+	util::io::raw_lock rawLock;
+	util::io::nonblock_lock nonblockLock;
 	while (read(STDIN_FILENO, &input, 1) == 1)
 		result += input;
 	return result;
@@ -54,14 +53,12 @@ std::string util::io::string_read () {
 util::io::cursor::pos util::io::cursor::get () {
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
+	std::string buffer;
+	char input;
+	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
+		buffer += input;
 	util::io::cursor::pos position;
-	char buffer[32];
-	for (int i = 0; i < 32; ++i) {
-		read(STDIN_FILENO, &buffer[i], 1);
-		if (buffer[i] == 'R')
-			break;
-	}
-	sscanf(buffer, "\033[%d;%dR", &position.row, &position.col);
+	sscanf(&buffer[0], "\033[%d;%dR", &position.row, &position.col);
 	return position;
 }
 
@@ -72,8 +69,7 @@ util::io::cursor::pos util::io::cursor::get_max () {
 }
 
 void util::io::cursor::set (const util::io::cursor::pos position) {
+	const std::string command = "\033[" + std::to_string(position.row) + ";" + std::to_string(position.col) + "H";
 	util::io::raw_lock rawLock;
-	char buffer[32];
-	sprintf(buffer, "\033[%d;%dH", position.row, position.col);
-	write(STDOUT_FILENO, buffer, strlen(buffer));
+	write(STDOUT_FILENO, command.c_str(), command.size());
 }
