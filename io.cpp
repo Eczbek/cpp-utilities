@@ -73,3 +73,9 @@ void util::io::cursor::set_pos (const util::io::cursor::pos position) {
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, command.c_str(), command.size());
 }
+
+void util::io::cursor::move (const char direction, const int count) {
+	const std::string command = "\033[" + std::to_string(count) + std::string(1, direction);
+	util::io::raw_lock rawLock;
+	write(STDOUT_FILENO, command.c_str(), command.size());
+}

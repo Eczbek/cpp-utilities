@@ -58,18 +58,7 @@
 #define AEC_RESET_EF_STRIKETHROUGH "\033[29m"
 #define AEC_RESET_EF_UNDERLINE_DOUBLE "\033[24m"
 #define AEC_ERASE_ALL "\033[2J"
-#define AEC_ERASE_LINE_RIGHT "\033[K"
-#define AEC_ERASE_LINE_LEFT "\033[1K"
 #define AEC_ERASE_LINE "\033[2K"
-#define AEC_CURSOR_HOME "\033[H"
-#define AEC_CURSOR_RIGHT "\033[1C"
-#define AEC_CURSOR_LEFT "\033[1D"
-#define AEC_CURSOR_UP "\033[1A"
-#define AEC_CURSOR_DOWN "\033[1B"
-#define AEC_CURSOR_LINE_NEXT "\033[E"
-#define AEC_CURSOR_LINE_PREV "\033[F"
-#define AEC_CURSOR_LINE_BEGIN "\033[1G"
-#define AEC_CURSOR_LINE_END "\033[999G"
 #define AEC_CURSOR_SAVE "\033[s"
 #define AEC_CURSOR_RESTORE "\033[u"
 #define AEC_CURSOR_HIDE "\033[?25l"
@@ -102,10 +91,10 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout (const Duration timeout, const char defaultChar = 0) {
-			util::io::raw_lock rawLock;
-			util::io::nonblock_lock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
+			util::io::raw_lock rawLock;
+			util::io::nonblock_lock nonblockLock;
 			while (read(STDIN_FILENO, &input, 1) == 1);
 			return input;
 		}
@@ -123,6 +112,15 @@ namespace util {
 			util::io::cursor::pos get_max_pos ();
 
 			void set_pos (const util::io::cursor::pos position);
+
+			enum direction {
+				UP = 'A',
+				DOWN = 'B',
+				RIGHT = 'C',
+				LEFT = 'D'
+			};
+
+			void move (const char direction, const int count = 1);
 		}
 	}
 }
