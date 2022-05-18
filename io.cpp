@@ -50,7 +50,7 @@ std::string util::io::string_read () {
 	return result;
 }
 
-util::io::cursor::pos util::io::cursor::get () {
+util::io::cursor::pos util::io::cursor::get_pos () {
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
@@ -62,13 +62,13 @@ util::io::cursor::pos util::io::cursor::get () {
 	return position;
 }
 
-util::io::cursor::pos util::io::cursor::get_max () {
+util::io::cursor::pos util::io::cursor::get_max_pos () {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
 	return { size.ws_row, size.ws_col };
 }
 
-void util::io::cursor::set (const util::io::cursor::pos position) {
+void util::io::cursor::set_pos (const util::io::cursor::pos position) {
 	const std::string command = "\033[" + std::to_string(position.row) + ";" + std::to_string(position.col) + "H";
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, command.c_str(), command.size());

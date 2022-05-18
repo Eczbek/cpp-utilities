@@ -118,11 +118,11 @@ namespace util {
 				int col;
 			};
 
-			util::io::cursor::pos get ();
+			util::io::cursor::pos get_pos ();
 
-			util::io::cursor::pos get_max ();
+			util::io::cursor::pos get_max_pos ();
 
-			void set (const util::io::cursor::pos position);
+			void set_pos (const util::io::cursor::pos position);
 		}
 	}
 }
