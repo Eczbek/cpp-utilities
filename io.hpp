@@ -89,10 +89,10 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout (const Duration timeout, const char defaultChar = 0) {
-			std::this_thread::sleep_for(timeout);
-			char input = defaultChar;
 			util::io::raw_lock rawLock;
 			util::io::nonblock_lock nonblockLock;
+			std::this_thread::sleep_for(timeout);
+			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1);
 			return input;
 		}

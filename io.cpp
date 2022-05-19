@@ -22,8 +22,8 @@ util::io::nonblock_lock::~nonblock_lock () {
 }
 
 void util::io::ignore (const char until) {
-	char input;
 	util::io::nonblock_lock nonblockLock;
+	char input;
 	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
@@ -33,18 +33,18 @@ char util::io::char_wait () {
 }
 
 char util::io::char_read (const char defaultChar) {
-	char input = defaultChar;
 	util::io::raw_lock rawLock;
 	util::io::nonblock_lock nonblockLock;
+	char input = defaultChar;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
 std::string util::io::string_read () {
-	std::string result;
-	char input;
 	util::io::raw_lock rawLock;
 	util::io::nonblock_lock nonblockLock;
+	std::string result;
+	char input;
 	while (read(STDIN_FILENO, &input, 1) == 1)
 		result += input;
 	return result;
@@ -69,13 +69,13 @@ util::io::cursor::pos util::io::cursor::get_max_pos () {
 }
 
 void util::io::cursor::set_pos (const util::io::cursor::pos position) {
-	const std::string command = "\033[" + std::to_string(position.row) + ";" + std::to_string(position.col) + "H";
 	util::io::raw_lock rawLock;
+	const std::string command = "\033[" + std::to_string(position.row) + ";" + std::to_string(position.col) + "H";
 	write(STDOUT_FILENO, command.c_str(), command.size());
 }
 
 void util::io::cursor::move (const char direction, const int count) {
-	const std::string command = "\033[" + std::to_string(count) + std::string(1, direction);
 	util::io::raw_lock rawLock;
+	const std::string command = "\033[" + std::to_string(count) + std::string(1, direction);
 	write(STDOUT_FILENO, command.c_str(), command.size());
 }
