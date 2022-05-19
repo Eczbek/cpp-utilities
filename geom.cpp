@@ -47,7 +47,7 @@ std::optional<util::geom::point> util::geom::line::intersection (const util::geo
 	if (e) {
 		const double f = start.x * end.y - start.y * end.x;
 		const double g = line.start.x * line.end.y - line.start.y * line.end.x;
-		const util::geom::point intersection { (c * f - a * g) / e, (d * f - b * g) / e };
+		const util::geom::point intersection((c * f - a * g) / e, (d * f - b * g) / e);
 		if (contains(intersection) && line.contains(intersection))
 			return intersection;
 	}
