@@ -4,47 +4,48 @@
 #include <thread>
 #include <string>
 
-#define AEC_EF_BOLD "\033[1m"
-#define AEC_EF_DIM "\033[2m"
-#define AEC_EF_ITALIC "\033[3m"
-#define AEC_EF_UNDERLINE "\033[4m"
-#define AEC_EF_BLINK "\033[5m"
-#define AEC_EF_REVERSE "\033[7m"
-#define AEC_EF_HIDDEN "\033[8m"
-#define AEC_EF_STRIKETHROUGH "\033[9m"
-#define AEC_EF_UNDERLINE_DOUBLE "\033[21m"
-#define AEC_FG_BLACK "\033[30m"
-#define AEC_FG_RED "\033[31m"
-#define AEC_FG_GREEN "\033[32m"
-#define AEC_FG_YELLOW "\033[33m"
-#define AEC_FG_BLUE "\033[34m"
-#define AEC_FG_MAGENTA "\033[35m"
-#define AEC_FG_CYAN "\033[36m"
-#define AEC_FG_WHITE "\033[37m"
-#define AEC_FG_BLACK_BRIGHT "\033[90m"
-#define AEC_FG_RED_BRIGHT "\033[91m"
-#define AEC_FG_GREEN_BRIGHT "\033[92m"
-#define AEC_FG_YELLOW_BRIGHT "\033[93m"
-#define AEC_FG_BLUE_BRIGHT "\033[94m"
-#define AEC_FG_MAGENTA_BRIGHT "\033[95m"
-#define AEC_FG_CYAN_BRIGHT "\033[96m"
-#define AEC_FG_WHITE_BRIGHT "\033[97m"
-#define AEC_BG_BLACK "\033[40m"
-#define AEC_BG_RED "\033[41m"
-#define AEC_BG_GREEN "\033[42m"
-#define AEC_BG_YELLOW "\033[43m"
-#define AEC_BG_BLUE "\033[44m"
-#define AEC_BG_MAGENTA "\033[45m"
-#define AEC_BG_CYAN "\033[46m"
-#define AEC_BG_WHITE "\033[47m"
-#define AEC_BG_BLACK_BRIGHT "\033[100m"
-#define AEC_BG_RED_BRIGHT "\033[101m"
-#define AEC_BG_GREEN_BRIGHT "\033[102m"
-#define AEC_BG_YELLOW_BRIGHT "\033[103m"
-#define AEC_BG_BLUE_BRIGHT "\033[104m"
-#define AEC_BG_MAGENTA_BRIGHT "\033[105m"
-#define AEC_BG_CYAN_BRIGHT "\033[106m"
-#define AEC_BG_WHITE_BRIGHT "\033[107m"
+#define AEC_RESET 0
+#define AEC_EF_BOLD 1
+#define AEC_EF_DIM 2
+#define AEC_EF_ITALIC 3
+#define AEC_EF_UNDERLINE 4
+#define AEC_EF_BLINK 5
+#define AEC_EF_REVERSE 7
+#define AEC_EF_HIDDEN 8
+#define AEC_EF_STRIKETHROUGH 9
+#define AEC_EF_UNDERLINE_DOUBLE 21
+#define AEC_FG_BLACK 30
+#define AEC_FG_RED 31
+#define AEC_FG_GREEN 32
+#define AEC_FG_YELLOW 33
+#define AEC_FG_BLUE 34
+#define AEC_FG_MAGENTA 35
+#define AEC_FG_CYAN 36
+#define AEC_FG_WHITE 37
+#define AEC_FG_BLACK_BRIGHT 90
+#define AEC_FG_RED_BRIGHT 91
+#define AEC_FG_GREEN_BRIGHT 92
+#define AEC_FG_YELLOW_BRIGHT 93
+#define AEC_FG_BLUE_BRIGHT 94
+#define AEC_FG_MAGENTA_BRIGHT 95
+#define AEC_FG_CYAN_BRIGHT 96
+#define AEC_FG_WHITE_BRIGHT 97
+#define AEC_BG_BLACK 40
+#define AEC_BG_RED 41
+#define AEC_BG_GREEN 42
+#define AEC_BG_YELLOW 43
+#define AEC_BG_BLUE 44
+#define AEC_BG_MAGENTA 45
+#define AEC_BG_CYAN 46
+#define AEC_BG_WHITE 47
+#define AEC_BG_BLACK_BRIGHT 100
+#define AEC_BG_RED_BRIGHT 101
+#define AEC_BG_GREEN_BRIGHT 102
+#define AEC_BG_YELLOW_BRIGHT 103
+#define AEC_BG_BLUE_BRIGHT 104
+#define AEC_BG_MAGENTA_BRIGHT 105
+#define AEC_BG_CYAN_BRIGHT 106
+#define AEC_BG_WHITE_BRIGHT 107
 
 namespace util {
 	namespace io {
@@ -87,7 +88,7 @@ namespace util {
 
 		void erase_line ();
 
-		void reset_style ();
+		void style_set (const int style);
 
 		void get_win_size (int& rows, int& cols);
 

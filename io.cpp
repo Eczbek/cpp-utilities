@@ -59,8 +59,8 @@ void util::io::erase_line () {
 	std::cout << "\033[2K";
 }
 
-void util::io::reset_style () {
-	std::cout << "\033[0m";
+void util::io::style_set (const int style) {
+	std::cout << "\033[" << style << 'm';
 }
 
 void util::io::cursor::get_pos (int& row, int& col) {
