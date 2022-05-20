@@ -45,22 +45,6 @@
 #define AEC_BG_MAGENTA_BRIGHT "\033[105m"
 #define AEC_BG_CYAN_BRIGHT "\033[106m"
 #define AEC_BG_WHITE_BRIGHT "\033[107m"
-#define AEC_RESET_ALL "\033[0m"
-#define AEC_RESET_FG "\033[39m"
-#define AEC_RESET_BG "\033[49m"
-#define AEC_RESET_EF_BOLD "\033[22m"
-#define AEC_RESET_EF_DIM "\033[22m"
-#define AEC_RESET_EF_ITALIC "\033[23m"
-#define AEC_RESET_EF_UNDERLINE "\033[24m"
-#define AEC_RESET_EF_BLINK "\033[25m"
-#define AEC_RESET_EF_REVERSE "\033[27m"
-#define AEC_RESET_EF_HIDDEN "\033[28m"
-#define AEC_RESET_EF_STRIKETHROUGH "\033[29m"
-#define AEC_RESET_EF_UNDERLINE_DOUBLE "\033[24m"
-#define AEC_ERASE_ALL "\033[2J"
-#define AEC_ERASE_LINE "\033[2K"
-#define AEC_CURSOR_HIDE "\033[?25l"
-#define AEC_CURSOR_SHOW "\033[?25h"
 
 namespace util {
 	namespace io {
@@ -97,19 +81,20 @@ namespace util {
 			return input;
 		}
 
-		std::string string_read ();
+		std::string string_read (const int chunkSize = 1);
+
+		void erase_all ();
+
+		void erase_line ();
+
+		void reset_style ();
+
+		void get_win_size (int& rows, int& cols);
 
 		namespace cursor {
-			struct pos {
-				int row;
-				int col;
-			};
+			void get_pos (int& row, int& col);
 
-			util::io::cursor::pos get_pos ();
-
-			util::io::cursor::pos get_max_pos ();
-
-			void set_pos (const util::io::cursor::pos position);
+			void set_pos (const int row, const int col);
 
 			enum direction {
 				UP = 'A',
@@ -119,6 +104,10 @@ namespace util {
 			};
 
 			void move (const char direction, const int count = 1);
+
+			void hide ();
+
+			void show ();
 		}
 	}
 }
