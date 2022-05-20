@@ -22,7 +22,11 @@ namespace util {
 
 		template <typename Number>
 		int sign (const Number value) {
-			return value > 0 ? 1 : value < 0 ? -1 : 0;
+			return value > 0
+				? 1
+				: value < 0
+					? -1
+					: 0;
 		}
 
 		template <typename Number>
@@ -32,7 +36,7 @@ namespace util {
 
 		template <typename Number>
 		Number deg_to_rad (const Number degrees) {
-			return degrees * M_PI / 180.0;
+			return degrees / 180.0 * M_PI;
 		}
 
 		template <typename Number>

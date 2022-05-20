@@ -56,7 +56,9 @@ std::optional<util::geom::point> util::geom::line::intersection (const util::geo
 
 bool util::geom::line::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
-	return std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y);
+	return std::isinf(slope)
+		? point.x == start.x
+		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y);
 }
 
 util::geom::ray::ray (const util::geom::point& start, const util::geom::point& end)
@@ -73,7 +75,15 @@ bool util::geom::ray::operator!= (const util::geom::ray& ray) const {
 
 bool util::geom::ray::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
-	return (std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y)) && (start.x <= end.x ? point.x >= start.x : point.x <= start.x) && (start.y <= end.y ? point.y >= start.y : point.y <= start.y);
+	return (std::isinf(slope)
+		? point.x == start.x
+		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y))
+		&& (start.x <= end.x
+			? point.x >= start.x
+			: point.x <= start.x)
+		&& (start.y <= end.y
+			? point.y >= start.y
+			: point.y <= start.y);
 }
 
 util::geom::segment::segment (const util::geom::point& start, const util::geom::point& end)
@@ -94,7 +104,15 @@ double util::geom::segment::length () const {
 
 bool util::geom::segment::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
-	return (std::isinf(slope) ? point.x == start.x : util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y)) && (start.x < end.x ? point.x >= start.x && point.x <= end.x : point.x <= start.x && point.x >= end.x) && (start.y < end.y ? point.y >= start.y && point.y <= end.y : point.y <= start.y && point.y >= end.y);
+	return (std::isinf(slope)
+		? point.x == start.x
+		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y))
+		&& (start.x < end.x
+			? point.x >= start.x && point.x <= end.x
+			: point.x <= start.x && point.x >= end.x)
+		&& (start.y < end.y
+			? point.y >= start.y && point.y <= end.y
+			: point.y <= start.y && point.y >= end.y);
 }
 
 util::geom::polygon::polygon (const std::vector<util::geom::point>& points)
