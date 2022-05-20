@@ -63,6 +63,13 @@ void util::io::style_set (const int style) {
 	std::cout << "\033[" << style << 'm';
 }
 
+void util::io::get_win_size (int& rows, int& cols) {
+	winsize size;
+	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
+	rows = size.ws_row;
+	cols = size.ws_col;
+}
+
 void util::io::cursor::get_pos (int& row, int& col) {
 	util::io::raw_lock rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
@@ -71,13 +78,6 @@ void util::io::cursor::get_pos (int& row, int& col) {
 	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
 		buffer += input;
 	sscanf(&buffer[0], "\033[%d;%dR", &row, &col);
-}
-
-void util::io::cursor::get_win_size (int& rows, int& cols) {
-	winsize size;
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
-	rows = size.ws_row;
-	cols = size.ws_col;
 }
 
 void util::io::cursor::set_pos (const int row, const int col) {
