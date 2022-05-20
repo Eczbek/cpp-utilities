@@ -55,11 +55,11 @@ namespace util {
 			const auto getIndex = [&](const char digit) -> int& {
 				return digitsMap[digit - std::numeric_limits<char>::min()];
 			};
-			for (int i = 0; i < digits.length(); ++i)
+			for (std::size_t i = 0; i < digits.length(); ++i)
 				getIndex(digits[i]) = i;
 			Number result = 0;
 			int power = 1;
-			for (int i = value.length() - 1; i >= 0; --i) {
+			for (std::size_t i = value.length() - 1; i >= 0; --i) {
 				result += getIndex(value[i]) * power;
 				power *= base;
 			}

@@ -129,7 +129,7 @@ bool util::geom::polygon::operator!= (const util::geom::polygon& polygon) const 
 
 double util::geom::polygon::area () const {
 	double area = 0;
-	for (int i = 0; i < points.size(); ++i) {
+	for (std::size_t i = 0; i < points.size(); ++i) {
 		const util::geom::point& current = points[i];
 		const util::geom::point& next = points[(i + 1) % points.size()];
 		area += current.x * next.y - next.x * current.y;
@@ -139,7 +139,7 @@ double util::geom::polygon::area () const {
 
 double util::geom::polygon::perimeter () const {
 	double perimeter = 0;
-	for (int i = 0; i < points.size(); ++i) {
+	for (std::size_t i = 0; i < points.size(); ++i) {
 		const util::geom::point& current = points[i];
 		const util::geom::point& next = points[(i + 1) % points.size()];
 		perimeter += std::hypot(current.x - next.x, current.y - next.y);
@@ -149,8 +149,8 @@ double util::geom::polygon::perimeter () const {
 
 bool util::geom::polygon::contains (const util::geom::point& point) const {
 	util::geom::ray ray(point, { point.x + 1, point.y });
-	int intersections = 0;
-	for (int i = 0; i < points.size(); ++i)
+	std::size_t intersections = 0;
+	for (std::size_t i = 0; i < points.size(); ++i)
 		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
 	return intersections % 2;
 }
