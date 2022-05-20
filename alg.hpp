@@ -1,28 +1,8 @@
 #pragma once
-#include "./math.hpp"
 #include <random>
 
 namespace util {
 	namespace alg {
-		template <typename Iterator, class Callback>
-		Iterator binary_search (Iterator begin, Iterator end, const Callback& getSearchDirection) {
-			const Iterator temp = end;
-			while (true) {
-				Iterator middle = begin;
-				const typename std::iterator_traits<Iterator>::difference_type size = std::distance(begin, end);
-				std::advance(middle, size / 2);
-				const int check = util::math::sign(getSearchDirection(*middle));
-				if (!check)
-					return middle;
-				if (size < 2)
-					return temp;
-				if (check < 0)
-					begin = ++middle;
-				else
-					end = middle;
-			}
-		}
-
 		template <typename Iterator, typename RandomGenerator>
 		void shuffle (Iterator begin, const Iterator end, RandomGenerator randomGenerator) {
 			for (typename std::iterator_traits<Iterator>::difference_type size = std::distance(begin, end); begin != end; ++begin) {
