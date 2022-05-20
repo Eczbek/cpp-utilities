@@ -24,3 +24,9 @@ std::vector<std::string> util::str::split (const std::string& string, const char
 	segments.push_back(string.substr(i));
 	return segments;
 }
+
+std::string util::str::truncate (const std::string& string, const std::size_t& length, const std::string& suffix) {
+	return string.length() <= length
+		? string
+		: string.substr(0, length - suffix.length()) + suffix;
+}
