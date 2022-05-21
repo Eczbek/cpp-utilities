@@ -59,8 +59,8 @@ namespace util {
 				getIndex(digits[i]) = i;
 			Number result = 0;
 			int power = 1;
-			for (std::size_t i = value.length() - 1; i >= 0; --i) {
-				result += getIndex(value[i]) * power;
+			for (std::size_t i = value.length(); i > 0; --i) {
+				result += getIndex(value[i - 1]) * power;
 				power *= base;
 			}
 			return result;

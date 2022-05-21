@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <cmath>
-#include <string_view>
+#include <string>
 #include <unordered_map>
 
 namespace util {
@@ -46,8 +46,8 @@ namespace util {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = 0; y < values[0].size(); ++y) {
 				std::vector<Value> row;
-				for (std::size_t x = values.size() - 1; x >= 0; --x)
-					row.push_back(values[x][y]);
+				for (std::size_t x = values.size(); x > 0; --x)
+					row.push_back(values[x - 1][y]);
 				rotated.push_back(row);
 			}
 			return rotated;
