@@ -49,21 +49,21 @@
 
 namespace util {
 	namespace io {
-		class raw_lock {
+		class lock_raw {
 			private:
 				termios cooked;
 
 			public:
-				raw_lock ();
+				lock_raw ();
 
-				~raw_lock ();
+				~lock_raw ();
 		};
 
-		class nonblock_lock {
+		class lock_nonblock {
 			public:
-				nonblock_lock ();
+				lock_nonblock ();
 
-				~nonblock_lock ();
+				~lock_nonblock ();
 		};
 
 		void ignore (const char until = 0);
@@ -74,8 +74,8 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout (const Duration timeout, const char defaultChar = 0) {
-			util::io::raw_lock rawLock;
-			util::io::nonblock_lock nonblockLock;
+			util::io::lock_raw rawLock;
+			util::io::lock_nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1);

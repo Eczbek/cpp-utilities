@@ -7,7 +7,7 @@ util::geom::point::point (double x, double y)
 {}
 
 bool util::geom::point::operator== (const util::geom::point& point) const {
-	return util::math::approx_eq(x, point.x) && util::math::approx_eq(y, point.y);
+	return util::math::approx_equal(x, point.x) && util::math::approx_equal(y, point.y);
 }
 
 bool util::geom::point::operator!= (const util::geom::point& point) const {
@@ -30,12 +30,12 @@ double util::geom::line::slope () const {
 	return (start.y - end.y) / (start.x - end.x);
 }
 
-double util::geom::line::radians () const {
+double util::geom::line::angle_rad () const {
 	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + M_TAU, M_PI);
 }
 
-double util::geom::line::degrees () const {
-	return util::math::rad_to_deg(radians());
+double util::geom::line::angle_deg () const {
+	return util::math::rad_to_deg(angle_rad());
 }
 
 std::optional<util::geom::point> util::geom::line::intersection (const util::geom::line& line) const {
@@ -58,7 +58,7 @@ bool util::geom::line::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
 	return std::isinf(slope)
 		? point.x == start.x
-		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y);
+		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y);
 }
 
 util::geom::ray::ray (const util::geom::point& start, const util::geom::point& end)
@@ -77,7 +77,7 @@ bool util::geom::ray::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
 		? point.x == start.x
-		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y))
+		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y))
 		&& (start.x <= end.x
 			? point.x >= start.x
 			: point.x <= start.x)
@@ -106,7 +106,7 @@ bool util::geom::segment::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
 		? point.x == start.x
-		: util::math::approx_eq(point.y, point.x * slope - start.x * slope + start.y))
+		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y))
 		&& (start.x < end.x
 			? point.x >= start.x && point.x <= end.x
 			: point.x <= start.x && point.x >= end.x)

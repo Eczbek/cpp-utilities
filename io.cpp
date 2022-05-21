@@ -3,47 +3,47 @@
 #include <sys/ioctl.h>
 #include <iostream>
 
-util::io::raw_lock::raw_lock () {
+util::io::lock_raw::lock_raw () {
 	tcgetattr(STDIN_FILENO, &cooked);
 	termios raw = cooked;
 	cfmakeraw(&raw);
 	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
 
-util::io::raw_lock::~raw_lock () {
+util::io::lock_raw::~lock_raw () {
 	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
 }
 
-util::io::nonblock_lock::nonblock_lock () {
+util::io::lock_nonblock::lock_nonblock () {
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
 }
 
-util::io::nonblock_lock::~nonblock_lock () {
+util::io::lock_nonblock::~lock_nonblock () {
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
 }
 
 void util::io::ignore (const char until) {
-	util::io::nonblock_lock nonblockLock;
+	util::io::lock_nonblock nonblockLock;
 	char input;
 	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
 char util::io::char_wait () {
-	util::io::raw_lock rawLock;
+	util::io::lock_raw rawLock;
 	return getchar();
 }
 
 char util::io::char_read (const char defaultChar) {
-	util::io::raw_lock rawLock;
-	util::io::nonblock_lock nonblockLock;
+	util::io::lock_raw rawLock;
+	util::io::lock_nonblock nonblockLock;
 	char input = defaultChar;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
 std::string util::io::string_read (const int chunkSize) {
-	util::io::raw_lock rawLock;
-	util::io::nonblock_lock nonblockLock;
+	util::io::lock_raw rawLock;
+	util::io::lock_nonblock nonblockLock;
 	std::string result;
 	char input;
 	while (read(STDIN_FILENO, &input, chunkSize) == 1)
@@ -71,7 +71,7 @@ void util::io::get_win_size (int& rows, int& cols) {
 }
 
 void util::io::cursor::get_pos (int& row, int& col) {
-	util::io::raw_lock rawLock;
+	util::io::lock_raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
 	char input;

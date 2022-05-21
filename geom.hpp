@@ -29,9 +29,9 @@ namespace util {
 
 				double slope () const;
 
-				double radians () const;
+				double angle_rad () const;
 
-				double degrees () const;
+				double angle_deg () const;
 
 				std::optional<util::geom::point> intersection (const util::geom::line& line) const;
 

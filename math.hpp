@@ -16,7 +16,7 @@ namespace util {
 		}
 
 		template <typename Number>
-		bool approx_eq (const Number value1, const Number value2, const double absoluteEpsilon = 1e-12, const double relativeEpsilon = 1e-8) {
+		bool approx_equal (const Number value1, const Number value2, const double absoluteEpsilon = 1e-12, const double relativeEpsilon = 1e-8) {
 			return std::abs(value1 - value2) <= std::fmin(absoluteEpsilon, std::fmax(std::abs(value1), std::abs(value2)) * relativeEpsilon);
 		}
 

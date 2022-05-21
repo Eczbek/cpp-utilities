@@ -13,7 +13,7 @@ namespace util {
 		}
 
 		template <typename Iterator1, typename Iterator2>
-		bool match_rotated (Iterator1 begin1, const Iterator1 end1, const Iterator2 begin2, const Iterator2 end2) {
+		bool rotated_match (Iterator1 begin1, const Iterator1 end1, const Iterator2 begin2, const Iterator2 end2) {
 			const typename std::iterator_traits<Iterator1>::difference_type size = std::distance(begin1, end1);
 			if (size != std::distance(begin2, end2))
 				return false;
