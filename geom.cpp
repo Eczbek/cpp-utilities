@@ -120,7 +120,7 @@ util::geom::polygon::polygon (const std::vector<util::geom::point>& points)
 {}
 
 bool util::geom::polygon::operator== (const util::geom::polygon& polygon) const {
-	return util::alg::match_rotated(points.begin(), points.end(), polygon.points.begin(), polygon.points.end()) || util::alg::match_rotated(points.rbegin(), points.rend(), polygon.points.begin(), polygon.points.end());
+	return util::alg::rotated_match(points.begin(), points.end(), polygon.points.begin(), polygon.points.end()) || util::alg::rotated_match(points.rbegin(), points.rend(), polygon.points.begin(), polygon.points.end());
 }
 
 bool util::geom::polygon::operator!= (const util::geom::polygon& polygon) const {
