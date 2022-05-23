@@ -1,7 +1,8 @@
 #include "./geom.hpp"
 
-#include "./math.hpp"
 #include "./alg.hpp"
+#include "./math.hpp"
+#include "./num.hpp"
 
 
 util::geom::point::point (double x, double y)
@@ -33,7 +34,7 @@ double util::geom::line::slope () const {
 }
 
 double util::geom::line::angle_rad () const {
-	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + util::math::tau, std::numbers::pi);
+	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + util::num::tau, std::numbers::pi);
 }
 
 double util::geom::line::angle_deg () const {
@@ -75,7 +76,7 @@ bool util::geom::ray::operator!= (const util::geom::ray& other) const {
 	return !operator==(other);
 }
 
-bool util::geom::ray::contains (const util::geom::point& point) const {
+bool util::geom::ray::contains (const util::geom::point& other) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
 		? other.x == start.x
@@ -149,11 +150,11 @@ double util::geom::polygon::perimeter () const {
 	return perimeter;
 }
 
-bool util::geom::polygon::contains (const util::geom::point& other) const {
-	util::geom::ray ray(point, { other.x + 1, other.y });
+bool util::geom::polygon::contains (const util::geom::point& point) const {
+	util::geom::ray ray(point, { point.x + 1, point.y });
 	std::size_t intersections = 0;
 	for (std::size_t i = 0; i < points.size(); ++i)
-		intersections += other.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
+		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
 	return intersections % 2;
 }
 
