@@ -65,9 +65,9 @@ namespace util {
 
 			enum directions: char {
 				UP = 'A',
-				DOWN = 'B',
-				RIGHT = 'C',
-				LEFT = 'D'
+				DOWN,
+				RIGHT,
+				LEFT
 			};
 
 			void move (const char direction, const int count = 1);
@@ -79,7 +79,7 @@ namespace util {
 	}
 }
 
-enum styles: int {
+enum styles {
 	STYLE_RESET = 0,
 	STYLE_EF_BOLD,
 	STYLE_EF_DIM,
