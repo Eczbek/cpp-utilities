@@ -48,13 +48,13 @@ std::string util::str::trim_right (const std::string& string, const char charact
 
 std::string util::str::trim_left (const std::string& string, const std::string_view& characters) {
 	std::array<bool, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> charMap;
-	const auto getChar = [&](const char character) -> bool& {
+	const auto hasChar = [&](const char character) -> bool& {
 		return charMap[character - std::numeric_limits<char>::min()];
 	};
 	for (const char character : characters)
-		getChar(character) = true;
+		hasChar(character) = true;
 	for (std::size_t i = 0; i < string.length(); ++i)
-		if (!getChar(string[i]))
+		if (!hasChar(string[i]))
 			return string.substr(i);
 	return "";
 }
