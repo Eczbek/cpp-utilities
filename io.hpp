@@ -72,7 +72,7 @@ namespace util {
 
 		void ignore (const char until = 0);
 
-		void ignore (const long characters);
+		void ignore (long characters);
 
 		char char_wait ();
 
