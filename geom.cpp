@@ -6,24 +6,24 @@ util::geom::point::point (double x, double y)
 	: x(x), y(y)
 {}
 
-bool util::geom::point::operator== (const util::geom::point& point) const {
-	return util::math::approx_equal(x, point.x) && util::math::approx_equal(y, point.y);
+bool util::geom::point::operator== (const util::geom::point& other) const {
+	return util::math::approx_equal(x, other.x) && util::math::approx_equal(y, other.y);
 }
 
-bool util::geom::point::operator!= (const util::geom::point& point) const {
-	return !operator==(point);
+bool util::geom::point::operator!= (const util::geom::point& other) const {
+	return !operator==(other);
 }
 
 util::geom::line::line (const util::geom::point& start, const util::geom::point& end)
 	: start(start), end(end)
 {}
 
-bool util::geom::line::operator== (const util::geom::line& line) const {
-	return slope() == line.slope() && contains(line.start);
+bool util::geom::line::operator== (const util::geom::line& other) const {
+	return slope() == other.slope() && contains(other.start);
 }
 
-bool util::geom::line::operator!= (const util::geom::line& line) const {
-	return !operator==(line);
+bool util::geom::line::operator!= (const util::geom::line& other) const {
+	return !operator==(other);
 }
 
 double util::geom::line::slope () const {
@@ -38,93 +38,93 @@ double util::geom::line::angle_deg () const {
 	return util::math::rad_to_deg(angle_rad());
 }
 
-std::optional<util::geom::point> util::geom::line::intersection (const util::geom::line& line) const {
+std::optional<util::geom::point> util::geom::line::intersection (const util::geom::line& other) const {
 	const double a = start.x - end.x;
 	const double b = start.y - end.y;
-	const double c = line.start.x - line.end.x;
-	const double d = line.start.y - line.end.y;
+	const double c = other.start.x - other.end.x;
+	const double d = other.start.y - other.end.y;
 	const double e = a * d - b * c;
 	if (e) {
 		const double f = start.x * end.y - start.y * end.x;
-		const double g = line.start.x * line.end.y - line.start.y * line.end.x;
+		const double g = other.start.x * other.end.y - other.start.y * other.end.x;
 		const util::geom::point intersection((c * f - a * g) / e, (d * f - b * g) / e);
-		if (contains(intersection) && line.contains(intersection))
+		if (contains(intersection) && other.contains(intersection))
 			return intersection;
 	}
 	return std::nullopt;
 }
 
-bool util::geom::line::contains (const util::geom::point& point) const {
+bool util::geom::line::contains (const util::geom::point& other) const {
 	const double slope = this->slope();
 	return std::isinf(slope)
-		? point.x == start.x
-		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y);
+		? other.x == start.x
+		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y);
 }
 
 util::geom::ray::ray (const util::geom::point& start, const util::geom::point& end)
 	: util::geom::line(start, end)
 {}
 
-bool util::geom::ray::operator== (const util::geom::ray& ray) const {
-	return start == ray.start && contains(ray.end);
+bool util::geom::ray::operator== (const util::geom::ray& other) const {
+	return start == other.start && contains(other.end);
 }
 
-bool util::geom::ray::operator!= (const util::geom::ray& ray) const {
-	return !operator==(ray);
+bool util::geom::ray::operator!= (const util::geom::ray& other) const {
+	return !operator==(other);
 }
 
 bool util::geom::ray::contains (const util::geom::point& point) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
-		? point.x == start.x
-		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y))
+		? other.x == start.x
+		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
 		&& (start.x <= end.x
-			? point.x >= start.x
-			: point.x <= start.x)
+			? other.x >= start.x
+			: other.x <= start.x)
 		&& (start.y <= end.y
-			? point.y >= start.y
-			: point.y <= start.y);
+			? other.y >= start.y
+			: other.y <= start.y);
 }
 
 util::geom::segment::segment (const util::geom::point& start, const util::geom::point& end)
 	: util::geom::line(start, end)
 {}
 
-bool util::geom::segment::operator== (const util::geom::segment& segment) const {
-	return start == segment.start && end == segment.end || start == segment.end && end == segment.start;
+bool util::geom::segment::operator== (const util::geom::segment& other) const {
+	return start == other.start && end == other.end || start == other.end && end == other.start;
 }
 
-bool util::geom::segment::operator!= (const util::geom::segment& segment) const {
-	return !operator==(segment);
+bool util::geom::segment::operator!= (const util::geom::segment& other) const {
+	return !operator==(other);
 }
 
 double util::geom::segment::length () const {
 	return std::hypot(start.x - end.x, start.y - end.y);
 }
 
-bool util::geom::segment::contains (const util::geom::point& point) const {
+bool util::geom::segment::contains (const util::geom::point& other) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
-		? point.x == start.x
-		: util::math::approx_equal(point.y, point.x * slope - start.x * slope + start.y))
+		? other.x == start.x
+		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
 		&& (start.x < end.x
-			? point.x >= start.x && point.x <= end.x
-			: point.x <= start.x && point.x >= end.x)
+			? other.x >= start.x && other.x <= end.x
+			: other.x <= start.x && other.x >= end.x)
 		&& (start.y < end.y
-			? point.y >= start.y && point.y <= end.y
-			: point.y <= start.y && point.y >= end.y);
+			? other.y >= start.y && other.y <= end.y
+			: other.y <= start.y && other.y >= end.y);
 }
 
 util::geom::polygon::polygon (const std::vector<util::geom::point>& points)
 	: points(points)
 {}
 
-bool util::geom::polygon::operator== (const util::geom::polygon& polygon) const {
-	return util::alg::rotated_match(points.begin(), points.end(), polygon.points.begin(), polygon.points.end()) || util::alg::rotated_match(points.rbegin(), points.rend(), polygon.points.begin(), polygon.points.end());
+bool util::geom::polygon::operator== (const util::geom::polygon& other) const {
+	return util::alg::rotated_match(points.begin(), points.end(), other.points.begin(), other.points.end()) || util::alg::rotated_match(points.rbegin(), points.rend(), other.points.begin(), other.points.end());
 }
 
-bool util::geom::polygon::operator!= (const util::geom::polygon& polygon) const {
-	return !operator==(polygon);
+bool util::geom::polygon::operator!= (const util::geom::polygon& other) const {
+	return !operator==(other);
 }
 
 double util::geom::polygon::area () const {
@@ -147,11 +147,11 @@ double util::geom::polygon::perimeter () const {
 	return perimeter;
 }
 
-bool util::geom::polygon::contains (const util::geom::point& point) const {
-	util::geom::ray ray(point, { point.x + 1, point.y });
+bool util::geom::polygon::contains (const util::geom::point& other) const {
+	util::geom::ray ray(point, { other.x + 1, other.y });
 	std::size_t intersections = 0;
 	for (std::size_t i = 0; i < points.size(); ++i)
-		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
+		intersections += other.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
 	return intersections % 2;
 }
 
@@ -159,12 +159,12 @@ util::geom::rectangle::rectangle (const util::geom::point& corner1, const util::
 	: util::geom::polygon({ corner1, { corner2.x, corner1.y }, corner2, { corner1.x, corner2.y } })
 {}
 
-bool util::geom::rectangle::operator== (const util::geom::rectangle& rectangle) const {
-	return points[0] == rectangle.points[0] && points[2] == rectangle.points[2] || points[0] == rectangle.points[2] && points[2] == rectangle.points[0];
+bool util::geom::rectangle::operator== (const util::geom::rectangle& other) const {
+	return points[0] == other.points[0] && points[2] == other.points[2] || points[0] == other.points[2] && points[2] == other.points[0];
 }
 
-bool util::geom::rectangle::operator!= (const util::geom::rectangle& rectangle) const {
-	return !operator==(rectangle);
+bool util::geom::rectangle::operator!= (const util::geom::rectangle& other) const {
+	return !operator==(other);
 }
 
 double util::geom::rectangle::width () const {
@@ -183,6 +183,6 @@ double util::geom::rectangle::perimeter () const {
 	return 2 * (width() + height());
 }
 
-bool util::geom::rectangle::contains (const util::geom::point& point) const {
-	return (point.x >= points[0].x && point.x <= points[2].x || point.x <= points[0].x && point.x >= points[2].x) && (point.y >= points[0].y && point.y <= points[2].y || point.y <= points[0].y && point.y >= points[2].y);
+bool util::geom::rectangle::contains (const util::geom::point& other) const {
+	return (other.x >= points[0].x && other.x <= points[2].x || other.x <= points[0].x && other.x >= points[2].x) && (other.y >= points[0].y && other.y <= points[2].y || other.y <= points[0].y && other.y >= points[2].y);
 }
