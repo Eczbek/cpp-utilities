@@ -10,18 +10,18 @@
 namespace util {
 	namespace math {
 		template <typename Number>
-		Number wrap (const Number value, const Number min, const Number max) {
+		Number wrap(const Number value, const Number min, const Number max) {
 			const Number diff = max - min;
 			return std::fmod(std::fmod(value - min, diff) + diff, diff) + min;
 		}
 
 		template <typename Number>
-		bool approx_equal (const Number value1, const Number value2, const int precision = 12) {
+		bool approx_equal(const Number value1, const Number value2, const int precision = 12) {
 			return std::fabs(value1 - value2) <= std::numeric_limits<Number>::epsilon() * std::fabs(value1 + value2) * precision || std::fabs(value1 - value2) < std::numeric_limits<Number>::min();
 		}
 
 		template <typename Number>
-		int sign (const Number value) {
+		int sign(const Number value) {
 			return value > 0
 				? 1
 				: value < 0
@@ -30,17 +30,17 @@ namespace util {
 		}
 
 		template <typename Number>
-		Number rad_to_deg (const Number radians) {
+		Number rad_to_deg(const Number radians) {
 			return radians * 180.0 / M_PI;
 		}
 
 		template <typename Number>
-		Number deg_to_rad (const Number degrees) {
+		Number deg_to_rad(const Number degrees) {
 			return degrees / 180.0 * M_PI;
 		}
 
 		template <typename Number>
-		std::string base_to (Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		std::string base_to(Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -50,7 +50,7 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number base_from (const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number base_from(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::array<int, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> digitsMap;
 			const auto getIndex = [&](const char digit) -> int& {
 				return digitsMap[digit - std::numeric_limits<char>::min()];

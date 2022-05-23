@@ -9,7 +9,7 @@
 namespace util {
 	namespace vect {
 		template <typename Value>
-		std::vector<std::vector<Value>> chunk (const std::vector<Value>& values, const int chunkSize, const bool overflow = true) {
+		std::vector<std::vector<Value>> chunk(const std::vector<Value>& values, const int chunkSize, const bool overflow = true) {
 			std::vector<std::vector<Value>> chunks;
 			std::size_t i = 0;
 			while (true) {
@@ -22,7 +22,7 @@ namespace util {
 		}
 
 		template <typename Value, class Callback>
-		std::vector<std::vector<Value>> chunk (const std::vector<Value>& values, const Callback& getChunkSize, const bool overflow = true) {
+		std::vector<std::vector<Value>> chunk(const std::vector<Value>& values, const Callback& getChunkSize, const bool overflow = true) {
 			std::vector<std::vector<Value>> chunks;
 			std::size_t i = 0;
 			while (true) {
@@ -36,7 +36,7 @@ namespace util {
 		}
 		
 		template <typename Key = std::string, typename Value, class Callback>
-		std::unordered_map<Key, std::vector<Value>> group (const std::vector<Value>& values, const Callback& getGroup) {
+		std::unordered_map<Key, std::vector<Value>> group(const std::vector<Value>& values, const Callback& getGroup) {
 			std::unordered_map<Key, std::vector<Value>> groups;
 			for (std::size_t i = 0; i < values.size(); ++i)
 				groups[getGroup(values[i], i)].push_back(values[i]);
@@ -44,7 +44,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotate_cw (const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotate_cw(const std::vector<std::vector<Value>>& values) {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = 0; y < values[0].size(); ++y) {
 				std::vector<Value> row;
@@ -56,7 +56,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotate_ccw (const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotate_ccw(const std::vector<std::vector<Value>>& values) {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = values[0].size() - 1; y >= 0; --y) {
 				std::vector<Value> row;

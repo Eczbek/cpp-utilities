@@ -13,7 +13,7 @@ namespace util {
 		constexpr std::array<std::string_view, 7> WEEK_DAYS_SHORT { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
 		template <typename Duration = std::chrono::nanoseconds>
-		long now () {
+		long now() {
 			return std::chrono::duration_cast<Duration>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
 		}
 	}

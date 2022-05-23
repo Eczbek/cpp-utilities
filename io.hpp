@@ -9,34 +9,31 @@
 namespace util {
 	namespace io {
 		namespace lock {
-			class raw {
-				private:
-					termios cooked;
+			struct raw {
+				termios cooked;
 
-				public:
-					raw ();
+				raw();
 
-					~raw ();
+				~raw();
 			};
 
-			class nonblock {
-				public:
-					nonblock ();
+			struct nonblock {
+				nonblock();
 
-					~nonblock ();
+				~nonblock();
 			};
 		};
 
-		void ignore (const char until = 0);
+		void ignore(const char until = 0);
 
-		void ignore (long characters);
+		void ignore(long characters);
 
-		char char_wait ();
+		char char_wait();
 
-		char char_read (const char defaultChar = 0);
+		char char_read(const char defaultChar = 0);
 
 		template <typename Duration>
-		char char_timeout (const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
+		char char_timeout(const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
 			util::io::lock::raw rawLock;
 			util::io::lock::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
@@ -48,20 +45,20 @@ namespace util {
 			return input;
 		}
 
-		std::string string_read ();
+		std::string string_read();
 
-		void erase_all ();
+		void erase_all();
 
-		void erase_line ();
+		void erase_line();
 
-		void style_set (const int style);
+		void style_set(const int style);
 
-		void get_win_size (int& rows, int& cols);
+		void get_win_size(int& rows, int& cols);
 
 		namespace cursor {
-			void get_pos (int& row, int& col);
+			void get_pos(int& row, int& col);
 
-			void set_pos (const int row, const int col);
+			void set_pos(const int row, const int col);
 
 			enum directions: char {
 				UP = 'A',
@@ -70,11 +67,11 @@ namespace util {
 				LEFT
 			};
 
-			void move (const char direction, const int count = 1);
+			void move(const char direction, const int count = 1);
 
-			void hide ();
+			void hide();
 
-			void show ();
+			void show();
 		}
 	}
 }
