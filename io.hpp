@@ -56,9 +56,9 @@ namespace util {
 		void get_win_size(int& rows, int& cols);
 
 		namespace cursor {
-			void get_pos(int& row, int& col);
+			void get(int& row, int& col);
 
-			void set_pos(const int row, const int col);
+			void set(const int row, const int col);
 
 			enum directions: char {
 				UP = 'A',
