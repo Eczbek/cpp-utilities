@@ -1,8 +1,8 @@
 #pragma once
-#include <termios.h>
 #include <unistd.h>
 #include <thread>
 #include <string>
+#include <termios.h>
 
 #define STYLE_RESET 0
 #define STYLE_EF_BOLD 1
@@ -49,23 +49,6 @@
 
 namespace util {
 	namespace io {
-		class lock_raw {
-			private:
-				termios cooked;
-
-			public:
-				lock_raw ();
-
-				~lock_raw ();
-		};
-
-		class lock_nonblock {
-			public:
-				lock_nonblock ();
-
-				~lock_nonblock ();
-		};
-
 		void ignore (const char until = 0);
 
 		char char_wait ();
@@ -74,8 +57,8 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout (const Duration timeout, const char defaultChar = 0) {
-			util::io::lock_raw rawLock;
-			util::io::lock_nonblock nonblockLock;
+			util::io::lock::raw rawLock;
+			util::io::lock::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1);
@@ -110,5 +93,24 @@ namespace util {
 
 			void show ();
 		}
+
+		namespace lock {
+			class raw {
+				private:
+					termios cooked;
+
+				public:
+					raw ();
+
+					~raw ();
+			};
+
+			class nonblock {
+				public:
+					nonblock ();
+
+					~nonblock ();
+			};
+		};
 	}
 }

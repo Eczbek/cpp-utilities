@@ -1,49 +1,30 @@
 #include "./io.hpp"
-#include <fcntl.h>
 #include <sys/ioctl.h>
 #include <iostream>
-
-util::io::lock_raw::lock_raw () {
-	tcgetattr(STDIN_FILENO, &cooked);
-	termios raw = cooked;
-	cfmakeraw(&raw);
-	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-}
-
-util::io::lock_raw::~lock_raw () {
-	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
-}
-
-util::io::lock_nonblock::lock_nonblock () {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
-}
-
-util::io::lock_nonblock::~lock_nonblock () {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
-}
+#include <fcntl.h>
 
 void util::io::ignore (const char until) {
-	util::io::lock_nonblock nonblockLock;
+	util::io::lock::nonblock nonblockLock;
 	char input;
 	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
 char util::io::char_wait () {
-	util::io::lock_raw rawLock;
+	util::io::lock::raw rawLock;
 	return getchar();
 }
 
 char util::io::char_read (const char defaultChar) {
-	util::io::lock_raw rawLock;
-	util::io::lock_nonblock nonblockLock;
+	util::io::lock::raw rawLock;
+	util::io::lock::nonblock nonblockLock;
 	char input = defaultChar;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
 std::string util::io::string_read (const int chunkSize) {
-	util::io::lock_raw rawLock;
-	util::io::lock_nonblock nonblockLock;
+	util::io::lock::raw rawLock;
+	util::io::lock::nonblock nonblockLock;
 	std::string result;
 	char input;
 	while (read(STDIN_FILENO, &input, chunkSize) == 1)
@@ -71,7 +52,7 @@ void util::io::get_win_size (int& rows, int& cols) {
 }
 
 void util::io::cursor::get_pos (int& row, int& col) {
-	util::io::lock_raw rawLock;
+	util::io::lock::raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
 	char input;
@@ -94,4 +75,23 @@ void util::io::cursor::hide () {
 
 void util::io::cursor::show () {
 	std::cout << "\033[?25h";
+}
+
+util::io::lock::raw::raw () {
+	tcgetattr(STDIN_FILENO, &cooked);
+	termios raw = cooked;
+	cfmakeraw(&raw);
+	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+util::io::lock::raw::~raw () {
+	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
+}
+
+util::io::lock::nonblock::nonblock () {
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
+}
+
+util::io::lock::nonblock::~nonblock () {
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
 }
