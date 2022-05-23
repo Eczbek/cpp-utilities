@@ -40,7 +40,7 @@ namespace util {
 		}
 
 		template <typename Number>
-		std::string to_base (const int base, Number value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		std::string base_to (Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -50,7 +50,7 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number from_base (const int base, const std::string_view& value, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number base_from (const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::array<int, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> digitsMap;
 			const auto getIndex = [&](const char digit) -> int& {
 				return digitsMap[digit - std::numeric_limits<char>::min()];
