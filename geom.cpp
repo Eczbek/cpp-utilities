@@ -33,7 +33,7 @@ double util::geom::line::slope () const {
 }
 
 double util::geom::line::angle_rad () const {
-	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + M_TAU, M_PI);
+	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + util::math::tau, std::numbers::pi);
 }
 
 double util::geom::line::angle_deg () const {
