@@ -10,9 +10,6 @@
 
 namespace util {
 	namespace math {
-		template <typename Number = double>
-		constexpr Number tau = std::numbers::pi_v<Number> * 2;
-
 		template <typename Number>
 		Number wrap (const Number value, const Number min, const Number max) {
 			const Number diff = max - min;
