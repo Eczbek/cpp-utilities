@@ -20,8 +20,8 @@ namespace util {
 		}
 
 		template <typename Number>
-		bool approx_equal (const Number value1, const Number value2, const double absoluteEpsilon = 1e-12, const double relativeEpsilon = 1e-8) {
-			return std::abs(value1 - value2) <= std::fmin(absoluteEpsilon, std::fmax(std::abs(value1), std::abs(value2)) * relativeEpsilon);
+		bool approx_equal (const Number value1, const Number value2, const int precision = 12) {
+			return std::fabs(value1 - value2) <= std::numeric_limits<Number>::epsilon() * std::fabs(value1 + value2) * precision || std::fabs(value1 - value2) < std::numeric_limits<Number>::min();
 		}
 
 		template <typename Number>
