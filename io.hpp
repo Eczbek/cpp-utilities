@@ -51,23 +51,47 @@ enum styles: int {
 
 namespace util {
 	namespace io {
+		namespace lock {
+			class raw {
+				private:
+					termios cooked;
+
+				public:
+					raw ();
+
+					~raw ();
+			};
+
+			class nonblock {
+				public:
+					nonblock ();
+
+					~nonblock ();
+			};
+		};
+
 		void ignore (const char until = 0);
+
+		void ignore (const long characters);
 
 		char char_wait ();
 
 		char char_read (const char defaultChar = 0);
 
 		template <typename Duration>
-		char char_timeout (const Duration timeout, const char defaultChar = 0) {
+		char char_timeout (const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
 			util::io::lock::raw rawLock;
 			util::io::lock::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
-			while (read(STDIN_FILENO, &input, 1) == 1);
+			do
+				read(STDIN_FILENO, &input, 1);
+			while (readLast);
+			util::io::ignore();
 			return input;
 		}
 
-		std::string string_read (const int chunkSize = 1);
+		std::string string_read ();
 
 		void erase_all ();
 
@@ -95,24 +119,5 @@ namespace util {
 
 			void show ();
 		}
-
-		namespace lock {
-			class raw {
-				private:
-					termios cooked;
-
-				public:
-					raw ();
-
-					~raw ();
-			};
-
-			class nonblock {
-				public:
-					nonblock ();
-
-					~nonblock ();
-			};
-		};
 	}
 }

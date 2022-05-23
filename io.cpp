@@ -1,7 +1,26 @@
 #include "./io.hpp"
 #include <sys/ioctl.h>
-#include <iostream>
 #include <fcntl.h>
+#include <iostream>
+
+util::io::lock::raw::raw () {
+	tcgetattr(STDIN_FILENO, &cooked);
+	termios raw = cooked;
+	cfmakeraw(&raw);
+	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+util::io::lock::raw::~raw () {
+	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
+}
+
+util::io::lock::nonblock::nonblock () {
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
+}
+
+util::io::lock::nonblock::~nonblock () {
+	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
+}
 
 void util::io::ignore (const char until) {
 	util::io::lock::nonblock nonblockLock;
@@ -9,9 +28,17 @@ void util::io::ignore (const char until) {
 	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
+void util::io::ignore (const long characters) {
+	util::io::lock::nonblock nonblockLock;
+	char input;
+	while (characters-- > 0 && read(STDIN_FILENO, &input, 1) == 1);
+}
+
 char util::io::char_wait () {
 	util::io::lock::raw rawLock;
-	return getchar();
+	char input;
+	read(STDIN_FILENO, &input, 1);
+	return input;
 }
 
 char util::io::char_read (const char defaultChar) {
@@ -22,12 +49,12 @@ char util::io::char_read (const char defaultChar) {
 	return input;
 }
 
-std::string util::io::string_read (const int chunkSize) {
+std::string util::io::string_read () {
 	util::io::lock::raw rawLock;
 	util::io::lock::nonblock nonblockLock;
 	std::string result;
 	char input;
-	while (read(STDIN_FILENO, &input, chunkSize) == 1)
+	while (read(STDIN_FILENO, &input, 1) == 1)
 		result += input;
 	return result;
 }
@@ -75,23 +102,4 @@ void util::io::cursor::hide () {
 
 void util::io::cursor::show () {
 	std::cout << "\033[?25h";
-}
-
-util::io::lock::raw::raw () {
-	tcgetattr(STDIN_FILENO, &cooked);
-	termios raw = cooked;
-	cfmakeraw(&raw);
-	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-}
-
-util::io::lock::raw::~raw () {
-	tcsetattr(STDIN_FILENO, TCSANOW, &cooked);
-}
-
-util::io::lock::nonblock::nonblock () {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
-}
-
-util::io::lock::nonblock::~nonblock () {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
 }
