@@ -63,7 +63,7 @@ namespace util {
 
 			void set_pos (const int row, const int col);
 
-			enum direction {
+			enum directions: char {
 				UP = 'A',
 				DOWN = 'B',
 				RIGHT = 'C',
