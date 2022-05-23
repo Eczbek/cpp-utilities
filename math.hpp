@@ -3,6 +3,7 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <numbers>
 #include <string>
 #include <string_view>
 
@@ -31,12 +32,12 @@ namespace util {
 
 		template <typename Number>
 		Number rad_to_deg(const Number radians) {
-			return radians * 180.0 / M_PI;
+			return radians * 180 / std::numbers::pi;
 		}
 
 		template <typename Number>
 		Number deg_to_rad(const Number degrees) {
-			return degrees / 180.0 * M_PI;
+			return degrees * std::numbers::pi / 180;
 		}
 
 		template <typename Number>
