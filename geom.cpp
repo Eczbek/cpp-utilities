@@ -1,6 +1,8 @@
 #include "./geom.hpp"
+
 #include "./math.hpp"
 #include "./alg.hpp"
+
 
 util::geom::point::point (double x, double y)
 	: x(x), y(y)

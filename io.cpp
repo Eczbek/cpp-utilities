@@ -1,7 +1,9 @@
 #include "./io.hpp"
-#include <sys/ioctl.h>
+
 #include <fcntl.h>
 #include <iostream>
+#include <sys/ioctl.h>
+
 
 util::io::lock::raw::raw () {
 	tcgetattr(STDIN_FILENO, &cooked);

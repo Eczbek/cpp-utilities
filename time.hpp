@@ -1,7 +1,9 @@
 #pragma once
+
+#include <array>
 #include <chrono>
 #include <string_view>
-#include <array>
+
 
 namespace util {
 	namespace time {

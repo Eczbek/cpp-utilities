@@ -1,6 +1,8 @@
 #pragma once
+
 #include <optional>
 #include <vector>
+
 
 namespace util {
 	namespace geom {

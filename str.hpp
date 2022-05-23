@@ -1,7 +1,9 @@
 #pragma once
+
 #include <string>
-#include <vector>
 #include <string_view>
+#include <vector>
+
 
 namespace util {
 	namespace str {

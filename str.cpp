@@ -1,6 +1,8 @@
 #include "./str.hpp"
-#include <limits>
+
 #include <array>
+#include <limits>
+
 
 std::vector<std::string> util::str::split (const std::string& string, const std::string_view& delimiter) {
 	std::vector<std::string> segments;
