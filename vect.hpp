@@ -21,7 +21,7 @@ namespace util {
 			}
 		}
 
-		template <typename Value, class Callback>
+		template <typename Value, typename Callback>
 		std::vector<std::vector<Value>> chunk(const std::vector<Value>& values, const Callback& getChunkSize, const bool overflow = true) {
 			std::vector<std::vector<Value>> chunks;
 			std::size_t i = 0;
@@ -35,7 +35,7 @@ namespace util {
 			}
 		}
 		
-		template <typename Key = std::string, typename Value, class Callback>
+		template <typename Key = std::string, typename Value, typename Callback>
 		std::unordered_map<Key, std::vector<Value>> group(const std::vector<Value>& values, const Callback& getGroup) {
 			std::unordered_map<Key, std::vector<Value>> groups;
 			for (std::size_t i = 0; i < values.size(); ++i)
