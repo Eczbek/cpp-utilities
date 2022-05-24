@@ -80,17 +80,17 @@ void util::io::get_win_size(int& rows, int& cols) {
 	cols = size.ws_col;
 }
 
-void util::io::cursor::get_pos(int& row, int& col) {
+void util::io::cursor::get(int& row, int& col) {
 	util::io::lock::raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
 	char input;
 	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
 		buffer += input;
-	sscanf(&buffer[0], "\033[%d;%dR", &row, &col);
+	sscanf(&buffer[0], "\033[%d;%d", &row, &col);
 }
 
-void util::io::cursor::set_pos(const int row, const int col) {
+void util::io::cursor::set(const int row, const int col) {
 	std::cout << "\033[" << row << ';' << col << 'H';
 }
 
