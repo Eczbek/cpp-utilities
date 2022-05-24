@@ -27,10 +27,10 @@ namespace util {
 
 		void off(const std::string& event);
 
-		template <typename... Parameters>
-		void emit(const std::string& event, Parameters... parameters) {
+		template <typename... Arguments>
+		void emit(const std::string& event, Arguments... arguments) {
 			if (events.contains(event))
-				std::any_cast<std::function<void(Parameters...)>>(events[event])(parameters...);
+				std::any_cast<std::function<void(Arguments...)>>(events[event])(arguments...);
 		}
 	};
 }
