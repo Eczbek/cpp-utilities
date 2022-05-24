@@ -5,7 +5,7 @@
 #include "./num.hpp"
 
 
-util::geom::point::point(double x, double y)
+util::geom::point::point(const double x, const double y)
 	: x(x), y(y)
 {}
 
@@ -21,6 +21,15 @@ util::geom::line::line(const util::geom::point& start, const util::geom::point& 
 	: start(start), end(end)
 {}
 
+util::geom::line::line(const util::geom::point& start, const double angleRadians)
+	: start(start)
+{
+	if (util::math::approx_equal(std::fmod(angleRadians + std::numbers::pi / 2, std::numbers::pi), 0.0))
+		end = util::geom::point(start.x, start.y - 1);
+	else 
+		end = util::geom::point(start.x + 1, std::tan(angleRadians));
+}
+
 bool util::geom::line::operator==(const util::geom::line& other) const {
 	return slope() == other.slope() && contains(other.start);
 }
@@ -30,7 +39,7 @@ bool util::geom::line::operator!=(const util::geom::line& other) const {
 }
 
 double util::geom::line::slope() const {
-	return(start.y - end.y) /(start.x - end.x);
+	return (start.y - end.y) / (start.x - end.x);
 }
 
 double util::geom::line::angle_rad() const {
@@ -60,12 +69,16 @@ std::optional<util::geom::point> util::geom::line::intersection(const util::geom
 bool util::geom::line::contains(const util::geom::point& other) const {
 	const double slope = this->slope();
 	return std::isinf(slope)
-		? other.x == start.x
+		? util::math::approx_equal(other.x, start.x)
 		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y);
 }
 
 util::geom::ray::ray(const util::geom::point& start, const util::geom::point& end)
 	: util::geom::line(start, end)
+{}
+
+util::geom::ray::ray(const util::geom::point& start, const double angleRadians)
+	: util::geom::line(start, angleRadians)
 {}
 
 bool util::geom::ray::operator==(const util::geom::ray& other) const {
@@ -78,15 +91,18 @@ bool util::geom::ray::operator!=(const util::geom::ray& other) const {
 
 bool util::geom::ray::contains(const util::geom::point& other) const {
 	const double slope = this->slope();
-	return(std::isinf(slope)
-		? other.x == start.x
+	return (std::isinf(slope)
+		? util::math::approx_equal(other.x, start.x)
+			&& slope < std::numeric_limits<double>::lowest()
+				? other.y >= start.y
+				: other.y <= start.y
 		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
-		&&(start.x <= end.x
-			? other.x >= start.x
-			: other.x <= start.x)
-		&&(start.y <= end.y
-			? other.y >= start.y
-			: other.y <= start.y);
+			&& (start.x <= end.x
+				? other.x >= start.x
+				: other.x <= start.x)
+			&& (start.y <= end.y
+				? other.y >= start.y
+				: other.y <= start.y);
 }
 
 util::geom::segment::segment(const util::geom::point& start, const util::geom::point& end)
@@ -107,15 +123,16 @@ double util::geom::segment::length() const {
 
 bool util::geom::segment::contains(const util::geom::point& other) const {
 	const double slope = this->slope();
-	return(std::isinf(slope)
-		? other.x == start.x
+	return (std::isinf(slope)
+		? util::math::approx_equal(other.x, start.x)
+			&& (other.y >= start.y && other.y <= end.y || other.y <= start.y && other.y >= end.y)
 		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
-		&&(start.x < end.x
-			? other.x >= start.x && other.x <= end.x
-			: other.x <= start.x && other.x >= end.x)
-		&&(start.y < end.y
-			? other.y >= start.y && other.y <= end.y
-			: other.y <= start.y && other.y >= end.y);
+			&& (start.x < end.x
+				? other.x >= start.x && other.x <= end.x
+				: other.x <= start.x && other.x >= end.x)
+			&& (start.y < end.y
+				? other.y >= start.y && other.y <= end.y
+				: other.y <= start.y && other.y >= end.y);
 }
 
 util::geom::polygon::polygon(const std::vector<util::geom::point>& points)
@@ -183,9 +200,10 @@ double util::geom::rectangle::area() const {
 }
 
 double util::geom::rectangle::perimeter() const {
-	return 2 *(width() + height());
+	return 2 * (width() + height());
 }
 
 bool util::geom::rectangle::contains(const util::geom::point& other) const {
-	return(other.x >= points[0].x && other.x <= points[2].x || other.x <= points[0].x && other.x >= points[2].x) &&(other.y >= points[0].y && other.y <= points[2].y || other.y <= points[0].y && other.y >= points[2].y);
+	return (other.x >= points[0].x && other.x <= points[2].x || other.x <= points[0].x && other.x >= points[2].x)
+		&& (other.y >= points[0].y && other.y <= points[2].y || other.y <= points[0].y && other.y >= points[2].y);
 }

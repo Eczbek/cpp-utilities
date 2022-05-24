@@ -10,7 +10,7 @@ namespace util {
 			double x;
 			double y;
 
-			point(double x, double y);
+			point(const double x = 0, const double y = 0);
 
 			bool operator==(const util::geom::point& point) const;
 
@@ -22,6 +22,8 @@ namespace util {
 			util::geom::point end;
 
 			line(const util::geom::point& start, const util::geom::point& end);
+
+			line(const util::geom::point& start, const double angleRadians);
 
 			bool operator==(const util::geom::line& line) const;
 
@@ -40,6 +42,8 @@ namespace util {
 
 		struct ray: util::geom::line {
 			ray(const util::geom::point& start, const util::geom::point& end);
+
+			ray(const util::geom::point& start, const double angleRadians);
 
 			bool operator==(const util::geom::ray& ray) const;
 
