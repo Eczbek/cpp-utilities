@@ -95,6 +95,8 @@ namespace util {
 			double perimiter() const;
 
 			bool contains(const util::geom::point& point) const;
+
+			std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections(const util::geom::line& line) const;
 		};
 	}
 }

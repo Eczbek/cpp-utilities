@@ -190,3 +190,20 @@ bool util::geom::ellipse::contains(const util::geom::point& point) const {
 	const double b = std::sin(rotation) * (point.x - center.x) - std::cos(rotation) * (point.y - center.y);
 	return a * a / radius.x / radius.x + b * b / radius.y / radius.y <= 1;
 }
+
+std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> util::geom::ellipse::intersections(const util::geom::line& line) const {
+	const double a = radius.y * radius.y * line.end.x * line.end.x + radius.x * radius.x * line.end.y * line.end.y;
+	const double b = 2 * radius.y * radius.y * line.start.x * line.end.x + 2 * radius.x * radius.x * line.start.y * line.end.y;
+	const double c = radius.y * radius.y * line.start.x * line.start.x + radius.x * radius.x * line.start.y * line.start.y - radius.x * radius.x * radius.y * radius.y;
+	if (b * b - 4 * a * c < 0)
+		return { std::nullopt, std::nullopt };
+	const double d = std::sqrt(b * b - 4 * a * c) / 2 / a;
+	const util::geom::point e(center.x + line.start.x + (d - b) * (line.end.x - line.start.x), center.y + line.start.y + (d + b) * (line.end.y - line.start.y));
+	const util::geom::point f(center.x - line.start.x - (d - b) * (line.end.x - line.start.x), center.y - line.start.y - (d + b) * (line.end.y - line.start.y));
+	std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections;
+	if (line.contains(e))
+		intersections.first = e;
+	if (line.contains(f))
+		intersections.second = f;
+	return intersections;
+}
