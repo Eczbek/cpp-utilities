@@ -165,20 +165,28 @@ bool util::geom::polygon::contains(const util::geom::point& point) const {
 	return intersections % 2;
 }
 
-util::geom::ellipse::ellipse(const util::geom::point& center, const util::geom::point& radiuses, const double rotation)
-	: center(center), radiuses(radiuses), rotation(rotation)
+util::geom::ellipse::ellipse(const util::geom::point& center, const util::geom::point& radius, const double rotation)
+	: center(center), radius(radius), rotation(rotation)
 {}
 
 bool util::geom::ellipse::operator==(const util::geom::ellipse& other) const {
-	return center == other.center && radiuses == other.radiuses && util::math::approx_equal(std::fmod(rotation, std::numbers::pi), std::fmod(other.rotation, std::numbers::pi));
+	return center == other.center && radius == other.radius && util::math::approx_equal(std::fmod(rotation, std::numbers::pi), std::fmod(other.rotation, std::numbers::pi));
 }
 
 bool util::geom::ellipse::operator!=(const util::geom::ellipse& other) const {
 	return !operator==(other);
 }
 
+double util::geom::ellipse::area() const {
+	return std::numbers::pi * radius.x * radius.y;
+}
+
+double util::geom::ellipse::perimiter() const {
+	return std::numbers::pi * std::sqrt(2 * (radius.x * radius.x + radius.y * radius.y));
+}
+
 bool util::geom::ellipse::contains(const util::geom::point& point) const {
 	const double a = std::cos(rotation) * (point.x - center.x) + std::sin(rotation) * (point.y - center.y);
 	const double b = std::sin(rotation) * (point.x - center.x) - std::cos(rotation) * (point.y - center.y);
-	return a * a / radiuses.x / radiuses.x + b * b / radiuses.y / radiuses.y <= 1;
+	return a * a / radius.x / radius.x + b * b / radius.y / radius.y <= 1;
 }

@@ -81,14 +81,18 @@ namespace util {
 
 		struct ellipse {
 			util::geom::point center;
-			util::geom::point radiuses;
+			util::geom::point radius;
 			double rotation;
 
-			ellipse(const util::geom::point& center, const util::geom::point& radiuses, const double rotation = 0);
+			ellipse(const util::geom::point& center, const util::geom::point& radius, const double rotation = 0);
 
 			bool operator==(const util::geom::ellipse& other) const;
 
 			bool operator!=(const util::geom::ellipse& other) const;
+
+			double area() const;
+
+			double perimiter() const;
 
 			bool contains(const util::geom::point& point) const;
 		};
