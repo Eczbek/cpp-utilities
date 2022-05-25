@@ -207,3 +207,7 @@ std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> ut
 		intersections.second = f;
 	return intersections;
 }
+
+std::vector<util::geom::point> util::geom::ellipse::intersections(const util::geom::ellipse& other) const {
+	return {}; // TODO
+}
