@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <utility>
 #include <vector>
 
 
@@ -12,9 +13,9 @@ namespace util {
 
 			point(const double x = 0, const double y = 0);
 
-			bool operator==(const util::geom::point& point) const;
+			bool operator==(const util::geom::point& other) const;
 
-			bool operator!=(const util::geom::point& point) const;
+			bool operator!=(const util::geom::point& other) const;
 		};
 
 		struct line {
@@ -23,19 +24,17 @@ namespace util {
 
 			line(const util::geom::point& start, const util::geom::point& end);
 
-			line(const util::geom::point& start, const double angleRadians);
+			line(const util::geom::point& start, const double angle);
 
-			bool operator==(const util::geom::line& line) const;
+			bool operator==(const util::geom::line& other) const;
 
-			bool operator!=(const util::geom::line& line) const;
+			bool operator!=(const util::geom::line& other) const;
 
 			double slope() const;
 
-			double angle_rad() const;
+			double angle() const;
 
-			double angle_deg() const;
-
-			std::optional<util::geom::point> intersection(const util::geom::line& line) const;
+			std::optional<util::geom::point> intersection(const util::geom::line& other) const;
 
 			virtual bool contains(const util::geom::point& point) const;
 		};
@@ -43,25 +42,25 @@ namespace util {
 		struct ray: util::geom::line {
 			ray(const util::geom::point& start, const util::geom::point& end);
 
-			ray(const util::geom::point& start, const double angleRadians);
+			ray(const util::geom::point& start, const double angle);
 
-			bool operator==(const util::geom::ray& ray) const;
+			bool operator==(const util::geom::ray& other) const;
 
-			bool operator!=(const util::geom::ray& ray) const;
+			bool operator!=(const util::geom::ray& other) const;
 
-			virtual bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::point& point) const;
 		};
 
 		struct segment: util::geom::line {
 			segment(const util::geom::point& start, const util::geom::point& end);
 
-			bool operator==(const util::geom::segment& segment) const;
+			bool operator==(const util::geom::segment& other) const;
 
-			bool operator!=(const util::geom::segment& segment) const;
+			bool operator!=(const util::geom::segment& other) const;
 
 			double length() const;
 
-			virtual bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::point& point) const;
 		};
 
 		struct polygon {
@@ -69,33 +68,29 @@ namespace util {
 
 			polygon(const std::vector<util::geom::point>& points);
 
-			bool operator==(const util::geom::polygon& polygon) const;
+			bool operator==(const util::geom::polygon& other) const;
 
-			bool operator!=(const util::geom::polygon& polygon) const;
+			bool operator!=(const util::geom::polygon& other) const;
 
 			double area() const;
 
 			double perimeter() const;
 
-			virtual bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::point& point) const;
 		};
 
-		struct rectangle: util::geom::polygon {
-			rectangle(const util::geom::point& corner1, const util::geom::point& corner2);
+		struct ellipse {
+			util::geom::point center;
+			util::geom::point radiuses;
+			double rotation;
 
-			bool operator==(const util::geom::rectangle& rectangle) const;
+			ellipse(const util::geom::point& center, const util::geom::point& radiuses, const double rotation = 0);
 
-			bool operator!=(const util::geom::rectangle& rectangle) const;
+			bool operator==(const util::geom::ellipse& other) const;
 
-			double width() const;
+			bool operator!=(const util::geom::ellipse& other) const;
 
-			double height() const;
-
-			double area() const;
-
-			double perimeter() const;
-
-			virtual bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::point& point) const;
 		};
 	}
 }

@@ -21,13 +21,13 @@ util::geom::line::line(const util::geom::point& start, const util::geom::point& 
 	: start(start), end(end)
 {}
 
-util::geom::line::line(const util::geom::point& start, const double angleRadians)
+util::geom::line::line(const util::geom::point& start, const double angle)
 	: start(start)
 {
-	if (util::math::approx_equal(std::fmod(angleRadians + std::numbers::pi / 2, std::numbers::pi), 0.0))
+	if (util::math::approx_equal(std::fmod(angle + std::numbers::pi / 2, std::numbers::pi), 0.0))
 		end = util::geom::point(start.x, start.y - 1);
 	else 
-		end = util::geom::point(start.x + 1, std::tan(angleRadians));
+		end = util::geom::point(start.x + 1, std::tan(angle));
 }
 
 bool util::geom::line::operator==(const util::geom::line& other) const {
@@ -42,24 +42,14 @@ double util::geom::line::slope() const {
 	return (start.y - end.y) / (start.x - end.x);
 }
 
-double util::geom::line::angle_rad() const {
+double util::geom::line::angle() const {
 	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + util::num::tau, std::numbers::pi);
 }
 
-double util::geom::line::angle_deg() const {
-	return util::math::rad_to_deg(angle_rad());
-}
-
 std::optional<util::geom::point> util::geom::line::intersection(const util::geom::line& other) const {
-	const double a = start.x - end.x;
-	const double b = start.y - end.y;
-	const double c = other.start.x - other.end.x;
-	const double d = other.start.y - other.end.y;
-	const double e = a * d - b * c;
-	if (e) {
-		const double f = start.x * end.y - start.y * end.x;
-		const double g = other.start.x * other.end.y - other.start.y * other.end.x;
-		const util::geom::point intersection((c * f - a * g) / e,(d * f - b * g) / e);
+	const double a = (start.x - end.x) * (other.start.y - other.end.y) - (start.y - end.y) * (other.start.x - other.end.x);
+	if (a) {
+		const util::geom::point intersection(((other.start.x - other.end.x) * (start.x * end.y - start.y * end.x) - (start.x - end.x) * (other.start.x * other.end.y - other.start.y * other.end.x)) / a, ((other.start.y - other.end.y) * (start.x * end.y - start.y * end.x) - (start.y - end.y) * (other.start.x * other.end.y - other.start.y * other.end.x)) / a);
 		if (contains(intersection) && other.contains(intersection))
 			return intersection;
 	}
@@ -77,8 +67,8 @@ util::geom::ray::ray(const util::geom::point& start, const util::geom::point& en
 	: util::geom::line(start, end)
 {}
 
-util::geom::ray::ray(const util::geom::point& start, const double angleRadians)
-	: util::geom::line(start, angleRadians)
+util::geom::ray::ray(const util::geom::point& start, const double angle)
+	: util::geom::line(start, angle)
 {}
 
 bool util::geom::ray::operator==(const util::geom::ray& other) const {
@@ -175,35 +165,20 @@ bool util::geom::polygon::contains(const util::geom::point& point) const {
 	return intersections % 2;
 }
 
-util::geom::rectangle::rectangle(const util::geom::point& corner1, const util::geom::point& corner2)
-	: util::geom::polygon({ corner1, { corner2.x, corner1.y }, corner2, { corner1.x, corner2.y } })
+util::geom::ellipse::ellipse(const util::geom::point& center, const util::geom::point& radiuses, const double rotation)
+	: center(center), radiuses(radiuses), rotation(rotation)
 {}
 
-bool util::geom::rectangle::operator==(const util::geom::rectangle& other) const {
-	return points[0] == other.points[0] && points[2] == other.points[2] || points[0] == other.points[2] && points[2] == other.points[0];
+bool util::geom::ellipse::operator==(const util::geom::ellipse& other) const {
+	return center == other.center && radiuses == other.radiuses && util::math::approx_equal(std::fmod(rotation, std::numbers::pi), std::fmod(other.rotation, std::numbers::pi));
 }
 
-bool util::geom::rectangle::operator!=(const util::geom::rectangle& other) const {
+bool util::geom::ellipse::operator!=(const util::geom::ellipse& other) const {
 	return !operator==(other);
 }
 
-double util::geom::rectangle::width() const {
-	return std::abs(points[0].x - points[2].x);
-}
-
-double util::geom::rectangle::height() const {
-	return std::abs(points[0].y - points[2].y);
-}
-
-double util::geom::rectangle::area() const {
-	return width() * height();
-}
-
-double util::geom::rectangle::perimeter() const {
-	return 2 * (width() + height());
-}
-
-bool util::geom::rectangle::contains(const util::geom::point& other) const {
-	return (other.x >= points[0].x && other.x <= points[2].x || other.x <= points[0].x && other.x >= points[2].x)
-		&& (other.y >= points[0].y && other.y <= points[2].y || other.y <= points[0].y && other.y >= points[2].y);
+bool util::geom::ellipse::contains(const util::geom::point& point) const {
+	const double a = std::cos(rotation) * (point.x - center.x) + std::sin(rotation) * (point.y - center.y);
+	const double b = std::sin(rotation) * (point.x - center.x) - std::cos(rotation) * (point.y - center.y);
+	return a * a / radiuses.x / radiuses.x + b * b / radiuses.y / radiuses.y <= 1;
 }
