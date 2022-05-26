@@ -38,9 +38,10 @@ namespace util {
 			util::io::lock::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
+			bool ok;
 			do
-				read(STDIN_FILENO, &input, 1);
-			while (readLast);
+				ok = read(STDIN_FILENO, &input, 1) == 1;
+			while (readLast && ok);
 			util::io::ignore();
 			return input;
 		}
