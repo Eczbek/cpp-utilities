@@ -32,6 +32,10 @@ namespace util {
 
 			double slope() const;
 
+			double intercept_x() const;
+
+			double intercept_y() const;
+
 			double angle() const;
 
 			std::optional<util::geom::point> intersection(const util::geom::line& other) const;
@@ -76,6 +80,8 @@ namespace util {
 
 			double perimeter() const;
 
+			std::vector<util::geom::segment> sides() const;
+
 			bool contains(const util::geom::point& point) const;
 		};
 
@@ -99,6 +105,30 @@ namespace util {
 			std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections(const util::geom::line& line) const;
 
 			std::vector<util::geom::point> intersections(const util::geom::ellipse& other) const;
+		};
+
+		struct rectangle: util::geom::polygon {
+			rectangle(const util::geom::point& corner1, const util::geom::point& corner2);
+
+			rectangle(const util::geom::segment& segment);
+
+			rectangle(const util::geom::polygon& polygon);
+
+			rectangle(const util::geom::ellipse& ellipse);
+
+			bool operator==(const util::geom::rectangle& other) const;
+
+			bool operator!=(const util::geom::rectangle& other) const;
+
+			double width() const;
+
+			double height() const;
+
+			double area() const;
+
+			double perimeter() const;
+
+			bool contains(const util::geom::point& point) const;
 		};
 	}
 }

@@ -42,6 +42,14 @@ double util::geom::line::slope() const {
 	return (start.y - end.y) / (start.x - end.x);
 }
 
+double util::geom::line::intercept_x() const {
+	return start.x - slope() * start.y;
+}
+
+double util::geom::line::intercept_y() const {
+	return start.y - slope() * start.x;
+}
+
 double util::geom::line::angle() const {
 	return std::fmod(std::atan2(start.y - end.y, start.x - end.x) + util::num::tau, std::numbers::pi);
 }
@@ -157,11 +165,18 @@ double util::geom::polygon::perimeter() const {
 	return perimeter;
 }
 
+std::vector<util::geom::segment> sides() const {
+	std::vector<util::geom::segment> sides;
+	for (std::size_t i = 0; i < points.size(); ++i)
+		sides.push_back({ points[i], points[(i + 1) % points.size()] });
+	return sides;
+}
+
 bool util::geom::polygon::contains(const util::geom::point& point) const {
 	util::geom::ray ray(point, { point.x + 1, point.y });
 	std::size_t intersections = 0;
-	for (std::size_t i = 0; i < points.size(); ++i)
-		intersections += ray.intersection(util::geom::segment(points[i], points[(i + 1) % points.size()])).has_value();
+	for (const util::geom::segment& segment : sides())
+		intersections += ray.intersection(segment).has_value();
 	return intersections % 2;
 }
 
@@ -214,4 +229,69 @@ std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> ut
 
 std::vector<util::geom::point> util::geom::ellipse::intersections(const util::geom::ellipse& other) const {
 	return {}; // TODO
+}
+
+util::geom::rectangle::rectangle(const util::geom::point& corner1, const util::geom::point& corner2)
+	: util::geom::polygon({ corner1, { corner2.x, corner1.y }, corner2, { corner1.x, corner2.y } })
+{}
+
+util::geom::rectangle::rectangle(const util::geom::segment& segment)
+	: util::geom::polygon({ segment.start, segment.end })
+{}
+
+util::geom::rectangle::rectangle(const util::geom::polygon& polygon)
+	: util::geom::polygon({})
+{
+	if (!polygon.points.size())
+		util::geom::polygon({});
+	util::geom::point min = polygon.points[0];
+	util::geom::point max = polygon.points[0];
+	for (std::size_t i = 1; i < polygon.points.size(); ++i) {
+		const util::geom::point& point = polygon.points[i];
+		if (point.x < min.x)
+			min.x = point.x;
+		else if (point.x > max.x)
+			max.x = point.x;
+		if (point.y < min.y)
+			min.y = point.y;
+		else if (point.y > max.y)
+			max.y = point.y;
+	}
+	points = { min, { max.x, min.y }, max, { min.x, max.y } };
+}
+
+util::geom::rectangle::rectangle(const util::geom::ellipse& ellipse)
+	: util::geom::polygon({})
+{
+	const double a = std::sqrt(ellipse.radius.x * ellipse.radius.x  * std::cos(ellipse.rotation) * std::cos(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::cos(ellipse.rotation + std::numbers::pi / 2) * std::cos(ellipse.rotation + std::numbers::pi / 2));
+	const double b = std::sqrt(ellipse.radius.x * ellipse.radius.x * std::sin(ellipse.rotation) * std::sin(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::sin(ellipse.rotation + std::numbers::pi / 2) * std::sin(ellipse.rotation + std::numbers::pi / 2));
+	points = { { ellipse.center.x - a, ellipse.center.y - b }, { ellipse.center.x + a, ellipse.center.y - b }, { ellipse.center.x + a, ellipse.center.y + b }, { ellipse.center.x - a, ellipse.center.y + b } };
+}
+
+bool util::geom::rectangle::operator==(const util::geom::rectangle& other) const {
+	return points[0] == other.points[0] && points[2] == other.points[2] || points[0] == other.points[2] && points[2] == other.points[0];
+}
+
+bool util::geom::rectangle::operator!=(const util::geom::rectangle& other) const {
+	return !operator==(other);
+}
+
+double util::geom::rectangle::width() const {
+	return std::fabs(points[0].x - points[2].x);
+}
+
+double util::geom::rectangle::height() const {
+	return std::fabs(points[0].y - points[2].y);
+}
+
+double util::geom::rectangle::area() const {
+	return width() * height();
+}
+
+double util::geom::rectangle::perimeter() const {
+	return (width() + height()) * 2;
+}
+
+bool util::geom::rectangle::contains(const util::geom::point& point) const {
+	return (point.x >= points[0].x && point.x <= points[2].x || point.x <= points[0].x && point.x >= points[2].x) && (point.y >= points[0].y && point.y <= points[2].y || point.y <= points[0].y && point.y >= points[2].y);
 }
