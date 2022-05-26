@@ -30,13 +30,13 @@ namespace util {
 					: 0;
 		}
 
-		template <typename Number>
-		Number rad_to_deg(const Number radians) {
+		template <typename Result = double, typename Number>
+		Result rad_to_deg(const Number radians) {
 			return radians * 180 / std::numbers::pi;
 		}
 
-		template <typename Number>
-		Number deg_to_rad(const Number degrees) {
+		template <typename Result = double, typename Number>
+		Result deg_to_rad(const Number degrees) {
 			return degrees * std::numbers::pi / 180;
 		}
 
