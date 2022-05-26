@@ -165,7 +165,7 @@ double util::geom::polygon::perimeter() const {
 	return perimeter;
 }
 
-std::vector<util::geom::segment> sides() const {
+std::vector<util::geom::segment> util::geom::polygon::sides() const {
 	std::vector<util::geom::segment> sides;
 	for (std::size_t i = 0; i < points.size(); ++i)
 		sides.push_back({ points[i], points[(i + 1) % points.size()] });
