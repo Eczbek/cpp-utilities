@@ -26,7 +26,7 @@ namespace util {
 
 		void ignore(const char until = 0);
 
-		void ignore(long characters);
+		void ignore(std::streamsize characters);
 
 		char char_wait();
 

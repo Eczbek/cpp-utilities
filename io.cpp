@@ -30,7 +30,7 @@ void util::io::ignore(const char until) {
 	while (input != until && read(STDIN_FILENO, &input, 1) == 1);
 }
 
-void util::io::ignore(long characters) {
+void util::io::ignore(std::streamsize characters) {
 	util::io::lock::nonblock nonblockLock;
 	char input;
 	while (characters-- > 0 && read(STDIN_FILENO, &input, 1) == 1);
