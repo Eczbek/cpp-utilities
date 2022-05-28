@@ -231,6 +231,30 @@ std::vector<util::geom::point> util::geom::ellipse::intersections(const util::ge
 	return {}; // TODO
 }
 
+util::geom::circle::circle(const util::geom::point& center, const double radius)
+	: util::geom::ellipse(center, { radius, radius })
+{}
+
+bool util::geom::circle::operator==(const util::geom::circle& other) const {
+	return center == other.center && util::math::approx_equal(radius, other.radius);
+}
+
+bool util::geom::circle::operator!=(const util::geom::circle& other) const {
+	return !operator==(other);
+}
+
+bool util::geom::circle::contains(const util::geom::point& point) const {
+	return std::hypot(point.x - center.x, point.y - center.y) <= radius;
+}
+
+std::pair<std::optional<util::geom::point>, std::optional<util::geom::point> util::geom::circle::intersections(const util::geom::line& line) const {
+	return {}; // TODO
+}
+
+std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> util::geom::circle::intersections(const util::geom::circle& other) const {
+	return {}; // TODO
+}
+
 util::geom::rectangle::rectangle(const util::geom::point& corner1, const util::geom::point& corner2)
 	: util::geom::polygon({ corner1, { corner2.x, corner1.y }, corner2, { corner1.x, corner2.y } })
 {}

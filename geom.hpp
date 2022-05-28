@@ -107,6 +107,20 @@ namespace util {
 			std::vector<util::geom::point> intersections(const util::geom::ellipse& other) const;
 		};
 
+		struct circle: util::geom::ellipse {
+			circle(const util::geom::point& center, const double radius);
+
+			bool operator==(const util::geom::circle& other) const;
+
+			bool operator!=(const util::geom::circle& other) const;
+
+			bool contains(const util::geom::point& point) const;
+
+			std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections(const util::geom::line& line) const;
+
+			std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections(const util::geom::circle& other) const;
+		};
+
 		struct rectangle: util::geom::polygon {
 			rectangle(const util::geom::point& corner1, const util::geom::point& corner2);
 
