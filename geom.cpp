@@ -244,10 +244,10 @@ bool util::geom::circle::operator!=(const util::geom::circle& other) const {
 }
 
 bool util::geom::circle::contains(const util::geom::point& point) const {
-	return std::hypot(point.x - center.x, point.y - center.y) <= radius;
+	return std::hypot(point.x - center.x, point.y - center.y) <= radius.x;
 }
 
-std::pair<std::optional<util::geom::point>, std::optional<util::geom::point> util::geom::circle::intersections(const util::geom::line& line) const {
+std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> util::geom::circle::intersections(const util::geom::line& line) const {
 	return {}; // TODO
 }
 
