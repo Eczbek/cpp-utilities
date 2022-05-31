@@ -1,7 +1,7 @@
-#include <util/geom>
-#include <util/alg>
-#include <util/math>
-#include <util/num>
+#include <util/geom.hpp>
+#include <util/alg.hpp>
+#include <util/math.hpp>
+#include <util/num.hpp>
 
 
 util::geom::point::point(const double x, const double y)
