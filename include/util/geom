@@ -16,6 +16,8 @@ namespace util {
 			bool operator==(const util::geom::point& other) const;
 
 			bool operator!=(const util::geom::point& other) const;
+
+			util::geom::point rotate(const util::geom::point& origin, const double angle) const;
 		};
 
 		struct line {
