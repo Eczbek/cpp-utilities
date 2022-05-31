@@ -8,20 +8,18 @@
 
 namespace util {
 	namespace io {
-		namespace lock {
-			struct raw {
-				termios cooked;
+		struct raw {
+			termios cooked;
 
-				raw();
+			raw();
 
-				~raw();
-			};
+			~raw();
+		};
 
-			struct nonblock {
-				nonblock();
+		struct nonblock {
+			nonblock();
 
-				~nonblock();
-			};
+			~nonblock();
 		};
 
 		void ignore(const char until = 0);
