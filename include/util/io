@@ -76,7 +76,7 @@ namespace util {
 		}
 
 		enum styles {
-			STYLE_RESET = 0,
+			STYLE_NONE = 0,
 			STYLE_EF_BOLD,
 			STYLE_EF_DIM,
 			STYLE_EF_ITALIC,
