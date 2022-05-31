@@ -23,14 +23,15 @@ namespace util {
 
 		std::string trim_right(const std::string& string, const std::string_view& characters);
 
+		template <typename Value = std::size_t>
 		class char_map {
 		private:
-			std::array<std::size_t, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> characters;
+			std::array<Value, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> characters;
 
 		public:
-			char_map(const std::string_view& characters);
-
-			std::size_t& operator[](const char character);
+			Value& operator[](const char character) {
+				return characters[character - std::numeric_limits<char>::min()];
+			}
 		};
 	}
 }

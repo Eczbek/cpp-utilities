@@ -72,12 +72,3 @@ std::string util::str::trim_right(const std::string& string, const std::string_v
 			return string.substr(0, i);
 	return "";
 }
-
-util::str::char_map::char_map(const std::string_view& characters) {
-	for (std::size_t i = 0; i < characters.length(); ++i)
-		operator[](characters[i]) = i;
-}
-
-std::size_t& util::str::char_map::operator[](const char character) {
-	return characters[character - std::numeric_limits<char>::min()];
-}
