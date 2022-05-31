@@ -50,7 +50,7 @@ namespace util {
 
 		void erase_line();
 
-		void style_set(const int style);
+		void style(const int style);
 
 		void get_win_size(int& rows, int& cols);
 
