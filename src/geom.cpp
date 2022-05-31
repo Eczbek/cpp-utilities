@@ -1,8 +1,7 @@
-#include "./geom.hpp"
-
-#include "./alg.hpp"
-#include "./math.hpp"
-#include "./num.hpp"
+#include <util/geom>
+#include <util/alg>
+#include <util/math>
+#include <util/num>
 
 
 util::geom::point::point(const double x, const double y)
@@ -236,7 +235,7 @@ util::geom::circle::circle(const util::geom::point& center, const double radius)
 {}
 
 bool util::geom::circle::operator==(const util::geom::circle& other) const {
-	return center == other.center && util::math::approx_equal(radius, other.radius);
+	return center == other.center && util::math::approx_equal(radius.x, other.radius.x);
 }
 
 bool util::geom::circle::operator!=(const util::geom::circle& other) const {

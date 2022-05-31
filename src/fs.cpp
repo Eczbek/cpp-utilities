@@ -1,4 +1,4 @@
-#include "./fs.hpp"
+#include <util/fs>
 
 
 std::string util::fs::read(const std::string& path) {
