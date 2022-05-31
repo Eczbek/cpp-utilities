@@ -16,7 +16,7 @@ namespace util {
 			: dimensions(dimensions)
 		{
 			std::size_t size = 1;
-			for (const std::size_t dimension : dimensions)
+			for (const std::size_t dimension: dimensions)
 				size *= dimension;
 			values.resize(size);
 		}
@@ -25,7 +25,7 @@ namespace util {
 			: values(values), dimensions(dimensions)
 		{
 			std::size_t size = 1;
-			for (const std::size_t dimension : dimensions)
+			for (const std::size_t dimension: dimensions)
 				size *= dimension;
 			assert(size == values.size());
 		}
