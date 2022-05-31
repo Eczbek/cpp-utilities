@@ -32,8 +32,8 @@ namespace util {
 
 		template <typename Duration>
 		char char_timeout(const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
-			util::io::lock::raw rawLock;
-			util::io::lock::nonblock nonblockLock;
+			util::io::raw rawLock;
+			util::io::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			bool ok;
