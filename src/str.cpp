@@ -48,27 +48,21 @@ std::string util::str::trim_right(const std::string& string, const char characte
 }
 
 std::string util::str::trim_left(const std::string& string, const std::string_view& characters) {
-	std::array<bool, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> charMap;
-	const auto hasChar = [&](const char character) -> bool& {
-		return charMap[character - std::numeric_limits<char>::min()];
-	};
-	for (const char character : characters)
-		hasChar(character) = true;
+	util::str::char_map<bool> charMap;
+	for (const char character: characters)
+		charMap[character] = true;
 	for (std::size_t i = 0; i < string.length(); ++i)
-		if (!hasChar(string[i]))
+		if (!charMap[string[i]])
 			return string.substr(i);
 	return "";
 }
 
 std::string util::str::trim_right(const std::string& string, const std::string_view& characters) {
-	std::array<bool, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> charMap;
-	const auto hasChar = [&](const char character) -> bool& {
-		return charMap[character - std::numeric_limits<char>::min()];
-	};
-	for (const char character : characters)
-		hasChar(character) = true;
+	util::str::char_map<bool> charMap;
+	for (const char character: characters)
+		charMap[character]= true;
 	for (std::size_t i = string.length(); i > 0; --i)
-		if (!hasChar(string[i - 1]))
+		if (!charMap[string[i - 1]])
 			return string.substr(0, i);
 	return "";
 }
