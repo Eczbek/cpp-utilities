@@ -8,19 +8,18 @@ namespace util {
 		template <typename Iterator1, typename Iterator2>
 		bool rotated_match(Iterator1 begin1, const Iterator1 end1, const Iterator2 begin2, const Iterator2 end2) {
 			const typename std::iterator_traits<Iterator1>::difference_type size = std::distance(begin1, end1);
-			if (size != std::distance(begin2, end2))
-				return false;
-			for (; begin1 != end1; ++begin1) {
-				Iterator2 copy2 = begin2;
-				for (Iterator1 copy1 = begin1; copy2 != end2; ++copy1, ++copy2) {
-					if (copy1 == end1)
-						std::advance(copy1, -size);
-					if (*copy1 != *copy2)
-						break;
+			if (size == std::distance(begin2, end2))
+				for (; begin1 != end1; ++begin1) {
+					Iterator2 copy2 = begin2;
+					for (Iterator1 copy1 = begin1; copy2 != end2; ++copy1, ++copy2) {
+						if (copy1 == end1)
+							std::advance(copy1, -size);
+						if (*copy1 != *copy2)
+							break;
+					}
+					if (copy2 == end2)
+						return true;
 				}
-				if (copy2 == end2)
-					return true;
-			}
 			return false;
 		}
 	}
