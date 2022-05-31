@@ -1,11 +1,8 @@
 #pragma once
 
-#include <array>
 #include <cmath>
-#include <limits>
 #include <numbers>
-#include <string>
-#include <string_view>
+#include <util/str>
 
 
 namespace util {
@@ -52,16 +49,11 @@ namespace util {
 
 		template <typename Number = int>
 		Number base_from(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
-			std::array<int, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> digitsMap;
-			const auto getIndex = [&](const char digit) -> int& {
-				return digitsMap[digit - std::numeric_limits<char>::min()];
-			};
-			for (std::size_t i = 0; i < digits.length(); ++i)
-				getIndex(digits[i]) = i;
+			util::str::char_map digitsMap(digits);
 			Number result = 0;
 			int power = 1;
 			for (std::size_t i = value.length(); i > 0; --i) {
-				result += getIndex(value[i - 1]) * power;
+				result += digitsMap[value[i - 1]] * power;
 				power *= base;
 			}
 			return result;
