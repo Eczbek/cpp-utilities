@@ -68,10 +68,6 @@ void util::io::erase_line() {
 	std::cout << "\033[2K";
 }
 
-void util::io::style(const int style) {
-	std::cout << "\033[" << style << 'm';
-}
-
 void util::io::get_win_size(int& rows, int& cols) {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
@@ -103,4 +99,12 @@ void util::io::cursor::hide() {
 
 void util::io::cursor::show() {
 	std::cout << "\033[?25h";
+}
+
+util::io::style::style(const int style) {
+	std::cout << "\033[" << style << "m";
+}
+
+util::io::style::~style() {
+	std::cout << "\033[" << util::io::style::NONE << "m";
 }

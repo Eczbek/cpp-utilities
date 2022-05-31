@@ -50,8 +50,6 @@ namespace util {
 
 		void erase_line();
 
-		void style(const int style);
-
 		void get_win_size(int& rows, int& cols);
 
 		namespace cursor {
@@ -73,49 +71,55 @@ namespace util {
 			void show();
 		}
 
-		enum styles {
-			STYLE_NONE = 0,
-			STYLE_EF_BOLD,
-			STYLE_EF_DIM,
-			STYLE_EF_ITALIC,
-			STYLE_EF_UNDERLINE,
-			STYLE_EF_BLINK,
-			STYLE_EF_REVERSE = 7,
-			STYLE_EF_HIDDEN,
-			STYLE_EF_STRIKETHROUGH,
-			STYLE_EF_UNDERLINE_DOUBLE = 21,
-			STYLE_FG_BLACK = 30,
-			STYLE_FG_RED,
-			STYLE_FG_GREEN,
-			STYLE_FG_YELLOW,
-			STYLE_FG_BLUE,
-			STYLE_FG_MAGENTA,
-			STYLE_FG_CYAN,
-			STYLE_FG_WHITE,
-			STYLE_BG_BLACK = 40,
-			STYLE_BG_RED,
-			STYLE_BG_GREEN,
-			STYLE_BG_YELLOW,
-			STYLE_BG_BLUE,
-			STYLE_BG_MAGENTA,
-			STYLE_BG_CYAN,
-			STYLE_BG_WHITE,
-			STYLE_FG_BLACK_BRIGHT = 90,
-			STYLE_FG_RED_BRIGHT,
-			STYLE_FG_GREEN_BRIGHT,
-			STYLE_FG_YELLOW_BRIGHT,
-			STYLE_FG_BLUE_BRIGHT,
-			STYLE_FG_MAGENTA_BRIGHT,
-			STYLE_FG_CYAN_BRIGHT,
-			STYLE_FG_WHITE_BRIGHT,
-			STYLE_BG_BLACK_BRIGHT = 100,
-			STYLE_BG_RED_BRIGHT,
-			STYLE_BG_GREEN_BRIGHT,
-			STYLE_BG_YELLOW_BRIGHT,
-			STYLE_BG_BLUE_BRIGHT,
-			STYLE_BG_MAGENTA_BRIGHT,
-			STYLE_BG_CYAN_BRIGHT,
-			STYLE_BG_WHITE_BRIGHT
+		struct style {
+			style(const int style);
+
+			~style();
+
+			enum {
+				NONE = 0,
+				EF_BOLD,
+				EF_DIM,
+				EF_ITALIC,
+				EF_UNDERLINE,
+				EF_BLINK,
+				EF_REVERSE = 7,
+				EF_HIDDEN,
+				EF_STRIKETHROUGH,
+				EF_UNDERLINE_DOUBLE = 21,
+				FG_BLACK = 30,
+				FG_RED,
+				FG_GREEN,
+				FG_YELLOW,
+				FG_BLUE,
+				FG_MAGENTA,
+				FG_CYAN,
+				FG_WHITE,
+				BG_BLACK = 40,
+				BG_RED,
+				BG_GREEN,
+				BG_YELLOW,
+				BG_BLUE,
+				BG_MAGENTA,
+				BG_CYAN,
+				BG_WHITE,
+				FG_BLACK_BRIGHT = 90,
+				FG_RED_BRIGHT,
+				FG_GREEN_BRIGHT,
+				FG_YELLOW_BRIGHT,
+				FG_BLUE_BRIGHT,
+				FG_MAGENTA_BRIGHT,
+				FG_CYAN_BRIGHT,
+				FG_WHITE_BRIGHT,
+				BG_BLACK_BRIGHT = 100,
+				BG_RED_BRIGHT,
+				BG_GREEN_BRIGHT,
+				BG_YELLOW_BRIGHT,
+				BG_BLUE_BRIGHT,
+				BG_MAGENTA_BRIGHT,
+				BG_CYAN_BRIGHT,
+				BG_WHITE_BRIGHT
+			};
 		};
 	}
 }
