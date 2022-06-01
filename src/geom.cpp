@@ -179,10 +179,13 @@ std::vector<util::geom::segment> util::geom::polygon::sides() const {
 }
 
 bool util::geom::polygon::contains(const util::geom::point& point) const {
-	util::geom::ray ray(point, { point.x + 1, point.y });
 	std::size_t intersections = 0;
-	for (const util::geom::segment& segment: sides())
-		intersections += ray.intersection(segment).has_value();
+	for (std::size_t i = 0; i < points.size(); ++i) {
+		const util::geom::point& a = points[i];
+		const util::geom::point& b = points[(i + 1) % points.size()];
+		if (point.x <= (a.x + b.x) / 2 && (point.y >= a.y && point.y <= b.y || point.y <= a.y && point.y >= b.y))
+			++intersections;
+	}
 	return intersections % 2;
 }
 
