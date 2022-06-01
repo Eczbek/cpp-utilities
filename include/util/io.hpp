@@ -26,12 +26,12 @@ namespace util {
 
 		void ignore(std::streamsize characters);
 
-		char char_wait();
+		char wait_char();
 
-		char char_read(const char defaultChar = 0);
+		char read_char(const char defaultChar = 0);
 
 		template <typename Duration>
-		char char_timeout(const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
+		char timeout_char(const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
 			util::io::raw rawLock;
 			util::io::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
@@ -44,7 +44,7 @@ namespace util {
 			return input;
 		}
 
-		std::string string_read();
+		std::string read_string();
 
 		void erase_all();
 

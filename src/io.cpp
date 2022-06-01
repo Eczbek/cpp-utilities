@@ -35,14 +35,14 @@ void util::io::ignore(std::streamsize characters) {
 	while (characters-- > 0 && read(STDIN_FILENO, &input, 1) == 1);
 }
 
-char util::io::char_wait() {
+char util::io::wait_char() {
 	util::io::raw rawLock;
 	char input;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
-char util::io::char_read(const char defaultChar) {
+char util::io::read_char(const char defaultChar) {
 	util::io::raw rawLock;
 	util::io::nonblock nonblockLock;
 	char input = defaultChar;
@@ -50,7 +50,7 @@ char util::io::char_read(const char defaultChar) {
 	return input;
 }
 
-std::string util::io::string_read() {
+std::string util::io::read_string() {
 	util::io::raw rawLock;
 	util::io::nonblock nonblockLock;
 	std::string result;
