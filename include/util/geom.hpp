@@ -1,7 +1,6 @@
 #pragma once
 
 #include <optional>
-#include <utility>
 #include <vector>
 
 
@@ -104,7 +103,7 @@ namespace util {
 
 			bool contains(const util::geom::point& point) const;
 
-			std::pair<std::optional<util::geom::point>, std::optional<util::geom::point>> intersections(const util::geom::line& line) const;
+			std::vector<util::geom::point> intersections(const util::geom::line& line) const;
 
 			std::vector<util::geom::point> intersections(const util::geom::ellipse& other) const;
 		};
