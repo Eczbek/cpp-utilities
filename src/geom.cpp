@@ -153,21 +153,15 @@ bool util::geom::polygon::operator!=(const util::geom::polygon& other) const {
 
 double util::geom::polygon::area() const {
 	double area = 0;
-	for (std::size_t i = 0; i < points.size(); ++i) {
-		const util::geom::point& current = points[i];
-		const util::geom::point& next = points[(i + 1) % points.size()];
-		area += current.x * next.y - next.x * current.y;
-	}
+	for (const util::geom::segment& side: sides())
+		area += side.start.x * side.end.y - side.start.y * side.start.x;
 	return area / 2;
 }
 
 double util::geom::polygon::perimeter() const {
 	double perimeter = 0;
-	for (std::size_t i = 0; i < points.size(); ++i) {
-		const util::geom::point& current = points[i];
-		const util::geom::point& next = points[(i + 1) % points.size()];
-		perimeter += std::hypot(current.x - next.x, current.y - next.y);
-	}
+	for (const util::geom::segment& side: sides())
+		perimeter += side.length();
 	return perimeter;
 }
 
