@@ -144,7 +144,8 @@ util::geom::polygon::polygon(const std::vector<util::geom::point>& points)
 {}
 
 bool util::geom::polygon::operator==(const util::geom::polygon& other) const {
-	return util::alg::rotated_match(points.begin(), points.end(), other.points.begin(), other.points.end()) || util::alg::rotated_match(points.rbegin(), points.rend(), other.points.begin(), other.points.end());
+	return util::alg::rotated_match(points.begin(), points.end(), other.points.begin(), other.points.end())
+		|| util::alg::rotated_match(points.rbegin(), points.rend(), other.points.begin(), other.points.end());
 }
 
 bool util::geom::polygon::operator!=(const util::geom::polygon& other) const {
@@ -209,7 +210,7 @@ bool util::geom::ellipse::contains(const util::geom::point& point) const {
 std::vector<util::geom::point> util::geom::ellipse::intersections(const util::geom::line& line) const {
 	std::vector<util::geom::point> intersections;
 	const double a = radius.y * radius.y * line.end.x * line.end.x + radius.x * radius.x * line.end.y * line.end.y;
-	const double b = 2 * radius.y * radius.y * line.start.x * line.end.x + 2 * radius.x * radius.x * line.start.y * line.end.y;
+	const double b = radius.y * radius.y * line.start.x * line.end.x * 2 + radius.x * radius.x * line.start.y * line.end.y * 2;
 	const double c = radius.y * radius.y * line.start.x * line.start.x + radius.x * radius.x * line.start.y * line.start.y - radius.x * radius.x * radius.y * radius.y;
 	const double d = std::sqrt(b * b - 4 * a * c) / 2 / a;
 	const double e = b * b - 4 * a * c;
@@ -281,7 +282,12 @@ util::geom::rectangle::rectangle(const util::geom::ellipse& ellipse)
 {
 	const double a = std::sqrt(ellipse.radius.x * ellipse.radius.x  * std::cos(ellipse.rotation) * std::cos(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::cos(ellipse.rotation + std::numbers::pi / 2) * std::cos(ellipse.rotation + std::numbers::pi / 2));
 	const double b = std::sqrt(ellipse.radius.x * ellipse.radius.x * std::sin(ellipse.rotation) * std::sin(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::sin(ellipse.rotation + std::numbers::pi / 2) * std::sin(ellipse.rotation + std::numbers::pi / 2));
-	points = { { ellipse.center.x - a, ellipse.center.y - b }, { ellipse.center.x + a, ellipse.center.y - b }, { ellipse.center.x + a, ellipse.center.y + b }, { ellipse.center.x - a, ellipse.center.y + b } };
+	points = {
+		{ ellipse.center.x - a, ellipse.center.y - b },
+		{ ellipse.center.x + a, ellipse.center.y - b },
+		{ ellipse.center.x + a, ellipse.center.y + b },
+		{ ellipse.center.x - a, ellipse.center.y + b }
+	};
 }
 
 bool util::geom::rectangle::operator==(const util::geom::rectangle& other) const {
@@ -309,5 +315,6 @@ double util::geom::rectangle::perimeter() const {
 }
 
 bool util::geom::rectangle::contains(const util::geom::point& point) const {
-	return (point.x >= points[0].x && point.x <= points[2].x || point.x <= points[0].x && point.x >= points[2].x) && (point.y >= points[0].y && point.y <= points[2].y || point.y <= points[0].y && point.y >= points[2].y);
+	return (point.x >= points[0].x && point.x <= points[2].x || point.x <= points[0].x && point.x >= points[2].x)
+		&& (point.y >= points[0].y && point.y <= points[2].y || point.y <= points[0].y && point.y >= points[2].y);
 }
