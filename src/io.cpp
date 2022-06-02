@@ -68,25 +68,26 @@ void util::io::erase_line() {
 	std::cout << "\033[2K";
 }
 
-void util::io::get_win_size(int& rows, int& cols) {
+util::pos util::io::get_win_size() {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
-	rows = size.ws_row;
-	cols = size.ws_col;
+	return { size.ws_col, size.ws_row };
 }
 
-void util::io::cursor::get(int& row, int& col) {
+util::pos util::io::cursor::get() {
 	util::io::raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
 	char input;
 	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
 		buffer += input;
-	sscanf(&buffer[0], "\033[%d;%d", &row, &col);
+	util::pos position;
+	sscanf(&buffer[0], "\033[%d;%d", &position.y, &position.x);
+	return position;
 }
 
-void util::io::cursor::set(const int row, const int col) {
-	std::cout << "\033[" << row << ';' << col << 'H';
+void util::io::cursor::set(const util::pos position) {
+	std::cout << "\033[" << position.y << ';' << position.x << 'H';
 }
 
 void util::io::cursor::move(const char direction, const int count) {

@@ -4,13 +4,16 @@
 #include <termios.h>
 #include <thread>
 #include <unistd.h>
+#include <util/misc.hpp>
 
 
 namespace util {
 	namespace io {
-		struct raw {
+		class raw {
+		private:
 			termios cooked;
 
+		public:
 			raw();
 
 			~raw();
@@ -50,12 +53,12 @@ namespace util {
 
 		void erase_line();
 
-		void get_win_size(int& rows, int& cols);
+		util::pos get_win_size();
 
 		namespace cursor {
-			void get(int& row, int& col);
+			util::pos get();
 
-			void set(const int row, const int col);
+			void set(const util::pos position);
 
 			enum directions: char {
 				UP = 'A',
