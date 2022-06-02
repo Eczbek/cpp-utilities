@@ -4,7 +4,6 @@
 #include <termios.h>
 #include <thread>
 #include <unistd.h>
-#include <util/misc.hpp>
 
 
 namespace util {
@@ -53,12 +52,17 @@ namespace util {
 
 		void erase_line();
 
-		util::pos get_win_size();
+		struct pos {
+			int row;
+			int col;
+		};
+
+		util::io::pos get_win_size();
 
 		namespace cursor {
-			util::pos get();
+			util::io::pos get();
 
-			void set(const util::pos position);
+			void set(const util::io::pos position);
 
 			enum directions: char {
 				UP = 'A',
