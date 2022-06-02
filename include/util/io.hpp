@@ -33,16 +33,16 @@ namespace util {
 		char read_char(const char defaultChar = 0);
 
 		template <typename Duration>
-		char timeout_char(const Duration timeout, const char defaultChar = 0, const bool readLast = false) {
+		char timeout_char(const Duration timeout, const char defaultChar = 0, const bool getLast = true) {
 			util::io::raw rawLock;
 			util::io::nonblock nonblockLock;
+			std::cout.flush();
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			bool ok;
 			do
 				ok = read(STDIN_FILENO, &input, 1) == 1;
-			while (readLast && ok);
-			util::io::ignore();
+			while (getLast && ok);
 			return input;
 		}
 
