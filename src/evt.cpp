@@ -1,6 +1,6 @@
 #include <util/evt.hpp>
 
 
-void util::evt::emitter::off(const std::string& event) {
+void util::event_emitter::off(const std::string& event) {
 	events.erase(event);
 }
