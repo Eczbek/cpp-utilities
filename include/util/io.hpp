@@ -18,7 +18,11 @@ namespace util {
 			~raw();
 		};
 
-		struct nonblock {
+		class nonblock {
+		private:
+			const int blocking = fcntl(STDIN_FILENO, F_GETFL);
+
+		public:
 			nonblock();
 
 			~nonblock();

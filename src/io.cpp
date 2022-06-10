@@ -16,11 +16,11 @@ util::io::raw::~raw() {
 }
 
 util::io::nonblock::nonblock() {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
+	fcntl(STDIN_FILENO, F_SETFL, blocking | O_NONBLOCK);
 }
 
 util::io::nonblock::~nonblock() {
-	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) & ~O_NONBLOCK);
+	fcntl(STDIN_FILENO, F_SETFL, blocking);
 }
 
 void util::io::ignore(const char until) {
