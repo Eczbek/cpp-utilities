@@ -1,3 +1,4 @@
+#include <util/map.hpp>
 #include <util/str.hpp>
 #include <array>
 #include <limits>
@@ -48,7 +49,7 @@ std::string util::str::trimRight(const std::string& string, const char character
 }
 
 std::string util::str::trimLeft(const std::string& string, const std::string_view& characters) {
-	util::str::char_map<bool> charMap;
+	util::OrderedMap<char, bool> charMap;
 	for (const char character: characters)
 		charMap[character] = true;
 	for (std::size_t i = 0; i < string.length(); ++i)
@@ -58,7 +59,7 @@ std::string util::str::trimLeft(const std::string& string, const std::string_vie
 }
 
 std::string util::str::trimRight(const std::string& string, const std::string_view& characters) {
-	util::str::char_map<bool> charMap;
+	util::OrderedMap<char, bool> charMap;
 	for (const char character: characters)
 		charMap[character]= true;
 	for (std::size_t i = string.length(); i > 0; --i)

@@ -2,7 +2,9 @@
 
 #include <cmath>
 #include <numbers>
-#include <util/str.hpp>
+#include <string>
+#include <string_view>
+#include <util/map.hpp>
 
 
 namespace util {
@@ -49,7 +51,7 @@ namespace util {
 
 		template <typename Number = int>
 		Number baseFrom(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
-			util::str::char_map<std::size_t> charMap;
+			util::OrderedMap<char, std::size_t> charMap;
 			for (std::size_t i = 0; i < digits.length(); ++i)
 				charMap[digits[i]] = i;
 			Number result = 0;
