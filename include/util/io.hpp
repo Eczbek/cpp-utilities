@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fcntl.h>
 #include <string>
 #include <termios.h>
 #include <thread>
@@ -40,7 +41,6 @@ namespace util {
 		char timeout_char(const Duration timeout, const char defaultChar = 0, const bool getLast = true) {
 			util::io::raw rawLock;
 			util::io::nonblock nonblockLock;
-			std::cout.flush();
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			bool ok;
@@ -68,7 +68,7 @@ namespace util {
 
 			void set(const util::io::pos position);
 
-			enum directions: char {
+			enum: char {
 				UP = 'A',
 				DOWN,
 				RIGHT,
