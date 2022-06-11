@@ -6,13 +6,13 @@
 
 namespace util {
 	template <typename Value>
-	class matrix {
+	class Matrix {
 	private:
 		std::vector<Value> values;
 		std::vector<std::size_t> dimensions;
 
 	public:
-		matrix(const std::vector<std::size_t>& dimensions)
+		Matrix(const std::vector<std::size_t>& dimensions)
 			: dimensions(dimensions)
 		{
 			std::size_t size = 1;
@@ -21,7 +21,7 @@ namespace util {
 			values.resize(size);
 		}
 
-		matrix(const std::vector<std::size_t>& dimensions, const std::vector<Value>& values)
+		Matrix(const std::vector<std::size_t>& dimensions, const std::vector<Value>& values)
 			: values(values), dimensions(dimensions)
 		{
 			std::size_t size = 1;

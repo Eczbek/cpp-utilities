@@ -7,7 +7,7 @@
 
 
 namespace util {
-	class event_emitter {
+	class EventEmitter {
 	private:
 		std::unordered_map<std::string, std::any> events;
 

@@ -6,30 +6,30 @@
 
 namespace util {
 	namespace geom {
-		struct point {
+		struct Point {
 			double x;
 			double y;
 
-			point(const double x = 0, const double y = 0);
+			Point(const double x = 0, const double y = 0);
 
-			bool operator==(const util::geom::point& other) const;
+			bool operator==(const util::geom::Point& other) const;
 
-			bool operator!=(const util::geom::point& other) const;
+			bool operator!=(const util::geom::Point& other) const;
 
-			util::geom::point rotate(const util::geom::point& origin, const double angle) const;
+			util::geom::Point rotate(const double angle, const util::geom::Point& origin = { 0, 0 }) const;
 		};
 
-		struct line {
-			util::geom::point start;
-			util::geom::point end;
+		struct Line {
+			util::geom::Point start;
+			util::geom::Point end;
 
-			line(const util::geom::point& start, const util::geom::point& end);
+			Line(const util::geom::Point& intersection1, const util::geom::Point& intersection2);
 
-			line(const util::geom::point& start, const double angle);
+			Line(const util::geom::Point& intersection, const double angle);
 
-			bool operator==(const util::geom::line& other) const;
+			bool operator==(const util::geom::Line& other) const;
 
-			bool operator!=(const util::geom::line& other) const;
+			bool operator!=(const util::geom::Line& other) const;
 
 			double slope() const;
 
@@ -39,97 +39,99 @@ namespace util {
 
 			double angle() const;
 
-			std::optional<util::geom::point> intersection(const util::geom::line& other) const;
+			std::optional<util::geom::Point> intersection(const util::geom::Line& other) const;
 
-			virtual bool contains(const util::geom::point& point) const;
+			virtual bool contains(const util::geom::Point& point) const;
 		};
 
-		struct ray: util::geom::line {
-			ray(const util::geom::point& start, const util::geom::point& end);
+		struct Ray: util::geom::Line {
+			Ray(const util::geom::Point& start, const util::geom::Point& intersection);
 
-			ray(const util::geom::point& start, const double angle);
+			Ray(const util::geom::point& start, const double angle);
 
-			bool operator==(const util::geom::ray& other) const;
+			bool operator==(const util::geom::Ray& other) const;
 
-			bool operator!=(const util::geom::ray& other) const;
+			bool operator!=(const util::geom::Ray& other) const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 		};
 
-		struct segment: util::geom::line {
-			segment(const util::geom::point& start, const util::geom::point& end);
+		struct Segment: util::geom::Line {
+			Segment(const util::geom::Point& start, const util::geom::Point& end);
 
-			bool operator==(const util::geom::segment& other) const;
+			bool operator==(const util::geom::Segment& other) const;
 
-			bool operator!=(const util::geom::segment& other) const;
+			bool operator!=(const util::geom::Segment& other) const;
 
 			double length() const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 		};
 
-		struct polygon {
-			std::vector<util::geom::point> points;
+		struct Polygon {
+			std::vector<util::geom::Point> points;
 
-			polygon(const std::vector<util::geom::point>& points);
+			polygon(const std::vector<util::geom::Point>& points);
 
-			bool operator==(const util::geom::polygon& other) const;
+			bool operator==(const util::geom::Polygon& other) const;
 
-			bool operator!=(const util::geom::polygon& other) const;
+			bool operator!=(const util::geom::Polygon& other) const;
 
 			double area() const;
 
 			double perimeter() const;
 
-			std::vector<util::geom::segment> sides() const;
+			std::vector<util::geom::Segment> sides() const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 		};
 
-		struct ellipse {
-			util::geom::point center;
-			util::geom::point radius;
+		struct Ellipse {
+			util::geom::Point center;
+			util::geom::Point radius;
 			double rotation;
 
-			ellipse(const util::geom::point& center, const util::geom::point& radius, const double rotation = 0);
+			Ellipse(const util::geom::Point& center, const util::geom::Point& radius, const double rotation = 0);
 
-			bool operator==(const util::geom::ellipse& other) const;
+			bool operator==(const util::geom::Ellipse& other) const;
 
-			bool operator!=(const util::geom::ellipse& other) const;
+			bool operator!=(const util::geom::Ellipse& other) const;
 
 			double area() const;
 
 			double perimiter() const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 
-			std::vector<util::geom::point> intersections(const util::geom::line& line) const;
+			std::vector<util::geom::Point> intersections(const util::geom::Line& line) const;
 
-			std::vector<util::geom::point> intersections(const util::geom::ellipse& other) const;
+			std::vector<util::geom::Point> intersections(const util::geom::Ellipse& other) const;
 		};
 
-		struct circle: util::geom::ellipse {
-			circle(const util::geom::point& center, const double radius);
+		struct Circle: util::geom::Ellipse {
+			Circle(const util::geom::Point& center, const double radius);
 
-			bool operator==(const util::geom::circle& other) const;
+			bool operator==(const util::geom::Circle& other) const;
 
-			bool operator!=(const util::geom::circle& other) const;
+			bool operator!=(const util::geom::Circle& other) const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 		};
 
-		struct rectangle: util::geom::polygon {
-			rectangle(const util::geom::point& corner1, const util::geom::point& corner2);
+		struct Rectangle: util::geom::Polygon {
+			Rectangle(const util::geom::Point& corner1, const util::geom::Point& corner2);
 
-			rectangle(const util::geom::segment& segment);
+			Rectangle(const util::geom::Segment& segment);
 
-			rectangle(const util::geom::polygon& polygon);
+			Rectangle(const util::geom::Polygon& polygon);
 
-			rectangle(const util::geom::ellipse& ellipse);
+			Rectangle(const util::geom::Ellipse& ellipse);
 
-			bool operator==(const util::geom::rectangle& other) const;
+			Rectangle(const util::geom::Circle& circle);
 
-			bool operator!=(const util::geom::rectangle& other) const;
+			bool operator==(const util::geom::Rectangle& other) const;
+
+			bool operator!=(const util::geom::Rectangle& other) const;
 
 			double width() const;
 
@@ -139,7 +141,7 @@ namespace util {
 
 			double perimeter() const;
 
-			bool contains(const util::geom::point& point) const;
+			bool contains(const util::geom::Point& point) const;
 		};
 	}
 }

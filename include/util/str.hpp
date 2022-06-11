@@ -24,7 +24,7 @@ namespace util {
 		std::string trim_right(const std::string& string, const std::string_view& characters);
 
 		template <typename Value = std::size_t>
-		struct char_map {
+		struct CharMap {
 			std::array<Value, std::numeric_limits<char>::max() - std::numeric_limits<char>::min() + 1> characters;
 			
 			Value& operator[](const char character) {

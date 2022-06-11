@@ -9,24 +9,24 @@
 
 namespace util {
 	namespace io {
-		class raw {
+		class Raw {
 		private:
 			termios cooked;
 
 		public:
-			raw(const bool echo = false);
+			Raw(const bool echo = false);
 
-			~raw();
+			~Raw();
 		};
 
-		class nonblock {
+		class NonBlock {
 		private:
 			const int blocking = fcntl(STDIN_FILENO, F_GETFL);
 
 		public:
-			nonblock();
+			NonBlock();
 
-			~nonblock();
+			~NonBlock();
 		};
 
 		void ignore(const char until = 0);
@@ -53,17 +53,17 @@ namespace util {
 
 		void erase_line();
 
-		struct pos {
+		struct Position {
 			int row;
 			int col;
 		};
 
-		util::io::pos get_win_size();
+		util::io::Position get_win_size();
 
 		namespace cursor {
-			util::io::pos get();
+			util::io::Position get();
 
-			void set(const util::io::pos position);
+			void set(const util::io::Position position);
 
 			enum: char {
 				UP = 'A',
@@ -79,10 +79,10 @@ namespace util {
 			void show();
 		}
 
-		struct style {
-			style(const int style);
+		struct Style {
+			Style(const int style);
 
-			~style();
+			~Style();
 
 			enum {
 				NONE = 0,
