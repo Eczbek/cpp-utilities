@@ -3,10 +3,12 @@
 #include <sys/ioctl.h>
 
 
-util::io::raw::raw() {
+util::io::raw::raw(const bool echo) {
 	tcgetattr(STDIN_FILENO, &cooked);
 	termios raw = cooked;
 	cfmakeraw(&raw);
+	if (echo)
+		raw.c_lflag |= ECHO;
 	tcsetattr(STDIN_FILENO, TCSANOW, &raw);
 }
 
@@ -34,8 +36,8 @@ void util::io::ignore(std::streamsize characters) {
 	while (characters-- > 0 && read(STDIN_FILENO, &input, 1) == 1);
 }
 
-char util::io::wait_char() {
-	util::io::raw rawLock;
+char util::io::wait_char(const bool echo) {
+	util::io::raw rawLock(echo);
 	char input;
 	read(STDIN_FILENO, &input, 1);
 	return input;
