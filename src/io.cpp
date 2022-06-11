@@ -20,7 +20,7 @@ util::io::NonBlock::NonBlock() {
 	fcntl(STDIN_FILENO, F_SETFL, blocking | O_NONBLOCK);
 }
 
-util::io::NonBlock::~nonblock() {
+util::io::NonBlock::~NonBlock() {
 	fcntl(STDIN_FILENO, F_SETFL, blocking);
 }
 
@@ -36,14 +36,14 @@ void util::io::ignore(std::streamsize characters) {
 	while (characters-- > 0 && read(STDIN_FILENO, &input, 1) == 1);
 }
 
-char util::io::wait_char(const bool echo) {
+char util::io::waitChar(const bool echo) {
 	util::io::Raw rawLock(echo);
 	char input;
 	read(STDIN_FILENO, &input, 1);
 	return input;
 }
 
-char util::io::read_char(const char defaultChar) {
+char util::io::readChar(const char defaultChar) {
 	util::io::Raw rawLock;
 	util::io::NonBlock nonblockLock;
 	char input = defaultChar;
@@ -51,7 +51,7 @@ char util::io::read_char(const char defaultChar) {
 	return input;
 }
 
-std::string util::io::read_string() {
+std::string util::io::readString() {
 	util::io::Raw rawLock;
 	util::io::NonBlock nonblockLock;
 	std::string result;
@@ -61,21 +61,21 @@ std::string util::io::read_string() {
 	return result;
 }
 
-void util::io::erase_all() {
+void util::io::eraseAll() {
 	std::cout << "\033[2J";
 }
 
-void util::io::erase_line() {
+void util::io::eraseLine() {
 	std::cout << "\033[2K";
 }
 
-util::io::pos util::io::get_win_size() {
+util::io::pos util::io::getWindowSize() {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
 	return { size.ws_col, size.ws_row };
 }
 
-util::io::pos util::io::cursor::get() {
+util::io::pos util::io::cursor::getPos() {
 	util::io::Raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
@@ -87,7 +87,7 @@ util::io::pos util::io::cursor::get() {
 	return position;
 }
 
-void util::io::cursor::set(const util::io::pos position) {
+void util::io::cursor::setPos(const util::io::pos position) {
 	std::cout << "\033[" << position.row << ';' << position.col << 'H';
 }
 
@@ -103,10 +103,10 @@ void util::io::cursor::show() {
 	std::cout << "\033[?25h";
 }
 
-util::io::style::style(const int style) {
+util::io::Style::Style(const int style) {
 	std::cout << "\033[" << style << "m";
 }
 
-util::io::style::~style() {
+util::io::Style::~Style() {
 	std::cout << "\033[" << util::io::style::NONE << "m";
 }

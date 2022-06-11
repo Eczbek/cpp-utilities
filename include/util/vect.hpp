@@ -44,7 +44,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotate_cw(const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotateCW(const std::vector<std::vector<Value>>& values) {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = 0; y < values[0].size(); ++y) {
 				std::vector<Value> row;
@@ -56,7 +56,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotate_ccw(const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotateCCW(const std::vector<std::vector<Value>>& values) {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = values[0].size() - 1; y >= 0; --y) {
 				std::vector<Value> row;

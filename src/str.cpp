@@ -33,21 +33,21 @@ std::string util::str::trunc(const std::string& string, const std::size_t length
 		: string.substr(0, length - suffix.length()) + suffix;
 }
 
-std::string util::str::trim_left(const std::string& string, const char character) {
+std::string util::str::trimLeft(const std::string& string, const char character) {
 	for (std::size_t i = 0; i < string.length(); ++i)
 		if (string[i] != character)
 			return string.substr(i);
 	return "";
 }
 
-std::string util::str::trim_right(const std::string& string, const char character) {
+std::string util::str::trimRight(const std::string& string, const char character) {
 	for (std::size_t i = string.length(); i > 0; --i)
 		if (string[i - 1] != character)
 			return string.substr(0, i);
 	return "";
 }
 
-std::string util::str::trim_left(const std::string& string, const std::string_view& characters) {
+std::string util::str::trimLeft(const std::string& string, const std::string_view& characters) {
 	util::str::char_map<bool> charMap;
 	for (const char character: characters)
 		charMap[character] = true;
@@ -57,7 +57,7 @@ std::string util::str::trim_left(const std::string& string, const std::string_vi
 	return "";
 }
 
-std::string util::str::trim_right(const std::string& string, const std::string_view& characters) {
+std::string util::str::trimRight(const std::string& string, const std::string_view& characters) {
 	util::str::char_map<bool> charMap;
 	for (const char character: characters)
 		charMap[character]= true;

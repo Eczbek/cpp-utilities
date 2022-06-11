@@ -15,13 +15,13 @@ namespace util {
 
 		std::string trunc(const std::string& string, const std::size_t length, const std::string& suffix = "...");
 
-		std::string trim_left(const std::string& string, const char character);
+		std::string trimLeft(const std::string& string, const char character);
 
-		std::string trim_right(const std::string& string, const char character);
+		std::string trimRight(const std::string& string, const char character);
 
-		std::string trim_left(const std::string& string, const std::string_view& characters);
+		std::string trimLeft(const std::string& string, const std::string_view& characters);
 
-		std::string trim_right(const std::string& string, const std::string_view& characters);
+		std::string trimRight(const std::string& string, const std::string_view& characters);
 
 		template <typename Value = std::size_t>
 		struct CharMap {

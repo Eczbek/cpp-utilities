@@ -33,12 +33,12 @@ namespace util {
 
 		void ignore(std::streamsize characters);
 
-		char wait_char(const bool echo = false);
+		char waitChar(const bool echo = false);
 
-		char read_char(const char defaultChar = 0);
+		char readChar(const char defaultChar = 0);
 
 		template <typename Duration>
-		char timeout_char(const Duration timeout, const char defaultChar = 0, const bool echo = false, const bool readAll = true) {
+		char timeoutChar(const Duration timeout, const char defaultChar = 0, const bool echo = false, const bool readAll = true) {
 			util::io::raw rawLock(echo);
 			util::io::nonblock nonblockLock;
 			std::this_thread::sleep_for(timeout);
@@ -47,30 +47,30 @@ namespace util {
 			return input;
 		}
 
-		std::string read_string();
+		std::string readString();
 
-		void erase_all();
+		void eraseAll();
 
-		void erase_line();
+		void eraseLine();
 
 		struct Position {
 			int row;
 			int col;
 		};
 
-		util::io::Position get_win_size();
+		util::io::Position getWindowSize();
 
 		namespace cursor {
-			util::io::Position get();
-
-			void set(const util::io::Position position);
-
 			enum: char {
 				UP = 'A',
 				DOWN,
 				RIGHT,
 				LEFT
 			};
+
+			util::io::Position getPos();
+
+			void setPos(const util::io::Position position);
 
 			void move(const char direction, const int count = 1);
 

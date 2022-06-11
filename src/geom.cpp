@@ -9,7 +9,7 @@ util::geom::Point::Point(const double x, const double y)
 {}
 
 bool util::geom::Point::operator==(const util::geom::Point& other) const {
-	return util::math::approx_equal(x, other.x) && util::math::approx_equal(y, other.y);
+	return util::math::approxEqual(x, other.x) && util::math::approxEqual(y, other.y);
 }
 
 bool util::geom::Point::operator!=(const util::geom::Point& other) const {
@@ -30,7 +30,7 @@ util::geom::Line::Line(const util::geom::Point& start, const util::geom::Point& 
 util::geom::Line::Line(const util::geom::Point& start, const double angle)
 	: start(start)
 {
-	if (util::math::approx_equal(std::fmod(angle + std::numbers::pi / 2, std::numbers::pi), 0.0))
+	if (util::math::approxEqual(std::fmod(angle + std::numbers::pi / 2, std::numbers::pi), 0.0))
 		end = util::geom::Point(start.x, start.y - 1);
 	else 
 		end = util::geom::Point(start.x + 1, std::tan(angle));
@@ -48,11 +48,11 @@ double util::geom::Line::slope() const {
 	return (start.y - end.y) / (start.x - end.x);
 }
 
-double util::geom::Line::intercept_x() const {
+double util::geom::Line::interceptX() const {
 	return start.x - slope() * start.y;
 }
 
-double util::geom::Line::intercept_y() const {
+double util::geom::Line::interceptY() const {
 	return start.y - slope() * start.x;
 }
 
@@ -73,8 +73,8 @@ std::optional<util::geom::Point> util::geom::Line::intersection(const util::geom
 bool util::geom::Line::contains(const util::geom::Point& other) const {
 	const double slope = this->slope();
 	return std::isinf(slope)
-		? util::math::approx_equal(other.x, start.x)
-		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y);
+		? util::math::approxEqual(other.x, start.x)
+		: util::math::approxEqual(other.y, other.x * slope - start.x * slope + start.y);
 }
 
 util::geom::Ray::Ray(const util::geom::Point& start, const util::geom::Point& end)
@@ -96,11 +96,11 @@ bool util::geom::Ray::operator!=(const util::geom::Ray& other) const {
 bool util::geom::Ray::contains(const util::geom::Point& other) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
-		? util::math::approx_equal(other.x, start.x)
+		? util::math::approxEqual(other.x, start.x)
 			&& slope < std::numeric_limits<double>::lowest()
 				? other.y >= start.y
 				: other.y <= start.y
-		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
+		: util::math::approxEqual(other.y, other.x * slope - start.x * slope + start.y))
 			&& (start.x <= end.x
 				? other.x >= start.x
 				: other.x <= start.x)
@@ -128,9 +128,9 @@ double util::geom::Segment::length() const {
 bool util::geom::Segment::contains(const util::geom::Point& other) const {
 	const double slope = this->slope();
 	return (std::isinf(slope)
-		? util::math::approx_equal(other.x, start.x)
+		? util::math::approxEqual(other.x, start.x)
 			&& (other.y >= start.y && other.y <= end.y || other.y <= start.y && other.y >= end.y)
-		: util::math::approx_equal(other.y, other.x * slope - start.x * slope + start.y))
+		: util::math::approxEqual(other.y, other.x * slope - start.x * slope + start.y))
 			&& (start.x < end.x
 				? other.x >= start.x && other.x <= end.x
 				: other.x <= start.x && other.x >= end.x)
@@ -144,8 +144,8 @@ util::geom::Polygon::Polygon(const std::vector<util::geom::Point>& points)
 {}
 
 bool util::geom::Polygon::operator==(const util::geom::Polygon& other) const {
-	return util::alg::rotated_match(points.begin(), points.end(), other.points.begin(), other.points.end())
-		|| util::alg::rotated_match(points.rbegin(), points.rend(), other.points.begin(), other.points.end());
+	return util::alg::rotatedMatch(points.begin(), points.end(), other.points.begin(), other.points.end())
+		|| util::alg::rotatedMatch(points.rbegin(), points.rend(), other.points.begin(), other.points.end());
 }
 
 bool util::geom::Polygon::operator!=(const util::geom::Polygon& other) const {
@@ -186,7 +186,7 @@ util::geom::Ellipse::Ellipse(const util::geom::Point& center, const util::geom::
 {}
 
 bool util::geom::Ellipse::operator==(const util::geom::Ellipse& other) const {
-	return center == other.center && radius == other.radius && util::math::approx_equal(std::fmod(rotation, std::numbers::pi), std::fmod(other.rotation, std::numbers::pi));
+	return center == other.center && radius == other.radius && util::math::approxEqual(std::fmod(rotation, std::numbers::pi), std::fmod(other.rotation, std::numbers::pi));
 }
 
 bool util::geom::Ellipse::operator!=(const util::geom::Ellipse& other) const {
@@ -214,7 +214,7 @@ std::vector<util::geom::Point> util::geom::Ellipse::intersections(const util::ge
 	const double c = radius.y * radius.y * line.start.x * line.start.x + radius.x * radius.x * line.start.y * line.start.y - radius.x * radius.x * radius.y * radius.y;
 	const double d = std::sqrt(b * b - 4 * a * c) / 2 / a;
 	const double e = b * b - 4 * a * c;
-	const bool f = util::math::approx_equal(e, 0.0);
+	const bool f = util::math::approxEqual(e, 0.0);
 	if (e > 0 || f) {
 		const util::geom::Point g(center.x + line.start.x + (d - b) * (line.end.x - line.start.x), center.y + line.start.y + (d + b) * (line.end.y - line.start.y));
 		if (line.contains(g))
@@ -237,7 +237,7 @@ util::geom::Circle::Circle(const util::geom::Point& center, const double radius)
 {}
 
 bool util::geom::Circle::operator==(const util::geom::Circle& other) const {
-	return center == other.center && util::math::approx_equal(radius.x, other.radius.x);
+	return center == other.center && util::math::approxEqual(radius.x, other.radius.x);
 }
 
 bool util::geom::Circle::operator!=(const util::geom::Circle& other) const {

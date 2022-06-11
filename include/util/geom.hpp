@@ -33,9 +33,9 @@ namespace util {
 
 			double slope() const;
 
-			double intercept_x() const;
+			double interceptX() const;
 
-			double intercept_y() const;
+			double interceptY() const;
 
 			double angle() const;
 

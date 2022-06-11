@@ -14,7 +14,7 @@ namespace util {
 		}
 
 		template <typename Number>
-		bool approx_equal(const Number value1, const Number value2, const int precision = 12) {
+		bool approxEqual(const Number value1, const Number value2, const int precision = 12) {
 			return std::fabs(value1 - value2) <= std::numeric_limits<Number>::epsilon() * std::fabs(value1 + value2) * precision || std::fabs(value1 - value2) < std::numeric_limits<Number>::min();
 		}
 
@@ -28,17 +28,17 @@ namespace util {
 		}
 
 		template <typename Result = double, typename Number>
-		Result rad_to_deg(const Number radians) {
+		Result radToDeg(const Number radians) {
 			return radians * 180 / std::numbers::pi;
 		}
 
 		template <typename Result = double, typename Number>
-		Result deg_to_rad(const Number degrees) {
+		Result degToRad(const Number degrees) {
 			return degrees * std::numbers::pi / 180;
 		}
 
 		template <typename Number>
-		std::string base_to(Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		std::string baseTo(Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -48,7 +48,7 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number base_from(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number baseFrom(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			util::str::char_map<std::size_t> charMap;
 			for (std::size_t i = 0; i < digits.length(); ++i)
 				charMap[digits[i]] = i;
