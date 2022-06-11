@@ -10,12 +10,15 @@ namespace util {
 			const typename std::iterator_traits<Iterator1>::difference_type size = std::distance(begin1, end1);
 			if (size == std::distance(begin2, end2))
 				for (; begin1 != end1; ++begin1) {
+					Iterator1 copy1 = begin1;
 					Iterator2 copy2 = begin2;
-					for (Iterator1 copy1 = begin1; copy2 != end2; ++copy1, ++copy2) {
+					while (copy2 != end2) {
 						if (copy1 == end1)
 							std::advance(copy1, -size);
 						if (*copy1 != *copy2)
 							break;
+						++copy1;
+						++copy2;
 					}
 					if (copy2 == end2)
 						return true;
