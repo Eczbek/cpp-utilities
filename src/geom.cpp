@@ -16,7 +16,7 @@ bool util::geom::Point::operator!=(const util::geom::Point& other) const {
 	return !operator==(other);
 }
 
-util::geom::Point util::geom::Point::rotate(const util::geom::Point& origin, const double angle) const {
+util::geom::Point util::geom::Point::rotate(const double angle, const util::geom::Point& origin) const {
 	return {
 		origin.x + std::cos(angle) * (x - origin.x) - std::sin(angle) * (y - origin.y),
 		origin.y + std::cos(angle) * (y - origin.y) + std::sin(angle) * (x - origin.x)

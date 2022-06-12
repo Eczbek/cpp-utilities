@@ -39,8 +39,8 @@ namespace util {
 
 		template <typename Duration>
 		char timeoutChar(const Duration timeout, const char defaultChar = 0, const bool echo = false, const bool readAll = true) {
-			util::io::raw rawLock(echo);
-			util::io::nonblock nonblockLock;
+			util::io::Raw rawLock(echo);
+			util::io::NonBlock nonblockLock;
 			std::this_thread::sleep_for(timeout);
 			char input = defaultChar;
 			while (read(STDIN_FILENO, &input, 1) == 1 && readAll);

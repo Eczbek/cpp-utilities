@@ -47,7 +47,7 @@ namespace util {
 		struct Ray: util::geom::Line {
 			Ray(const util::geom::Point& start, const util::geom::Point& intersection);
 
-			Ray(const util::geom::point& start, const double angle);
+			Ray(const util::geom::Point& start, const double angle);
 
 			bool operator==(const util::geom::Ray& other) const;
 
@@ -71,7 +71,7 @@ namespace util {
 		struct Polygon {
 			std::vector<util::geom::Point> points;
 
-			polygon(const std::vector<util::geom::Point>& points);
+			Polygon(const std::vector<util::geom::Point>& points);
 
 			bool operator==(const util::geom::Polygon& other) const;
 

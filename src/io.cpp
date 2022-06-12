@@ -69,25 +69,25 @@ void util::io::eraseLine() {
 	std::cout << "\033[2K";
 }
 
-util::io::pos util::io::getWindowSize() {
+util::io::Position util::io::getWindowSize() {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
 	return { size.ws_col, size.ws_row };
 }
 
-util::io::pos util::io::cursor::getPos() {
+util::io::Position util::io::cursor::getPos() {
 	util::io::Raw rawLock;
 	write(STDOUT_FILENO, "\033[6n", 4);
 	std::string buffer;
 	char input;
 	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
 		buffer += input;
-	util::io::pos position;
+	util::io::Position position;
 	sscanf(&buffer[0], "\033[%d;%d", &position.row, &position.col);
 	return position;
 }
 
-void util::io::cursor::setPos(const util::io::pos position) {
+void util::io::cursor::setPos(const util::io::Position position) {
 	std::cout << "\033[" << position.row << ';' << position.col << 'H';
 }
 
@@ -108,5 +108,5 @@ util::io::Style::Style(const int style) {
 }
 
 util::io::Style::~Style() {
-	std::cout << "\033[" << util::io::style::NONE << "m";
+	std::cout << "\033[0m";
 }
