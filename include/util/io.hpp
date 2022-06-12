@@ -129,5 +129,8 @@ namespace util {
 				BG_WHITE_BRIGHT
 			};
 		};
+
+		constexpr std::string_view ASCII_SCALE_70 = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+		constexpr std::string_view ASCII_SCALE_5 = " ░▒▓█";
 	}
 }
