@@ -1,11 +1,11 @@
 # cpp-utilities
 C++ utility library
 
-## Examples
+### Examples
 ```cpp
 #include <util/math.hpp>
 
-util::math::baseTo(util::math::baseFrom("10", 16), 17)
+util::math::baseTo(util::math::baseFrom("10", 16), 17);
 // "g"
 ```
 ```cpp
@@ -42,7 +42,7 @@ matrix[{ 1, 0 }] // 3
 util::vect::rotateCW({
 	{ 1, 2, 3 },
 	{ 4, 5, 6 }
-})
+});
 /* {
 	{ 4, 1 },
 	{ 5, 2 },
@@ -53,12 +53,12 @@ util::vect::rotateCW({
 #include <util/geom.hpp>
 
 util::geom::Line({ 0, 2 }, { 2, 0 })
-	.intersection(util::geom::Line({ 0, 0 }, util::math::degToRad(45)))
+	.intersection(util::geom::Line({ 0, 0 }, util::math::degToRad(45)));
 // { 1, 1 }
 ```
 ```cpp
 #include <util/fs.hpp>
 
 util::fs::write("output.txt", 42);
-util::fs::read("output.txt") // "42"
+util::fs::read("output.txt"); // "42"
 ```
