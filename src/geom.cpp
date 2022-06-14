@@ -1,3 +1,4 @@
+#include <limits>
 #include <util/geom.hpp>
 #include <util/alg.hpp>
 #include <util/math.hpp>
@@ -30,10 +31,9 @@ util::geom::Line::Line(const util::geom::Point& start, const util::geom::Point& 
 util::geom::Line::Line(const util::geom::Point& start, const double angle)
 	: start(start)
 {
-	if (util::math::approxEqual(std::fmod(angle + std::numbers::pi / 2, std::numbers::pi), 0.0))
-		end = util::geom::Point(start.x, start.y - 1);
-	else 
-		end = util::geom::Point(start.x + 1, std::tan(angle));
+	end = util::math::approxEqual(std::fmod(angle + std::numbers::pi / 2, std::numbers::pi), 0.0)
+		? util::geom::Point(start.x, start.y - 1)
+		: util::geom::Point(start.x + 1, std::tan(angle));
 }
 
 bool util::geom::Line::operator==(const util::geom::Line& other) const {
