@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <limits>
 #include <numbers>
 #include <string>
 #include <string_view>
