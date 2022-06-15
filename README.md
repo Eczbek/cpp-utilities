@@ -27,7 +27,7 @@ emitter.emit("event", 17, 'h');
 ```cpp
 #include <util/io.hpp>
 
-util::io::Style lock(util::io::Style::FG_RED_BRIGHT);
+util::io::setStyle(util::io::Style::FG_RED_BRIGHT);
 std::cout << "Hello, world!\n";
 ```
 ```cpp
