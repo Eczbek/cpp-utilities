@@ -103,10 +103,6 @@ void util::io::cursor::show() {
 	std::cout << "\033[?25h";
 }
 
-util::io::Style::Style(const int style) {
-	std::cout << "\033[" << style << "m";
-}
-
-util::io::Style::~Style() {
-	std::cout << "\033[0m";
+void util::io::setStyle(const util::io::Style style) {
+	std::cout << "\033[" << static_cast<int>(style) << 'm';
 }
