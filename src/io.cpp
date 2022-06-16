@@ -1,6 +1,7 @@
-#include <util/io.hpp>
 #include <iostream>
+#include <limits>
 #include <sys/ioctl.h>
+#include <util/io.hpp>
 
 
 util::io::Raw::Raw(const bool echo) {
@@ -105,4 +106,9 @@ void util::io::cursor::show() {
 
 void util::io::setStyle(const util::io::Style style) {
 	std::cout << "\033[" << static_cast<int>(style) << 'm';
+}
+
+void util::io::clean() {
+	std::cout << "\033[2J\033[H\033[0m\033[?25h";
+	util::io::ignore(std::numeric_limits<std::streamsize>::max());
 }
