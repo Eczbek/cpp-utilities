@@ -1,6 +1,6 @@
 #include <limits>
-#include <util/geom.hpp>
 #include <util/alg.hpp>
+#include <util/geom.hpp>
 #include <util/math.hpp>
 #include <util/num.hpp>
 
