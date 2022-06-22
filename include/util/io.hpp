@@ -126,6 +126,6 @@ namespace util {
 
 		void setStyle(const util::io::Style style);
 
-		void clean();
+		void reset();
 	}
 }
