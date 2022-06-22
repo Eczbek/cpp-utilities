@@ -89,7 +89,7 @@ util::io::Position util::io::cursor::getPos() {
 }
 
 void util::io::cursor::setPos(const util::io::Position position) {
-	std::cout << "\033[" << position.row << ';' << position.col << 'H';
+	std::cout << "\033[" << (position.row + 1) << ';' << (position.col + 1) << 'H';
 }
 
 void util::io::cursor::move(const char direction, const int count) {
