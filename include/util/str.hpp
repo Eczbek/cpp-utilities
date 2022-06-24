@@ -9,7 +9,7 @@
 
 namespace util {
 	namespace str {
-		std::vector<std::string> split(const std::string& string, const std::string_view& delimiter);
+		std::vector<std::string> split(const std::string& string, std::string_view delimiter);
 
 		std::vector<std::string> split(const std::string& string, const char delimiter);
 
@@ -19,8 +19,8 @@ namespace util {
 
 		std::string trimRight(const std::string& string, const char character);
 
-		std::string trimLeft(const std::string& string, const std::string_view& characters);
+		std::string trimLeft(const std::string& string, std::string_view characters);
 
-		std::string trimRight(const std::string& string, const std::string_view& characters);
+		std::string trimRight(const std::string& string, std::string_view characters);
 	}
 }

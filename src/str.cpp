@@ -4,7 +4,7 @@
 #include <limits>
 
 
-std::vector<std::string> util::str::split(const std::string& string, const std::string_view& delimiter) {
+std::vector<std::string> util::str::split(const std::string& string, std::string_view delimiter) {
 	std::vector<std::string> segments;
 	std::size_t i = 0;
 	for (std::size_t j = 0; j < string.size() - i; ++j)
@@ -29,9 +29,9 @@ std::vector<std::string> util::str::split(const std::string& string, const char 
 }
 
 std::string util::str::trunc(const std::string& string, const std::size_t length, const std::string& suffix) {
-	return string.size() <= length
-		? string
-		: string.substr(0, length - suffix.size()) + suffix;
+	return string.size() > length		
+		? string.substr(0, length - suffix.size()) + suffix
+		: string;
 }
 
 std::string util::str::trimLeft(const std::string& string, const char character) {
@@ -48,7 +48,7 @@ std::string util::str::trimRight(const std::string& string, const char character
 	return "";
 }
 
-std::string util::str::trimLeft(const std::string& string, const std::string_view& characters) {
+std::string util::str::trimLeft(const std::string& string, std::string_view characters) {
 	util::OrderedMap<char, bool> charMap;
 	for (const char character: characters)
 		charMap[character] = true;
@@ -58,10 +58,10 @@ std::string util::str::trimLeft(const std::string& string, const std::string_vie
 	return "";
 }
 
-std::string util::str::trimRight(const std::string& string, const std::string_view& characters) {
+std::string util::str::trimRight(const std::string& string, std::string_view characters) {
 	util::OrderedMap<char, bool> charMap;
 	for (const char character: characters)
-		charMap[character]= true;
+		charMap[character] = true;
 	for (std::size_t i = string.size(); i > 0; --i)
 		if (!charMap[string[i - 1]])
 			return string.substr(0, i);

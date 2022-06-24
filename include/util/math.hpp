@@ -41,7 +41,7 @@ namespace util {
 		}
 
 		template <typename Number>
-		std::string baseTo(Number value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		std::string baseTo(Number value, const int base, std::string_view digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -51,7 +51,7 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number baseFrom(const std::string_view& value, const int base, const std::string_view& digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number baseFrom(std::string_view value, const int base, std::string_view digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
 			util::OrderedMap<char, std::size_t> charMap;
 			for (std::size_t i = 0; i < digits.size(); ++i)
 				charMap[digits[i]] = i;
