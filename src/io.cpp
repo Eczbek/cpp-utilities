@@ -107,8 +107,3 @@ void util::io::cursor::show() {
 void util::io::setStyle(const util::io::Style style) {
 	std::cout << "\033[" << static_cast<int>(style) << 'm';
 }
-
-void util::io::reset() {
-	std::cout << "\033[2J\033[H\033[0m\033[?25h";
-	util::io::ignore(std::numeric_limits<std::streamsize>::max());
-}
