@@ -8,33 +8,6 @@
 
 namespace util {
 	namespace vect {
-		template <typename Value>
-		std::vector<std::vector<Value>> chunk(const std::vector<Value>& values, const int chunkSize, const bool overflow = true) {
-			std::vector<std::vector<Value>> chunks;
-			std::size_t i = 0;
-			while (true) {
-				const std::size_t vectorSize = std::fmin(values.size(), chunkSize);
-				if (!vectorSize || !overflow && vectorSize < chunkSize)
-					return chunks;
-				chunks.push_back(std::vector<Value>(values.begin() + i, values.begin() + i + vectorSize));
-				i += vectorSize;
-			}
-		}
-
-		template <typename Value, typename Callback>
-		std::vector<std::vector<Value>> chunk(const std::vector<Value>& values, const Callback& getChunkSize, const bool overflow = true) {
-			std::vector<std::vector<Value>> chunks;
-			std::size_t i = 0;
-			while (true) {
-				const std::size_t chunkSize = getChunkSize(chunks.size());
-				const std::size_t vectorSize = std::fmin(values.size(), chunkSize);
-				if (!vectorSize || !overflow && vectorSize < chunkSize)
-					return chunks;
-				chunks.push_back(std::vector<Value>(values.begin() + i, values.begin() + i + vectorSize));
-				i += vectorSize;
-			}
-		}
-		
 		template <typename Key = std::string, typename Value, typename Callback>
 		std::unordered_map<Key, std::vector<Value>> group(const std::vector<Value>& values, const Callback& getGroup) {
 			std::unordered_map<Key, std::vector<Value>> groups;
