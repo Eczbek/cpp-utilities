@@ -12,5 +12,9 @@ namespace util {
 		Value& operator[](const Key key) {
 			return values[key - std::numeric_limits<Key>::min()];
 		}
+
+		const Value& operator[](const Key key) const {
+			return values[key - std::numeric_limits<Key>::min()];
+		}
 	};
 }
