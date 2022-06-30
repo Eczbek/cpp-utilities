@@ -79,8 +79,6 @@ namespace util {
 			void show();
 		}
 
-		void setStyle(const util::io::Style style);
-
 		enum class Style {
 			NONE = 0,
 			EF_BOLD,
@@ -125,5 +123,7 @@ namespace util {
 			BG_CYAN_BRIGHT,
 			BG_WHITE_BRIGHT
 		};
+
+		void setStyle(const util::io::Style style);
 	}
 }
