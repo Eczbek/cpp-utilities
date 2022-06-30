@@ -67,7 +67,7 @@ void util::io::eraseAll() {
 }
 
 void util::io::eraseLine() {
-	std::cout << "\033[2K\033[0G";
+	std::cout << "\033[2K\r";
 }
 
 util::io::Position util::io::getWindowSize() {
