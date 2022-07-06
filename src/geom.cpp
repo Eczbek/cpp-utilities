@@ -62,7 +62,7 @@ double util::geom::Line::angle() const {
 
 std::optional<util::geom::Point> util::geom::Line::intersection(const util::geom::Line& other) const {
 	const double a = (start.x - end.x) * (other.start.y - other.end.y) - (start.y - end.y) * (other.start.x - other.end.x);
-	if (a) {
+	if (!util::math::approxEqual(a, 0.0)) {
 		const util::geom::Point intersection(((other.start.x - other.end.x) * (start.x * end.y - start.y * end.x) - (start.x - end.x) * (other.start.x * other.end.y - other.start.y * other.end.x)) / a, ((other.start.y - other.end.y) * (start.x * end.y - start.y * end.x) - (start.y - end.y) * (other.start.x * other.end.y - other.start.y * other.end.x)) / a);
 		if (contains(intersection) && other.contains(intersection))
 			return intersection;
