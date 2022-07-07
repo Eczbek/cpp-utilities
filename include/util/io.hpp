@@ -14,7 +14,7 @@ namespace util {
 			termios cooked;
 
 		public:
-			Raw(const bool echo = false);
+			Raw(const bool echo = false) noexcept;
 
 			~Raw();
 		};
@@ -24,21 +24,21 @@ namespace util {
 			const int blocking = fcntl(STDIN_FILENO, F_GETFL);
 
 		public:
-			NonBlock();
+			NonBlock() noexcept;
 
 			~NonBlock();
 		};
 
-		void ignore(const char until = 0);
+		void ignore(const char until = 0) noexcept;
 
-		void ignore(std::streamsize characters);
+		void ignore(std::streamsize characters) noexcept;
 
-		char waitChar(const bool echo = false);
+		char waitChar(const bool echo = false) noexcept;
 
-		char readChar(const char defaultChar = 0);
+		char readChar(const char defaultChar = 0) noexcept;
 
 		template <typename Duration>
-		char timeoutChar(const Duration timeout, const char defaultChar = 0, const bool echo = false, const bool readAll = true) {
+		char timeoutChar(const Duration timeout, const char defaultChar = 0, const bool echo = false, const bool readAll = true) noexcept {
 			util::io::Raw rawLock(echo);
 			util::io::NonBlock nonblockLock;
 			std::this_thread::sleep_for(timeout);
@@ -47,18 +47,18 @@ namespace util {
 			return input;
 		}
 
-		std::string readString();
+		std::string readString() noexcept;
 
-		void eraseAll();
+		void eraseAll() noexcept;
 
-		void eraseLine();
+		void eraseLine() noexcept;
 
 		struct Position {
 			int row;
 			int col;
 		};
 
-		util::io::Position getWindowSize();
+		util::io::Position getWindowSize() noexcept;
 
 		namespace cursor {
 			enum: char {
@@ -68,15 +68,15 @@ namespace util {
 				LEFT
 			};
 
-			util::io::Position getPos();
+			util::io::Position getPos() noexcept;
 
-			void setPos(const util::io::Position position);
+			void setPos(const util::io::Position position) noexcept;
 
-			void move(const char direction, const int count = 1);
+			void move(const char direction, const int count = 1) noexcept;
 
-			void hide();
+			void hide() noexcept;
 
-			void show();
+			void show() noexcept;
 		}
 
 		enum class Style {
@@ -124,6 +124,6 @@ namespace util {
 			BG_WHITE_BRIGHT
 		};
 
-		void setStyle(const util::io::Style style);
+		void setStyle(const util::io::Style style) noexcept;
 	}
 }

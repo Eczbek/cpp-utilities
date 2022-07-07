@@ -9,18 +9,18 @@
 
 namespace util {
 	namespace str {
-		std::vector<std::string> split(const std::string& string, std::string_view delimiter);
+		std::vector<std::string> split(const std::string& string, std::string_view delimiter) noexcept;
 
-		std::vector<std::string> split(const std::string& string, const char delimiter);
+		std::vector<std::string> split(const std::string& string, const char delimiter) noexcept;
 
-		std::string trunc(const std::string& string, const std::size_t length, const std::string& suffix = "...");
+		std::string trunc(const std::string& string, const std::size_t length, const std::string& suffix = "...") noexcept;
 
-		std::string trimLeft(const std::string& string, const char character);
+		std::string trimLeft(const std::string& string, const char character) noexcept;
 
-		std::string trimRight(const std::string& string, const char character);
+		std::string trimRight(const std::string& string, const char character) noexcept;
 
-		std::string trimLeft(const std::string& string, std::string_view characters);
+		std::string trimLeft(const std::string& string, std::string_view characters) noexcept;
 
-		std::string trimRight(const std::string& string, std::string_view characters);
+		std::string trimRight(const std::string& string, std::string_view characters) noexcept;
 	}
 }

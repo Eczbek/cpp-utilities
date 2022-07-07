@@ -9,7 +9,7 @@
 namespace util {
 	namespace vect {
 		template <typename Key = std::string, typename Value, typename Callback>
-		std::unordered_map<Key, std::vector<Value>> group(const std::vector<Value>& values, const Callback& getGroup) {
+		std::unordered_map<Key, std::vector<Value>> group(const std::vector<Value>& values, const Callback& getGroup) noexcept {
 			std::unordered_map<Key, std::vector<Value>> groups;
 			for (std::size_t i = 0; i < values.size(); ++i)
 				groups[getGroup(values[i], i)].push_back(values[i]);
@@ -17,7 +17,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotateCW(const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotateCW(const std::vector<std::vector<Value>>& values) noexcept {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = 0; y < values[0].size(); ++y) {
 				std::vector<Value> row;
@@ -29,7 +29,7 @@ namespace util {
 		}
 
 		template <typename Value>
-		std::vector<std::vector<Value>> rotateCCW(const std::vector<std::vector<Value>>& values) {
+		std::vector<std::vector<Value>> rotateCCW(const std::vector<std::vector<Value>>& values) noexcept {
 			std::vector<std::vector<Value>> rotated;
 			for (std::size_t y = values[0].size() - 1; y >= 0; --y) {
 				std::vector<Value> row;

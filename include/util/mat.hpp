@@ -13,7 +13,7 @@ namespace util {
 		std::vector<Value> values;
 
 	public:
-		Matrix(std::span<const std::size_t> dimensions)
+		Matrix(std::span<const std::size_t> dimensions) noexcept
 			: dimensions(dimensions.begin(), dimensions.end())
 		{
 			std::size_t size = 1;
@@ -56,11 +56,11 @@ namespace util {
 			return values[index];
 		}
 
-		std::span<const Value> getValues() const {
+		std::span<const Value> getValues() const noexcept {
 			return values;
 		}
 
-		std::span<const std::size_t> getDimensions() const {
+		std::span<const std::size_t> getDimensions() const noexcept {
 			return dimensions;
 		}
 	};

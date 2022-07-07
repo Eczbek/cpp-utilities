@@ -3,6 +3,7 @@
 #include <cmath>
 #include <limits>
 #include <numbers>
+#include <stdexcept>
 #include <string>
 #include <string_view>
 #include <util/map.hpp>
@@ -11,18 +12,18 @@
 namespace util {
 	namespace math {
 		template <typename Number>
-		Number wrap(const Number value, const Number min, const Number max) {
+		Number wrap(const Number value, const Number min, const Number max) noexcept {
 			const Number diff = max - min;
 			return std::fmod(std::fmod(value - min, diff) + diff, diff) + min;
 		}
 
 		template <typename Number>
-		bool approxEqual(const Number value1, const Number value2, const int precision = 12) {
+		bool approxEqual(const Number value1, const Number value2, const int precision = 12) noexcept {
 			return std::fabs(value1 - value2) <= std::numeric_limits<Number>::epsilon() * std::fabs(value1 + value2) * precision || std::fabs(value1 - value2) < std::numeric_limits<Number>::min();
 		}
 
 		template <typename Number>
-		int sign(const Number value) {
+		int sign(const Number value) noexcept {
 			return value > 0
 				? 1
 				: value < 0
@@ -31,17 +32,19 @@ namespace util {
 		}
 
 		template <typename Result = double, typename Number>
-		Result radToDeg(const Number radians) {
+		Result radToDeg(const Number radians) noexcept {
 			return radians * 180 / std::numbers::pi;
 		}
 
 		template <typename Result = double, typename Number>
-		Result degToRad(const Number degrees) {
+		Result degToRad(const Number degrees) noexcept {
 			return degrees * std::numbers::pi / 180;
 		}
 
 		template <typename Number>
 		std::string baseTo(Number value, const int base, std::string_view digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+			if (value != std::floor(value))
+				throw std::runtime_error("Value is not integer");
 			std::string result;
 			while (value) {
 				result = digits[value % base] + result;
@@ -51,7 +54,7 @@ namespace util {
 		}
 
 		template <typename Number = int>
-		Number baseFrom(std::string_view value, const int base, std::string_view digits = "0123456789abcdefghijklmnopqrstuvwxyz") {
+		Number baseFrom(std::string_view value, const int base, std::string_view digits = "0123456789abcdefghijklmnopqrstuvwxyz") noexcept {
 			util::OrderedMap<char, std::size_t> charMap;
 			for (std::size_t i = 0; i < digits.size(); ++i)
 				charMap[digits[i]] = i;

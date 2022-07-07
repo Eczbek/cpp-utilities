@@ -13,19 +13,19 @@ namespace util {
 
 	public:
 		template <typename... Parameters, typename Callback>
-		void on(const std::string& event, const Callback& callback) {
+		void on(const std::string& event, const Callback& callback) noexcept {
 			events[event] = std::any(std::function<void(Parameters...)>(callback));
 		}
 
 		template <typename... Parameters, typename Callback>
-		void once(const std::string& event, const Callback& callback) {
+		void once(const std::string& event, const Callback& callback) noexcept {
 			events[event] = std::any(std::function<void(Parameters...)>([&](Parameters... arguments) {
 				events.erase(event);
 				callback(arguments...);
 			}));
 		}
 
-		void off(const std::string& event);
+		void off(const std::string& event) noexcept;
 
 		template <typename... Arguments>
 		void emit(const std::string& event, Arguments... arguments) {
