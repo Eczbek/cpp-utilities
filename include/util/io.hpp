@@ -55,7 +55,7 @@ namespace util {
 
 		struct Position {
 			int row;
-			int col;
+			int column;
 		};
 
 		util::io::Position getWindowSize() noexcept;
