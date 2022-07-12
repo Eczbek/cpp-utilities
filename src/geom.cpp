@@ -1,8 +1,8 @@
 #include <limits>
-#include <util/alg.hpp>
-#include <util/geom.hpp>
-#include <util/math.hpp>
-#include <util/num.hpp>
+#include <util/alg>
+#include <util/geom>
+#include <util/math>
+#include <util/num>
 
 
 util::geom::Point::Point(const double x, const double y) noexcept
@@ -186,6 +186,13 @@ bool util::geom::Polygon::contains(const util::geom::Point point) const noexcept
 	for (const util::geom::Segment& side: sides())
 		intersections += ray.intersection(side).has_value();
 	return intersections % 2;
+}
+
+util::geom::Polygon util::geom::Polygon::rotate(const double angle, const util::geom::Point pivot) const noexcept {
+	std::vector<util::geom::Point> rotatedPoints = points;
+	for (std::size_t i = 0; i < points.size(); ++i)
+		rotatedPoints[i] = points[i].rotate(angle, pivot);
+	return { rotatedPoints };
 }
 
 util::geom::Ellipse::Ellipse(const util::geom::Point center, const util::geom::Point radius, const double rotation) noexcept

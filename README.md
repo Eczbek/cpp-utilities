@@ -3,17 +3,17 @@ C++ utility library
 
 ### Examples
 ```cpp
-#include <util/math.hpp>
+#include <util/math>
 
 util::math::baseTo(util::math::baseFrom("10", 16), 17) // "g"
 ```
 ```cpp
-#include <util/str.hpp>
+#include <util/str>
 
 util::str::trunc("Hello, world!", 8, "...") // "Hello..."
 ```
 ```cpp
-#include <util/evt.hpp>
+#include <util/evt>
 
 util::EventEmitter emitter;
 emitter.on("event", [](const int x, const char y) {
@@ -23,19 +23,19 @@ emitter.emit("event", 17, 'h');
 // h17
 ```
 ```cpp
-#include <util/io.hpp>
+#include <util/io>
 
 util::io::setStyle(util::io::Style::FG_RED_BRIGHT);
 std::cout << "Hello, world!\n";
 ```
 ```cpp
-#include <util/mat.hpp>
+#include <util/mat>
 
 util::Matrix<int> matrix({ 2, 2 }, { 1, 2, 3, 4 });
 matrix[{ 1, 0 }] // 3
 ```
 ```cpp
-#include <util/vect.hpp>
+#include <util/vect>
 
 util::vect::rotateCW({
 	{ 1, 2, 3 },
@@ -47,20 +47,20 @@ util::vect::rotateCW({
 } */
 ```
 ```cpp
-#include <util/geom.hpp>
+#include <util/geom>
 
 util::geom::Line({ 0, 2 }, { 2, 0 })
 	.intersection(util::geom::Line({ 0, 0 }, util::math::degToRad(45)))
 // { 1, 1 }
 ```
 ```cpp
-#include <util/fs.hpp>
+#include <util/fs>
 
 util::fs::write("output.txt", 42);
 util::fs::read("output.txt") // "42"
 ```
 ```cpp
-#include <util/map.hpp>
+#include <util/map>
 
 util::OrderedMap<char, bool> map;
 map['a'] = true;

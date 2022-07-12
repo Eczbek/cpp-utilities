@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
-#include <util/map.hpp>
+#include <util/map>
 
 
 namespace util {

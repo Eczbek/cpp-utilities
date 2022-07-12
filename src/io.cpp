@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <sys/ioctl.h>
-#include <util/io.hpp>
+#include <util/io>
 
 
 util::io::Raw::Raw(const bool echo) noexcept {

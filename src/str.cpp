@@ -1,5 +1,5 @@
-#include <util/map.hpp>
-#include <util/str.hpp>
+#include <util/map>
+#include <util/str>
 #include <array>
 #include <limits>
 

@@ -87,7 +87,7 @@ namespace util {
 
 			bool contains(const util::geom::Point point) const noexcept;
 
-			util::geom::Polygon rotate(const double angle, const util::geom::Point pivot);
+			util::geom::Polygon rotate(const double angle, const util::geom::Point pivot) const noexcept;
 		};
 
 		struct Ellipse {
