@@ -16,7 +16,7 @@ util::str::trunc("Hello, world!", 8, "...") // "Hello..."
 #include <util/evt>
 
 util::EventEmitter emitter;
-emitter.on("event", [](const int x, const char y) {
+emitter.on("event", [](const int x, const char y) -> void {
 	std::cout << y << x << '\n';
 });
 emitter.emit("event", 17, 'h');
