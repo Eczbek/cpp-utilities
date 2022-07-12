@@ -228,17 +228,17 @@ util::geom::Polygon util::geom::Polygon::boundingPolygon() const noexcept {
 		if (point.y >= newPoint.y && point.x < newPoint.x)
 			newPoint = point;
 	for (long i = 0; !i || newPoint.x != newPoints[0].x || newPoint.y != newPoints[0].y; ++i) {
-		newPoints[i] = newPoint;
+		newPoints.push_back(newPoint);
 		minAngleDiff = util::num::tau;
 		for (const util::geom::Point point: points) {
-			pointDiff = { point.x - newPoints[i], point.y - newPoints[i] };
+			pointDiff = { point.x - newPoints[i].x, point.y - newPoints[i].y };
 			if (pointDiff.x || pointDiff.y) {
 				double dist = std::sqrt(pointDiff.x * pointDiff.x + pointDiff.y * pointDiff.y);
-				newAngle = (y >= 0)
+				newAngle = (pointDiff.y >= 0)
 					? std::acos(pointDiff.x / dist)
 					: std::acos(-pointDiff.x / dist) + std::numbers::pi;
 				angleDiff = oldAngle - newAngle;
-				angleDiff = util::math::wrap(angleDiff, 0, util::num::tau);
+				angleDiff = util::math::wrap(angleDiff, util::num::tau);
 				if (angleDiff < minAngleDiff) {
 					minAngleDiff = angleDiff;
 					newPoint = point;
@@ -305,18 +305,18 @@ util::geom::Ellipse util::geom::Ellipse::rotate(const double angle, const util::
 	return {
 		center.rotate(angle, pivot),
 		radius,
-		(this->angle + angle) % util::num::tau
+		std::fmod(rotation + angle, util::num::tau)
 	};
 }
 
-util::geom::Polygon util::geom::Ellipse::bounds() const noexcept {
-	const double a = std::sqrt(ellipse.radius.x * ellipse.radius.x  * std::cos(ellipse.rotation) * std::cos(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::cos(ellipse.rotation + std::numbers::pi / 2) * std::cos(ellipse.rotation + std::numbers::pi / 2));
-	const double b = std::sqrt(ellipse.radius.x * ellipse.radius.x * std::sin(ellipse.rotation) * std::sin(ellipse.rotation) + ellipse.radius.y * ellipse.radius.y * std::sin(ellipse.rotation + std::numbers::pi / 2) * std::sin(ellipse.rotation + std::numbers::pi / 2));
+util::geom::Polygon util::geom::Ellipse::boundingBox() const noexcept {
+	const double a = std::sqrt(radius.x * radius.x * std::cos(rotation) * std::cos(rotation) + radius.y * radius.y * std::cos(rotation + std::numbers::pi / 2) * std::cos(rotation + std::numbers::pi / 2));
+	const double b = std::sqrt(radius.x * radius.x * std::sin(rotation) * std::sin(rotation) + radius.y * radius.y * std::sin(rotation + std::numbers::pi / 2) * std::sin(rotation + std::numbers::pi / 2));
 	return { {
-		{ ellipse.center.x - a, ellipse.center.y - b },
-		{ ellipse.center.x + a, ellipse.center.y - b },
-		{ ellipse.center.x + a, ellipse.center.y + b },
-		{ ellipse.center.x - a, ellipse.center.y + b }
+		{ center.x - a, center.y - b },
+		{ center.x + a, center.y - b },
+		{ center.x + a, center.y + b },
+		{ center.x - a, center.y + b }
 	} };
 }
 
@@ -337,14 +337,14 @@ bool util::geom::Circle::contains(const util::geom::Point point) const noexcept 
 }
 
 util::geom::Circle util::geom::Circle::rotate(const double angle, const util::geom::Point pivot) const noexcept {
-	return { center.rotate(angle, pivot), radius };
+	return { center.rotate(angle, pivot), radius.x };
 }
 
-util::geom::Polygon util::geom::Circle::bounds() const noexcept {
+util::geom::Polygon util::geom::Circle::boundingBox() const noexcept {
 	return { {
-		{ center.x - radius, center.y - radius },
-		{ center.x + radius, center.y - radius },
-		{ center.x + radius, center.y + radius },
-		{ center.x - radius, center.y + radius }
+		{ center.x - radius.x, center.y - radius.y },
+		{ center.x + radius.x, center.y - radius.y },
+		{ center.x + radius.x, center.y + radius.y },
+		{ center.x - radius.x, center.y + radius.y }
 	} };
 }

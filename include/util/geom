@@ -115,7 +115,7 @@ namespace util {
 
 			std::vector<util::geom::Point> intersections(const util::geom::Ellipse& other) const noexcept;
 
-			util::geom::Ellipse rotate(const double angle, const util::geom::Point pivot);
+			util::geom::Ellipse rotate(const double angle, const util::geom::Point pivot) const noexcept;
 
 			util::geom::Polygon boundingBox() const noexcept;
 		};
@@ -129,7 +129,7 @@ namespace util {
 
 			bool contains(const util::geom::Point point) const noexcept;
 
-			util::geom::Circle rotate(const double angle, const util::geom::Point pivot);
+			util::geom::Circle rotate(const double angle, const util::geom::Point pivot) const noexcept;
 
 			util::geom::Polygon boundingBox() const noexcept;
 		};
