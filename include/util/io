@@ -49,10 +49,6 @@ namespace util {
 
 		std::string readString() noexcept;
 
-		void eraseAll() noexcept;
-
-		void eraseLine() noexcept;
-
 		struct Position {
 			int row;
 			int column;
@@ -62,10 +58,10 @@ namespace util {
 
 		namespace cursor {
 			enum: char {
-				UP = 'A',
-				DOWN,
-				RIGHT,
-				LEFT
+				up = 'A',
+				down,
+				right,
+				left
 			};
 
 			util::io::Position getPos() noexcept;
@@ -73,57 +69,68 @@ namespace util {
 			void setPos(const util::io::Position position) noexcept;
 
 			void move(const char direction, const int count = 1) noexcept;
-
-			void hide() noexcept;
-
-			void show() noexcept;
 		}
 
-		enum class Style {
-			NONE = 0,
-			EF_BOLD,
-			EF_DIM,
-			EF_ITALIC,
-			EF_UNDERLINE,
-			EF_BLINK,
-			EF_REVERSE = 7,
-			EF_HIDDEN,
-			EF_STRIKETHROUGH,
-			EF_UNDERLINE_DOUBLE = 21,
-			FG_BLACK = 30,
-			FG_RED,
-			FG_GREEN,
-			FG_YELLOW,
-			FG_BLUE,
-			FG_MAGENTA,
-			FG_CYAN,
-			FG_WHITE,
-			BG_BLACK = 40,
-			BG_RED,
-			BG_GREEN,
-			BG_YELLOW,
-			BG_BLUE,
-			BG_MAGENTA,
-			BG_CYAN,
-			BG_WHITE,
-			FG_BLACK_BRIGHT = 90,
-			FG_RED_BRIGHT,
-			FG_GREEN_BRIGHT,
-			FG_YELLOW_BRIGHT,
-			FG_BLUE_BRIGHT,
-			FG_MAGENTA_BRIGHT,
-			FG_CYAN_BRIGHT,
-			FG_WHITE_BRIGHT,
-			BG_BLACK_BRIGHT = 100,
-			BG_RED_BRIGHT,
-			BG_GREEN_BRIGHT,
-			BG_YELLOW_BRIGHT,
-			BG_BLUE_BRIGHT,
-			BG_MAGENTA_BRIGHT,
-			BG_CYAN_BRIGHT,
-			BG_WHITE_BRIGHT
-		};
+		namespace style {
+			constexpr std::string none = "\27[0m";
 
-		void setStyle(const util::io::Style style) noexcept;
+			constexpr std::string erase_line = "\27[2K\r";
+			constexpr std::string erase_all = "\27[2J\27[H";
+
+			namespace ef {
+				constexpr std::string bold = "\27[1m";
+				constexpr std::string dim = "\27[2m";
+				constexpr std::string italic = "\27[3m";
+				constexpr std::string underline = "\27[4m";
+				constexpr std::string blink = "\27[5m";
+				constexpr std::string reverse = "\27[7m";
+				constexpr std::string hide = "\27[8m";
+				constexpr std::string strikethrough = "\27[9m";
+				constexpr std::string underline_double = "\27[21m";
+
+				constexpr std::string cursor_hide = "\27[?25l";
+				constexpr std::string cursor_show = "\27[?25h";
+			}
+
+			namespace fg {
+				constexpr std::string black = "\27[30m";
+				constexpr std::string red = "\27[31m";
+				constexpr std::string green = "\27[32m";
+				constexpr std::string yellow = "\27[33m";
+				constexpr std::string blue = "\27[34m";
+				constexpr std::string magenta = "\27[35m";
+				constexpr std::string cyan = "\27[36m";
+				constexpr std::string white = "\27[37m";
+
+				constexpr std::string black_bright = "\27[90m";
+				constexpr std::string red_bright = "\27[91m";
+				constexpr std::string green_bright = "\27[92m";
+				constexpr std::string yellow_bright = "\27[93m";
+				constexpr std::string blue_bright = "\27[94m";
+				constexpr std::string magenta_bright = "\27[95m";
+				constexpr std::string cyan_bright = "\27[96m";
+				constexpr std::string white_bright = "\27[97m";
+			}
+
+			namespace bg {
+				constexpr std::string black = "\27[40m";
+				constexpr std::string red = "\27[41m";
+				constexpr std::string green = "\27[42m";
+				constexpr std::string yellow = "\27[43m";
+				constexpr std::string blue = "\27[44m";
+				constexpr std::string magenta = "\27[45m";
+				constexpr std::string cyan = "\27[46m";
+				constexpr std::string white = "\27[47m";
+
+				constexpr std::string black_bright = "\27[100m";
+				constexpr std::string red_bright = "\27[101m";
+				constexpr std::string green_bright = "\27[102m";
+				constexpr std::string yellow_bright = "\27[103m";
+				constexpr std::string blue_bright = "\27[104m";
+				constexpr std::string magenta_bright = "\27[105m";
+				constexpr std::string cyan_bright = "\27[106m";
+				constexpr std::string white_bright = "\27[107m";
+			}
+		}
 	}
 }

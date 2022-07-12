@@ -62,14 +62,6 @@ std::string util::io::readString() noexcept {
 	return result;
 }
 
-void util::io::eraseAll() noexcept {
-	std::cout << "\033[2J\033[H";
-}
-
-void util::io::eraseLine() noexcept {
-	std::cout << "\033[2K\r";
-}
-
 util::io::Position util::io::getWindowSize() noexcept {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
@@ -78,32 +70,20 @@ util::io::Position util::io::getWindowSize() noexcept {
 
 util::io::Position util::io::cursor::getPos() noexcept {
 	util::io::Raw rawLock;
-	write(STDOUT_FILENO, "\033[6n", 4);
+	write(STDOUT_FILENO, "\27[6n", 4);
 	std::string buffer;
 	char input;
 	while (read(STDIN_FILENO, &input, 1) == 1 && input != 'R')
 		buffer += input;
 	util::io::Position position;
-	sscanf(&buffer[0], "\033[%d;%d", &position.row, &position.column);
+	sscanf(&buffer[0], "\27[%d;%d", &position.row, &position.column);
 	return { position.row - 1, position.column - 1 };
 }
 
 void util::io::cursor::setPos(const util::io::Position position) noexcept {
-	std::cout << "\033[" << (position.row + 1) << ';' << (position.column + 1) << 'H';
+	std::cout << "\27[" << (position.row + 1) << ';' << (position.column + 1) << 'H';
 }
 
 void util::io::cursor::move(const char direction, const int count) noexcept {
-	std::cout << "\033[" << count << direction;
-}
-
-void util::io::cursor::hide() noexcept {
-	std::cout << "\033[?25l";
-}
-
-void util::io::cursor::show() noexcept {
-	std::cout << "\033[?25h";
-}
-
-void util::io::setStyle(const util::io::Style style) noexcept {
-	std::cout << "\033[" << static_cast<int>(style) << 'm';
+	std::cout << "\27[" << count << direction;
 }
