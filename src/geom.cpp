@@ -195,6 +195,61 @@ util::geom::Polygon util::geom::Polygon::rotate(const double angle, const util::
 	return { rotatedPoints };
 }
 
+util::geom::Polygon util::geom::Polygon::boundingBox() const noexcept {
+	util::geom::Point min = points[0];
+	util::geom::Point max = points[0];
+	for (const util::geom::Point point: points) {
+		if (point.x < min.x)
+			min.x = point.x;
+		if (point.x > max.x)
+			max.x = point.x;
+		if (point.y < min.y)
+			min.y = point.y;
+		if (point.y > max.y)
+			max.y = point.y;
+	}
+	return { {
+		min,
+		{ max.x, min.y },
+		max,
+		{ min.x, max.y }
+	} };
+}
+
+util::geom::Polygon util::geom::Polygon::boundingPolygon() const noexcept {
+	std::vector<util::geom::Point> newPoints;
+	util::geom::Point newPoint = points[0];
+	util::geom::Point pointDiff;
+	double oldAngle = util::num::tau * 5;
+	double newAngle;
+	double angleDiff;
+	double minAngleDiff;
+	for (const util::geom::Point point: points)
+		if (point.y >= newPoint.y && point.x < newPoint.x)
+			newPoint = point;
+	for (long i = 0; !i || newPoint.x != newPoints[0].x || newPoint.y != newPoints[0].y; ++i) {
+		newPoints[i] = newPoint;
+		minAngleDiff = util::num::tau;
+		for (const util::geom::Point point: points) {
+			pointDiff = { point.x - newPoints[i], point.y - newPoints[i] };
+			if (pointDiff.x || pointDiff.y) {
+				double dist = std::sqrt(pointDiff.x * pointDiff.x + pointDiff.y * pointDiff.y);
+				newAngle = (y >= 0)
+					? std::acos(pointDiff.x / dist)
+					: std::acos(-pointDiff.x / dist) + std::numbers::pi;
+				angleDiff = oldAngle - newAngle;
+				angleDiff = util::math::wrap(angleDiff, 0, util::num::tau);
+				if (angleDiff < minAngleDiff) {
+					minAngleDiff = angleDiff;
+					newPoint = point;
+				}
+			}
+		}
+		oldAngle += std::numbers::pi - minAngleDiff;
+	}
+	return { newPoints };
+}
+
 util::geom::Ellipse::Ellipse(const util::geom::Point center, const util::geom::Point radius, const double rotation) noexcept
 	: center(center), radius(radius), rotation(rotation)
 {}
