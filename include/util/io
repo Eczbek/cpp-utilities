@@ -2,6 +2,7 @@
 
 #include <fcntl.h>
 #include <string>
+#include <string_view>
 #include <termios.h>
 #include <thread>
 #include <unistd.h>
@@ -72,64 +73,64 @@ namespace util {
 		}
 
 		namespace style {
-			constexpr std::string none = "\27[0m";
+			constexpr std::string_view none = "\033[0m";
 
-			constexpr std::string erase_line = "\27[2K\r";
-			constexpr std::string erase_all = "\27[2J\27[H";
+			constexpr std::string_view erase_line = "\033[2K\r";
+			constexpr std::string_view erase_all = "\033[2J\033[H";
 
 			namespace ef {
-				constexpr std::string bold = "\27[1m";
-				constexpr std::string dim = "\27[2m";
-				constexpr std::string italic = "\27[3m";
-				constexpr std::string underline = "\27[4m";
-				constexpr std::string blink = "\27[5m";
-				constexpr std::string reverse = "\27[7m";
-				constexpr std::string hide = "\27[8m";
-				constexpr std::string strikethrough = "\27[9m";
-				constexpr std::string underline_double = "\27[21m";
+				constexpr std::string_view bold = "\033[1m";
+				constexpr std::string_view dim = "\033[2m";
+				constexpr std::string_view italic = "\033[3m";
+				constexpr std::string_view underline = "\033[4m";
+				constexpr std::string_view blink = "\033[5m";
+				constexpr std::string_view reverse = "\033[7m";
+				constexpr std::string_view hide = "\033[8m";
+				constexpr std::string_view strikethrough = "\033[9m";
+				constexpr std::string_view underline_double = "\033[21m";
 
-				constexpr std::string cursor_hide = "\27[?25l";
-				constexpr std::string cursor_show = "\27[?25h";
+				constexpr std::string_view cursor_hide = "\033[?25l";
+				constexpr std::string_view cursor_show = "\033[?25h";
 			}
 
 			namespace fg {
-				constexpr std::string black = "\27[30m";
-				constexpr std::string red = "\27[31m";
-				constexpr std::string green = "\27[32m";
-				constexpr std::string yellow = "\27[33m";
-				constexpr std::string blue = "\27[34m";
-				constexpr std::string magenta = "\27[35m";
-				constexpr std::string cyan = "\27[36m";
-				constexpr std::string white = "\27[37m";
+				constexpr std::string_view black = "\033[30m";
+				constexpr std::string_view red = "\033[31m";
+				constexpr std::string_view green = "\033[32m";
+				constexpr std::string_view yellow = "\033[33m";
+				constexpr std::string_view blue = "\033[34m";
+				constexpr std::string_view magenta = "\033[35m";
+				constexpr std::string_view cyan = "\033[36m";
+				constexpr std::string_view white = "\033[37m";
 
-				constexpr std::string black_bright = "\27[90m";
-				constexpr std::string red_bright = "\27[91m";
-				constexpr std::string green_bright = "\27[92m";
-				constexpr std::string yellow_bright = "\27[93m";
-				constexpr std::string blue_bright = "\27[94m";
-				constexpr std::string magenta_bright = "\27[95m";
-				constexpr std::string cyan_bright = "\27[96m";
-				constexpr std::string white_bright = "\27[97m";
+				constexpr std::string_view black_bright = "\033[90m";
+				constexpr std::string_view red_bright = "\033[91m";
+				constexpr std::string_view green_bright = "\033[92m";
+				constexpr std::string_view yellow_bright = "\033[93m";
+				constexpr std::string_view blue_bright = "\033[94m";
+				constexpr std::string_view magenta_bright = "\033[95m";
+				constexpr std::string_view cyan_bright = "\033[96m";
+				constexpr std::string_view white_bright = "\033[97m";
 			}
 
 			namespace bg {
-				constexpr std::string black = "\27[40m";
-				constexpr std::string red = "\27[41m";
-				constexpr std::string green = "\27[42m";
-				constexpr std::string yellow = "\27[43m";
-				constexpr std::string blue = "\27[44m";
-				constexpr std::string magenta = "\27[45m";
-				constexpr std::string cyan = "\27[46m";
-				constexpr std::string white = "\27[47m";
+				constexpr std::string_view black = "\033[40m";
+				constexpr std::string_view red = "\033[41m";
+				constexpr std::string_view green = "\033[42m";
+				constexpr std::string_view yellow = "\033[43m";
+				constexpr std::string_view blue = "\033[44m";
+				constexpr std::string_view magenta = "\033[45m";
+				constexpr std::string_view cyan = "\033[46m";
+				constexpr std::string_view white = "\033[47m";
 
-				constexpr std::string black_bright = "\27[100m";
-				constexpr std::string red_bright = "\27[101m";
-				constexpr std::string green_bright = "\27[102m";
-				constexpr std::string yellow_bright = "\27[103m";
-				constexpr std::string blue_bright = "\27[104m";
-				constexpr std::string magenta_bright = "\27[105m";
-				constexpr std::string cyan_bright = "\27[106m";
-				constexpr std::string white_bright = "\27[107m";
+				constexpr std::string_view black_bright = "\033[100m";
+				constexpr std::string_view red_bright = "\033[101m";
+				constexpr std::string_view green_bright = "\033[102m";
+				constexpr std::string_view yellow_bright = "\033[103m";
+				constexpr std::string_view blue_bright = "\033[104m";
+				constexpr std::string_view magenta_bright = "\033[105m";
+				constexpr std::string_view cyan_bright = "\033[106m";
+				constexpr std::string_view white_bright = "\033[107m";
 			}
 		}
 	}
