@@ -41,6 +41,8 @@ namespace util {
 
 			std::optional<util::geom::Point> intersection(const util::geom::Line& other) const noexcept;
 
+			double length() const noexcept;
+
 			virtual bool contains(const util::geom::Point point) const noexcept;
 
 			util::geom::Line rotate(const double angle, const util::geom::Point pivot = { 0, 0 });
@@ -54,6 +56,8 @@ namespace util {
 			bool operator==(const util::geom::Ray& other) const noexcept;
 
 			bool operator!=(const util::geom::Ray& other) const noexcept;
+
+			double length() const noexcept;
 
 			bool contains(const util::geom::Point point) const noexcept;
 		};

@@ -70,6 +70,10 @@ std::optional<util::geom::Point> util::geom::Line::intersection(const util::geom
 	return std::nullopt;
 }
 
+double util::geom::Line::length() const noexcept {
+	return std::numeric_limits<double>::infinity();
+}
+
 bool util::geom::Line::contains(const util::geom::Point other) const noexcept {
 	const double slope = this->slope();
 	return std::isinf(slope)
@@ -98,6 +102,10 @@ bool util::geom::Ray::operator==(const util::geom::Ray& other) const noexcept {
 
 bool util::geom::Ray::operator!=(const util::geom::Ray& other) const noexcept {
 	return !operator==(other);
+}
+
+double util::geom::Ray::length() const noexcept {
+	return std::numeric_limits<double>::infinity();
 }
 
 bool util::geom::Ray::contains(const util::geom::Point other) const noexcept {
