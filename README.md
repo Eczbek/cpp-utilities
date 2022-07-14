@@ -25,7 +25,7 @@ emitter.emit("event", 17, 'h');
 ```cpp
 #include <util/io>
 
-util::io::setStyle(util::io::Style::FG_RED_BRIGHT);
+util::io::setStyle(util::io::style::fg::red_bright);
 std::cout << "Hello, world!\n";
 ```
 ```cpp
@@ -56,8 +56,8 @@ util::geom::Line({ 0, 2 }, { 2, 0 })
 ```cpp
 #include <util/fs>
 
-util::fs::write("output.txt", 42);
-util::fs::read("output.txt") // "42"
+util::fs::write("something.txt", 42);
+util::fs::read("something.txt") // "42"
 ```
 ```cpp
 #include <util/map>
@@ -65,4 +65,9 @@ util::fs::read("output.txt") // "42"
 util::OrderedMap<char, bool> map;
 map['a'] = true;
 map['m'] // false
+```
+```cpp
+#include <util/time>
+
+util::time::week_days[3] // "Wednesday"
 ```
