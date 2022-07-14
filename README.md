@@ -4,70 +4,70 @@ C++ utility library
 ### Examples
 ```cpp
 #include <util/math>
+using namespace util::math;
 
-util::math::baseTo(util::math::baseFrom("10", 16), 17) // "g"
+wrap(6, 5, -3) // -2
+
+approxEqual(0.1 + 0.2, 0.3) // true
+
+sign(297580) // 1
+sign(-6527395) // -1
+sign(0) // 0
+
+degToRad(180) // 3.14159
+radToDeg(3.14159) // 180
+
+baseTo(13, 16) // "d"
+baseFrom("d", 16) // 16
 ```
 ```cpp
 #include <util/str>
+using namespace util::str;
 
-util::str::trunc("Hello, world!", 8, "...") // "Hello..."
-```
-```cpp
-#include <util/evt>
+split("abc", "") // { "a", "b", "c" }
+split("a b c", ' ') // { "a", "b", "c" }
 
-util::EventEmitter emitter;
-emitter.on("event", [](const int x, const char y) -> void {
-	std::cout << y << x << '\n';
-});
-emitter.emit("event", 17, 'h');
-// h17
-```
-```cpp
-#include <util/io>
+trunc("0123456789", 8, "...") // "01234..."
 
-util::io::setStyle(util::io::style::fg::red_bright);
-std::cout << "Hello, world!\n";
-```
-```cpp
-#include <util/mat>
+trimLeft("...a...", '.') // "a..."
+trimRight("...a...", '.') // "...a"
 
-util::Matrix<int> matrix({ 2, 2 }, { 1, 2, 3, 4 });
-matrix[{ 1, 0 }] // 3
+trimLeft(".-.a-.-", ".-") // "a-.-"
+trimRight(".-.a-.-", ".-") // ".-.a"
 ```
 ```cpp
 #include <util/vect>
+using namespace util::vect;
 
-util::vect::rotateCW({
+group({ 1, 2, 3, 4 }, [](const int value) -> std::string {
+	return (value > 2) ? "big" : "small"
+}) /* {
+	"big": { 3, 4 },
+	"small": { 1, 2 }
+} */
+
+std::vector<std::vector<int>> vector2D {
 	{ 1, 2, 3 },
 	{ 4, 5, 6 }
-}) /* {
+};
+
+rotateCW(vector2D) /* {
 	{ 4, 1 },
 	{ 5, 2 },
 	{ 6, 3 }
 } */
-```
-```cpp
-#include <util/geom>
-
-util::geom::Line({ 0, 2 }, { 2, 0 })
-	.intersection(util::geom::Line({ 0, 0 }, util::math::degToRad(45)))
-// { 1, 1 }
+rotateCCW(vector2D) /* {
+	{ 3, 6 },
+	{ 2, 5 },
+	{ 1, 4 }
+} */
 ```
 ```cpp
 #include <util/fs>
+using namespace util::fs;
 
-util::fs::write("something.txt", 42);
-util::fs::read("something.txt") // "42"
-```
-```cpp
-#include <util/map>
+write("something.txt", 4)
+append("something.txt", 'd')
 
-util::OrderedMap<char, bool> map;
-map['a'] = true;
-map['m'] // false
-```
-```cpp
-#include <util/time>
-
-util::time::week_days[3] // "Wednesday"
+read("something.txt") // "4d"
 ```
