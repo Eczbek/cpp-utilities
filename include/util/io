@@ -84,7 +84,7 @@ namespace util {
 				constexpr std::string_view italic = "\033[3m";
 				constexpr std::string_view underline = "\033[4m";
 				constexpr std::string_view blink = "\033[5m";
-				constexpr std::string_view reverse = "\033[7m";
+				constexpr std::string_view invert = "\033[7m";
 				constexpr std::string_view hide = "\033[8m";
 				constexpr std::string_view strikethrough = "\033[9m";
 				constexpr std::string_view underline_double = "\033[21m";
