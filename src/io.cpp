@@ -65,7 +65,7 @@ std::string util::io::readString() noexcept {
 util::io::Position util::io::getWindowSize() noexcept {
 	winsize size;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
-	return { size.ws_col, size.ws_row };
+	return util::io::Position(size.ws_col, size.ws_row);
 }
 
 util::io::Position util::io::cursor::getPos() noexcept {
@@ -77,7 +77,7 @@ util::io::Position util::io::cursor::getPos() noexcept {
 		buffer += input;
 	util::io::Position position;
 	sscanf(&buffer[0], "\033[%d;%d", &position.row, &position.column);
-	return { position.row - 1, position.column - 1 };
+	return util::io::Position(position.row - 1, position.column - 1);
 }
 
 void util::io::cursor::setPos(const util::io::Position position) noexcept {

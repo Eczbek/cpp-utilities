@@ -18,10 +18,7 @@ bool util::geom::Point::operator!=(const util::geom::Point other) const noexcept
 }
 
 util::geom::Point util::geom::Point::rotate(const double angle, const util::geom::Point pivot) const noexcept {
-	return {
-		pivot.x + std::cos(angle) * (x - pivot.x) - std::sin(angle) * (y - pivot.y),
-		pivot.y + std::cos(angle) * (y - pivot.y) + std::sin(angle) * (x - pivot.x)
-	};
+	return util::geom::Point(pivot.x + std::cos(angle) * (x - pivot.x) - std::sin(angle) * (y - pivot.y), pivot.y + std::cos(angle) * (y - pivot.y) + std::sin(angle) * (x - pivot.x));
 }
 
 util::geom::Line::Line(const util::geom::Point start, const util::geom::Point end) noexcept
@@ -82,10 +79,7 @@ bool util::geom::Line::contains(const util::geom::Point other) const noexcept {
 }
 
 util::geom::Line util::geom::Line::rotate(const double angle, const util::geom::Point pivot) {
-	return {
-		start.rotate(angle, pivot),
-		end.rotate(angle, pivot)
-	};
+	return util::geom::Line(start.rotate(angle, pivot), end.rotate(angle, pivot));
 }
 
 util::geom::Ray::Ray(const util::geom::Point start, const util::geom::Point end) noexcept
@@ -184,7 +178,7 @@ double util::geom::Polygon::perimeter() const noexcept {
 std::vector<util::geom::Segment> util::geom::Polygon::sides() const noexcept {
 	std::vector<util::geom::Segment> sides;
 	for (std::size_t i = 0; i < points.size(); ++i)
-		sides.push_back({ points[i], points[(i + 1) % points.size()] });
+		sides.push_back(util::geom::Segment(points[i], points[(i + 1) % points.size()]));
 	return sides;
 }
 
@@ -200,7 +194,7 @@ util::geom::Polygon util::geom::Polygon::rotate(const double angle, const util::
 	std::vector<util::geom::Point> rotatedPoints = points;
 	for (std::size_t i = 0; i < points.size(); ++i)
 		rotatedPoints[i] = points[i].rotate(angle, pivot);
-	return { rotatedPoints };
+	return util::geom::Polygon(rotatedPoints);
 }
 
 util::geom::Ellipse::Ellipse(const util::geom::Point center, const util::geom::Point radius, const double rotation) noexcept
@@ -255,26 +249,22 @@ std::vector<util::geom::Point> util::geom::Ellipse::intersections(const util::ge
 }
 
 util::geom::Ellipse util::geom::Ellipse::rotate(const double angle, const util::geom::Point pivot) const noexcept {
-	return {
-		center.rotate(angle, pivot),
-		radius,
-		std::fmod(rotation + angle, util::num::tau)
-	};
+	return util::geom::Ellipse(center.rotate(angle, pivot), radius, std::fmod(rotation + angle, util::num::tau));
 }
 
 util::geom::Polygon util::geom::Ellipse::boundingBox() const noexcept {
 	const double a = std::sqrt(radius.x * radius.x * std::cos(rotation) * std::cos(rotation) + radius.y * radius.y * std::cos(rotation + std::numbers::pi / 2) * std::cos(rotation + std::numbers::pi / 2));
 	const double b = std::sqrt(radius.x * radius.x * std::sin(rotation) * std::sin(rotation) + radius.y * radius.y * std::sin(rotation + std::numbers::pi / 2) * std::sin(rotation + std::numbers::pi / 2));
-	return { {
-		{ center.x - a, center.y - b },
-		{ center.x + a, center.y - b },
-		{ center.x + a, center.y + b },
-		{ center.x - a, center.y + b }
-	} };
+	return util::geom::Polygon(std::vector<util::geom::Point> {
+		util::geom::Point(center.x - a, center.y - b),
+		util::geom::Point(center.x + a, center.y - b),
+		util::geom::Point(center.x + a, center.y + b),
+		util::geom::Point(center.x - a, center.y + b)
+	});
 }
 
 util::geom::Circle::Circle(const util::geom::Point center, const double radius) noexcept
-	: util::geom::Ellipse(center, { radius, radius })
+	: util::geom::Ellipse(center, util::geom::Point(radius, radius))
 {}
 
 bool util::geom::Circle::operator==(const util::geom::Circle& other) const noexcept {
@@ -290,5 +280,5 @@ bool util::geom::Circle::contains(const util::geom::Point point) const noexcept 
 }
 
 util::geom::Circle util::geom::Circle::rotate(const double angle, const util::geom::Point pivot) const noexcept {
-	return { center.rotate(angle, pivot), radius.x };
+	return util::geom::Circle(center.rotate(angle, pivot), radius.x);
 }

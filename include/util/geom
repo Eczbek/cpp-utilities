@@ -16,7 +16,7 @@ namespace util {
 
 			bool operator!=(const util::geom::Point other) const noexcept;
 
-			util::geom::Point rotate(const double angle, const util::geom::Point pivot = { 0, 0 }) const noexcept;
+			util::geom::Point rotate(const double angle, const util::geom::Point pivot = util::geom::Point(0, 0)) const noexcept;
 		};
 
 		struct Line {
@@ -45,7 +45,7 @@ namespace util {
 
 			virtual bool contains(const util::geom::Point point) const noexcept;
 
-			util::geom::Line rotate(const double angle, const util::geom::Point pivot = { 0, 0 });
+			util::geom::Line rotate(const double angle, const util::geom::Point pivot = util::geom::Point(0, 0));
 		};
 
 		struct Ray: util::geom::Line {
